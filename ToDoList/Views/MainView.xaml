@@ -19,7 +19,7 @@
             </DataGrid>
         </StackPanel>
         <StackPanel Margin="350,0,0,0">
-            <Button Content="New"/>
+            <Button Content="New" Command="{Binding NewThingViewCmd}"/>
         </StackPanel>
 
     </Grid>

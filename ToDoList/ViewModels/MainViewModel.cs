@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Prism.Commands;
 using Prism.Mvvm;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using ToDoList.Db;
 using ToDoList.Models;
 using ToDoList.Services;
+using ToDoList.Views;
 
 namespace ToDoList.ViewModels
 {
@@ -24,7 +24,6 @@ namespace ToDoList.ViewModels
 
         #region 属性定义
 
-       
         public ObservableCollection<Thing> Things { get; set; } = new ObservableCollection<Thing>();
 
         private ThingsContext db = new ThingsContext();
@@ -35,39 +34,22 @@ namespace ToDoList.ViewModels
             set { SetProperty(ref db, value); }
         }
 
-        private DelegateCommand command1;
-
-        public DelegateCommand Command1 =>
-            command1 ?? (command1 = new DelegateCommand(ExecuteCommandName, CanExecuteCommandName));
-
-        private void ExecuteCommandName()
-        {
-            
-            var a = from b in db.Things where b.Done == true select b.Content;
-           
-            //db.Things.Add(new Thing { Content = "666" ,DateTime=DateTime.Now});
-            //db.SaveChanges();
-        }
-
-        private bool CanExecuteCommandName()
-        {
-            return true;
-        }
-
-        private DelegateCommand command2;
-
-        public DelegateCommand Command2 =>
-            command2 ?? (command2 = new DelegateCommand(ExecuteCommand2));
-
-        private void ExecuteCommand2()
-        {
-            db.SaveChanges();
-        }
-
         #endregion 属性定义
 
         #region 命令
 
-        #endregion
+        private DelegateCommand _newThingCmd;
+
+        public DelegateCommand NewThingViewCmd =>
+            _newThingCmd ?? (_newThingCmd = new DelegateCommand(ExecuteNewThingViewCmd));
+
+        private void ExecuteNewThingViewCmd()
+        {
+            var a = from b in db.Things where b.Done == true select b.Content;
+            NewThingView newThingView = new NewThingView();
+            newThingView.Show();
+        }
+
+        #endregion 命令
     }
 }

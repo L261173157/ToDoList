@@ -7,8 +7,10 @@
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        Title="NewThingView" Height="450" Width="800">
+        Title="NewThingView" Height="100" Width="400">
     <Grid>
-        
+        <TextBox x:Name="tb1" HorizontalAlignment="Left" Margin="10,0,0,0" Text="{Binding Thing}" TextWrapping="Wrap" VerticalAlignment="Center" Width="294" Height="65"/>
+        <Button Content="保存" HorizontalAlignment="Left" Margin="309,0,0,0" VerticalAlignment="Center" Height="31" Width="54" Command="{Binding SaveCmd}" CommandParameter="{Binding Text, ElementName=tb1}" Click="Button_Click"/>
+
     </Grid>
 </Window>
