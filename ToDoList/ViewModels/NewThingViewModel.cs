@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Prism.Commands;
 using Prism.Mvvm;
-
+using ToDoList.Services;
+using ToDoList.Services.EventType;
 using System.Collections.ObjectModel;
 using ToDoList.Db;
 using ToDoList.Models;
@@ -10,29 +11,30 @@ namespace ToDoList.ViewModels
 {
     public class NewThingViewModel : BindableBase
     {
-        public NewThingViewModel()
+        public NewThingViewModel(IEventAggregator ea)
         {
-            Things = db.Things.Local.ToObservableCollection();
+
+            _eventAggregator = ea;
             db.Things.Load();
         }
 
         #region 属性定义
-
+        IEventAggregator _eventAggregator;
         private ThingsContext db = new ThingsContext();
-        private string thing;
+        
         public ThingsContext DB
         {
             get { return db; }
             set { SetProperty(ref db, value); }
         }
-
+        private string thing;
         public string Thing
         {
             get { return thing; }
             set { SetProperty(ref thing, value); }
         }
 
-        public ObservableCollection<Thing> Things { get; set; } = new ObservableCollection<Thing>();
+        
         #endregion 属性定义
 
         #region 命令
@@ -46,6 +48,7 @@ namespace ToDoList.ViewModels
         {
             db.Things.Add(new Models.Thing { Content = parameter });
             db.SaveChanges();
+            _eventAggregator.GetEvent<MainViewRefresh>().Publish();
         }
 
         #endregion 命令

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Prism.DryIoc;
 using Prism.Ioc;
-using ToDoList.Services;
+
 using ToDoList;
 using Prism.Regions;
 using ToDoList.Views;
@@ -27,7 +27,7 @@ namespace ToDoList
         #region 服务注册
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.Register<IExample, Example>();
+            //containerRegistry.Register<IExample, Example>();
         }
         #endregion
 
