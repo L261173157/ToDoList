@@ -8,6 +8,7 @@ using ToDoList.Models;
 using ToDoList.Views;
 using ToDoList.Services;
 using ToDoList.Services.EventType;
+using Prism.Events;
 
 namespace ToDoList.ViewModels
 {

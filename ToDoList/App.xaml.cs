@@ -11,6 +11,7 @@ using Prism.Ioc;
 using ToDoList;
 using Prism.Regions;
 using ToDoList.Views;
+using ToDoList.Services;
 
 namespace ToDoList
 {
@@ -21,13 +22,13 @@ namespace ToDoList
     {
         protected override Window CreateShell()
         {
-            var w = Container.Resolve<MainView>();
+            MainView w = Container.Resolve<MainView>();
             return w;
         }
         #region 服务注册
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            //containerRegistry.Register<IExample, Example>();
+          //  containerRegistry.Register<IEventAggregator,EventAggregator>();
         }
         #endregion
 

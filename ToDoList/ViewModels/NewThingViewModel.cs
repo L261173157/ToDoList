@@ -6,6 +6,8 @@ using ToDoList.Services.EventType;
 using System.Collections.ObjectModel;
 using ToDoList.Db;
 using ToDoList.Models;
+using ToDoList.Views;
+using Prism.Events;
 
 namespace ToDoList.ViewModels
 {
