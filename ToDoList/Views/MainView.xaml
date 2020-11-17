@@ -21,6 +21,7 @@
         <StackPanel Margin="350,0,0,0">
             <Button Content="New" Command="{Binding NewThingViewCmd}"/>
             <Button Content="test" Command="{Binding TestCmd}"/>
+            <Button Content="Refresh" Command="{Binding RefreshCmd}"/>
         </StackPanel>
 
     </Grid>

@@ -1,14 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Prism.Commands;
+﻿using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using System.Collections.ObjectModel;
 using System.Linq;
 using ToDoList.Db;
 using ToDoList.Models;
-using ToDoList.Views;
-using ToDoList.Services;
 using ToDoList.Services.EventType;
-using Prism.Events;
+using ToDoList.Views;
 
 namespace ToDoList.ViewModels
 {
@@ -17,23 +15,15 @@ namespace ToDoList.ViewModels
         public MainViewModel(IEventAggregator ea)
 
         {
+            
             ea.GetEvent<MainViewRefresh>().Subscribe(Refresh);
-            var ThingsList = db.Things.Where(b => b.Done == false).ToList();
-            Things = new ObservableCollection<Thing>(ThingsList);
-            db.Things.Load();
+            
+            Things = new ObservableCollection<Thing>();
         }
 
         #region 属性定义
-        
+
         public ObservableCollection<Thing> Things { get; set; }
-
-        private ThingsContext db = new ThingsContext();
-
-        public ThingsContext DB
-        {
-            get { return db; }
-            set { SetProperty(ref db, value); }
-        }
 
         #endregion 属性定义
 
@@ -55,22 +45,34 @@ namespace ToDoList.ViewModels
         public DelegateCommand TestCmd =>
             _testCmd ?? (_testCmd = new DelegateCommand(Test));
 
+        private DelegateCommand _RefreshCmd;
+
+        public DelegateCommand RefreshCmd =>
+            _RefreshCmd ?? (_RefreshCmd = new DelegateCommand(Refresh));
+
         #endregion 命令方法
 
         #region 内部方法
 
         private void Test()
         {
+            using (var db = new ThingsContext())
+            {
+                db.SaveChanges();
+            }
         }
 
         private void Refresh()
         {
-            db.Things.Load();
-            var ThingsList = db.Things.Where(b => b.Done == false).ToList();
-            Things.Clear();
-            foreach (var item in ThingsList)
+            using (var db = new ThingsContext())
             {
-                Things.Add(item);
+                var ThingsList = db.Things.Where(b => b.Done == false).ToList();
+
+                Things.Clear();
+                foreach (var item in ThingsList)
+                {
+                    Things.Add(item);
+                }
             }
         }
 
