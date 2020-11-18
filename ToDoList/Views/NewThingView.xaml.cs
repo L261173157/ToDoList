@@ -20,6 +20,8 @@ namespace ToDoList.Views
         public NewThingView()
         {
             InitializeComponent();
+            var desktopWorkingArea = SystemParameters.WorkArea;
+            this.Left = desktopWorkingArea.Right - this.Width;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

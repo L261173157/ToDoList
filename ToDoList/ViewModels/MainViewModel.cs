@@ -15,14 +15,16 @@ namespace ToDoList.ViewModels
         public MainViewModel(IEventAggregator ea)
 
         {
-            
             ea.GetEvent<MainViewRefresh>().Subscribe(Refresh);
-            
+
             Things = new ObservableCollection<Thing>();
+
+            Refresh();
         }
 
         #region 属性定义
 
+        private readonly ThingsContext db = new ThingsContext();
         public ObservableCollection<Thing> Things { get; set; }
 
         #endregion 属性定义
@@ -56,23 +58,18 @@ namespace ToDoList.ViewModels
 
         private void Test()
         {
-            using (var db = new ThingsContext())
-            {
-                db.SaveChanges();
-            }
+           // db.SaveChanges();
         }
 
         private void Refresh()
         {
-            using (var db = new ThingsContext())
-            {
-                var ThingsList = db.Things.Where(b => b.Done == false).ToList();
+            db.SaveChanges();
+            var ThingsLst = from Thing in db.Things where (Thing.Done == false) select Thing;
 
-                Things.Clear();
-                foreach (var item in ThingsList)
-                {
-                    Things.Add(item);
-                }
+            Things.Clear();
+            foreach (var item in ThingsLst)
+            {
+                Things.Add(item);
             }
         }
 

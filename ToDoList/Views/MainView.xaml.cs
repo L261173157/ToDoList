@@ -23,7 +23,9 @@ namespace ToDoList.Views
         public MainView()
         {
             InitializeComponent();
-           
+            var desktopWorkingArea = SystemParameters.WorkArea;
+            this.Left = desktopWorkingArea.Right - this.Width;
+            this.Top = 0;
         }
     }
 }
