@@ -8,6 +8,7 @@ using ToDoList.Db;
 using ToDoList.Models;
 using ToDoList.Views;
 using Prism.Events;
+using System;
 
 namespace ToDoList.ViewModels
 {
@@ -17,18 +18,12 @@ namespace ToDoList.ViewModels
         {
 
             _eventAggregator = ea;
-            db.Things.Load();
+            
         }
 
         #region 属性定义
         IEventAggregator _eventAggregator;
-        private ThingsContext db = new ThingsContext();
         
-        public ThingsContext DB
-        {
-            get { return db; }
-            set { SetProperty(ref db, value); }
-        }
         private string thing;
         public string Thing
         {
@@ -48,8 +43,12 @@ namespace ToDoList.ViewModels
 
         private void ExecuteSaveCmd(string parameter)
         {
-            db.Things.Add(new Models.Thing { Content = parameter });
-            db.SaveChanges();
+            using (var db = new ThingsContext())
+            {
+                db.Things.Add(new Models.Thing { Content = parameter, CreatTime = DateTime.Now });
+                db.SaveChanges();
+            }
+           
             _eventAggregator.GetEvent<MainViewRefresh>().Publish();
         }
 

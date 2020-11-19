@@ -4,14 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToDoList"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        Title="ToDoList" Height="500" Width="430" WindowStyle="SingleBorderWindow" ShowInTaskbar="False">
+        Title="ToDoList" Height="750" Width="430" WindowStyle="SingleBorderWindow" ShowInTaskbar="False" Visibility="{Binding MainViewVisiblity, Mode=TwoWay, UpdateSourceTrigger=Default}" ResizeMode="NoResize">
+    
     <Grid>
+        <tb:TaskbarIcon x:Name="NotifyIcon" IconSource="\Resources\Journal.ico" ToolTipText="ToDoList" DoubleClickCommand="{Binding MainViewShow}"/>
         <StackPanel Margin="0,0,85,0">
-            <DataGrid x:Name="ExaDataGrid" Height="450
-                      " ItemsSource="{Binding Things}" AutoGenerateColumns="False" Width="320" HorizontalAlignment="Left">
+            <DataGrid x:Name="ExaDataGrid" Height="735" ItemsSource="{Binding Things}" AutoGenerateColumns="False" Width="320" HorizontalAlignment="Left">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Content}" Header="内容" MinWidth="260" CanUserReorder="False" FontSize="20"/>
                     <DataGridCheckBoxColumn Binding="{Binding Done}" Header="完成"/>
@@ -25,4 +27,7 @@
         </StackPanel>
 
     </Grid>
+
+    
+
 </Window>

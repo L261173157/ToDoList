@@ -7,6 +7,8 @@ using ToDoList.Db;
 using ToDoList.Models;
 using ToDoList.Services.EventType;
 using ToDoList.Views;
+using System.Windows;
+
 
 namespace ToDoList.ViewModels
 {
@@ -18,14 +20,23 @@ namespace ToDoList.ViewModels
             ea.GetEvent<MainViewRefresh>().Subscribe(Refresh);
 
             Things = new ObservableCollection<Thing>();
-
+            _eventAggregator = ea;
             Refresh();
+
         }
 
         #region 属性定义
+        IEventAggregator _eventAggregator;
 
         private readonly ThingsContext db = new ThingsContext();
         public ObservableCollection<Thing> Things { get; set; }
+
+        private Visibility mainViewVisiblity=Visibility.Visible;
+        public Visibility MainViewVisiblity
+        {
+            get { return mainViewVisiblity; }
+            set { SetProperty(ref mainViewVisiblity, value); }
+        }
 
         #endregion 属性定义
 
@@ -51,6 +62,26 @@ namespace ToDoList.ViewModels
 
         public DelegateCommand RefreshCmd =>
             _RefreshCmd ?? (_RefreshCmd = new DelegateCommand(Refresh));
+
+        private DelegateCommand _MainViewShow;
+        public DelegateCommand MainViewShow =>
+            _MainViewShow ?? (_MainViewShow = new DelegateCommand(ExecuteMainViewShow));
+
+        void ExecuteMainViewShow()
+        {
+            _eventAggregator.GetEvent<MainViewShow>().Publish();
+            if (MainViewVisiblity == Visibility.Visible)
+            {
+                MainViewVisiblity = Visibility.Hidden;
+                return;
+            }
+            else
+            {
+                MainViewVisiblity = Visibility.Visible;
+                return;
+            }
+           
+        }
 
         #endregion 命令方法
 

@@ -20,6 +20,7 @@ namespace ToDoList
     /// </summary>
     public partial class App: PrismApplication
     {
+        
         protected override Window CreateShell()
         {
             MainView w = Container.Resolve<MainView>();
