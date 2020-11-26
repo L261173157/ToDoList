@@ -31,7 +31,26 @@ namespace ToDoList.ViewModels
             set { SetProperty(ref thing, value); }
         }
 
-        
+        private bool remind;
+        /// <summary>
+        /// 是否提醒
+        /// </summary>
+        public bool Remind
+        {
+            get { return remind; }
+            set { SetProperty(ref remind, value); }
+        }
+
+        private DateTime remindTime=DateTime.Now;
+        /// <summary>
+        /// 提醒时间
+        /// </summary>
+        public DateTime RemindTime
+        {
+            get { return remindTime; }
+            set { SetProperty(ref remindTime, value); }
+        }
+
         #endregion 属性定义
 
         #region 命令
@@ -45,7 +64,7 @@ namespace ToDoList.ViewModels
         {
             using (var db = new ThingsContext())
             {
-                db.Things.Add(new Models.Thing { Content = parameter, CreatTime = DateTime.Now });
+                db.Things.Add(new Models.Thing { Content = parameter, CreatTime = DateTime.Now ,Remind=this.Remind,RemindTime=this.RemindTime});
                 db.SaveChanges();
             }
            

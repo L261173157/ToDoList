@@ -1,14 +1,15 @@
 ﻿using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Timers;
+using System.Windows;
 using ToDoList.Db;
 using ToDoList.Models;
 using ToDoList.Services.EventType;
 using ToDoList.Views;
-using System.Windows;
-
 
 namespace ToDoList.ViewModels
 {
@@ -22,16 +23,20 @@ namespace ToDoList.ViewModels
             Things = new ObservableCollection<Thing>();
             _eventAggregator = ea;
             Refresh();
-
+            SetTimer();
         }
 
         #region 属性定义
-        IEventAggregator _eventAggregator;
+
+        private static Timer timer;
+
+        private IEventAggregator _eventAggregator;
 
         private readonly ThingsContext db = new ThingsContext();
         public ObservableCollection<Thing> Things { get; set; }
 
-        private Visibility mainViewVisiblity=Visibility.Visible;
+        private Visibility mainViewVisiblity = Visibility.Visible;
+
         public Visibility MainViewVisiblity
         {
             get { return mainViewVisiblity; }
@@ -44,6 +49,7 @@ namespace ToDoList.ViewModels
 
         private DelegateCommand _newThingCmd;
 
+        //弹出新建事务窗体
         public DelegateCommand NewThingViewCmd =>
             _newThingCmd ?? (_newThingCmd = new DelegateCommand(ExecuteNewThingViewCmd));
 
@@ -64,10 +70,13 @@ namespace ToDoList.ViewModels
             _RefreshCmd ?? (_RefreshCmd = new DelegateCommand(Refresh));
 
         private DelegateCommand _MainViewShow;
+
+        //主窗体是否通过托盘图标显示
         public DelegateCommand MainViewShow =>
             _MainViewShow ?? (_MainViewShow = new DelegateCommand(ExecuteMainViewShow));
 
-        void ExecuteMainViewShow()
+        //主窗体是否显示
+        private void ExecuteMainViewShow()
         {
             _eventAggregator.GetEvent<MainViewShow>().Publish();
             if (MainViewVisiblity == Visibility.Visible)
@@ -80,7 +89,6 @@ namespace ToDoList.ViewModels
                 MainViewVisiblity = Visibility.Visible;
                 return;
             }
-           
         }
 
         #endregion 命令方法
@@ -89,7 +97,7 @@ namespace ToDoList.ViewModels
 
         private void Test()
         {
-           // db.SaveChanges();
+            // db.SaveChanges();
         }
 
         private void Refresh()
@@ -101,6 +109,31 @@ namespace ToDoList.ViewModels
             foreach (var item in ThingsLst)
             {
                 Things.Add(item);
+            }
+        }
+
+        private void SetTimer()
+        {
+            timer = new Timer(1000);
+            timer.Elapsed += Timer_Elapsed;
+            timer.AutoReset = true;
+            timer.Start();
+        }
+
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            TimeSpan timeSpanMax = new TimeSpan(0, 0, 1);
+            TimeSpan timeSpanMin = new TimeSpan(0, 0, 0);
+            DateTime nowTime = DateTime.Now;
+            var ThingsLst = from Thing in db.Things where (Thing.Done == false && Thing.Remind == true) select Thing;
+            foreach (var thing in ThingsLst)
+            {
+                TimeSpan timeSpan = thing.RemindTime - nowTime;
+                if (timeSpanMin < timeSpan && timeSpan < timeSpanMax)
+                {
+                    RemindView remindView = new RemindView();
+                    remindView.Show();
+                }
             }
         }
 

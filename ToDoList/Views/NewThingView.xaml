@@ -4,13 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToDoList.Views"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        Title="新建事务" Height="100" Width="400">
+        Title="新建事务" Height="200" Width="400">
     <Grid>
-        <TextBox x:Name="tb1" HorizontalAlignment="Left" Margin="10,0,0,0" Text="{Binding Thing}" TextWrapping="Wrap" VerticalAlignment="Center" Width="294" Height="65"/>
-        <Button Content="保存" HorizontalAlignment="Left" Margin="309,0,0,0" VerticalAlignment="Center" Height="65" Width="81" Command="{Binding SaveCmd}" CommandParameter="{Binding Text, ElementName=tb1}" Click="Button_Click"/>
+        <TextBox x:Name="tb1" HorizontalAlignment="Left" Margin="10,7,0,0" Text="{Binding Thing}" TextWrapping="Wrap" VerticalAlignment="Top" Width="255" Height="168" FontSize="16" VerticalContentAlignment="Top"/>
+        <Button Content="保存" HorizontalAlignment="Left" Margin="272,7,0,0" VerticalAlignment="Top" Height="40" Width="80" Command="{Binding SaveCmd}" CommandParameter="{Binding Text, ElementName=tb1}" Click="Button_Click"/>
+        <Label Content="是否提醒" HorizontalAlignment="Left" Margin="272,62,0,0" VerticalAlignment="Top" Width="80"/>
+        <CheckBox Content="" HorizontalAlignment="Left" Margin="366,68,0,0" VerticalAlignment="Top" IsChecked="{Binding Remind}"/>
+        <hc:DateTimePicker Margin="272,104,0,10" SelectedDateTime="{Binding RemindTime}"></hc:DateTimePicker>
+
+
+
 
     </Grid>
 </Window>
