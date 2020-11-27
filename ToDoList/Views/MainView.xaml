@@ -22,7 +22,7 @@
         </StackPanel>
         <StackPanel Margin="350,0,0,0">
             <Button Content="新建" Command="{Binding NewThingViewCmd}" Height="40"/>
-            <!--<Button Content="test" Command="{Binding TestCmd}"/>-->
+            <Button Content="test" Command="{Binding TestCmd}"/>
             <Button Content="保存" Command="{Binding RefreshCmd}" Height="40"/>
         </StackPanel>
 

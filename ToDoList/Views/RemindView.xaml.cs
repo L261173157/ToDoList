@@ -1,4 +1,7 @@
 ﻿using System.Windows;
+using ToDoList.Models;
+using System;
+
 
 
 namespace ToDoList.Views
@@ -12,5 +15,13 @@ namespace ToDoList.Views
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+       
+
+
     }
 }

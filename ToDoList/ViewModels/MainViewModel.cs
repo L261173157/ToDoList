@@ -97,7 +97,9 @@ namespace ToDoList.ViewModels
 
         private void Test()
         {
-            // db.SaveChanges();
+            RemindView remindView = new RemindView();
+            remindView.Show();
+            _eventAggregator.GetEvent<RemindViewTransmit>().Publish(new Thing() { Content = "11", ThingId = 21 });
         }
 
         private void Refresh()
@@ -111,7 +113,7 @@ namespace ToDoList.ViewModels
                 Things.Add(item);
             }
         }
-
+        //设置时间间隔
         private void SetTimer()
         {
             timer = new Timer(1000);
@@ -122,10 +124,10 @@ namespace ToDoList.ViewModels
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            TimeSpan timeSpanMax = new TimeSpan(0, 0, 1);
+            TimeSpan timeSpanMax = new TimeSpan(0, 0, 2);
             TimeSpan timeSpanMin = new TimeSpan(0, 0, 0);
             DateTime nowTime = DateTime.Now;
-            var ThingsLst = from Thing in db.Things where (Thing.Done == false && Thing.Remind == true) select Thing;
+            var ThingsLst = from Thing in db.Things where (Thing.Done == false && Thing.Remind == true&&Thing.RemindTime> nowTime) select Thing;
             foreach (var thing in ThingsLst)
             {
                 TimeSpan timeSpan = thing.RemindTime - nowTime;
@@ -133,6 +135,7 @@ namespace ToDoList.ViewModels
                 {
                     RemindView remindView = new RemindView();
                     remindView.Show();
+                    _eventAggregator.GetEvent<RemindViewTransmit>().Publish(thing);
                 }
             }
         }
