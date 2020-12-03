@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:hc="https://handyorg.github.io/handycontrol"
-             prism:ViewModelLocator.AutoWireViewModel="True" Width="400" Height="200" WindowStartupLocation="CenterScreen" Title="{Binding ThingId}" WindowStyle="SingleBorderWindow" Topmost="True">
+             prism:ViewModelLocator.AutoWireViewModel="True" Width="460" Height="200" WindowStartupLocation="CenterScreen" Title="{Binding ThingId}" WindowStyle="SingleBorderWindow" Topmost="True">
     <Grid>
         <TextBox x:Name="tbContent" HorizontalAlignment="Left" Margin="10,7,0,0" Text="{Binding Content}" TextWrapping="Wrap" VerticalAlignment="Top" Width="255" Height="168" FontSize="16" VerticalContentAlignment="Top" />
 

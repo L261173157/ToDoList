@@ -1,26 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-
-
+﻿using Prism.Events;
+using System;
 using System.Runtime.InteropServices;
-
+using System.Windows;
+using ToDoList.Models;
+using ToDoList.Services.EventType;
 
 namespace ToDoList.Views
 {
@@ -37,12 +20,17 @@ namespace ToDoList.Views
 
         [DllImport("user32.dll")]
         public static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
-        public MainView()
+
+        public MainView(IEventAggregator ea)
         {
             InitializeComponent();
+
             var desktopWorkingArea = SystemParameters.WorkArea;
             this.Left = desktopWorkingArea.Right - this.Width;
             this.Top = 0;
+            //接受提醒通知
+            _eventAggregator = ea;
+            ea.GetEvent<MainViewNotify>().Subscribe(Notify, ThreadOption.UIThread);
 
             IntPtr pWnd = FindWindow("Progman", null);
             pWnd = FindWindowEx(pWnd, IntPtr.Zero, "SHELLDLL_DefVIew", null);
@@ -52,6 +40,42 @@ namespace ToDoList.Views
             SetParent(tWnd, pWnd);
         }
 
-       
+        private void NotifyIcon_MouseDoubleClick(object sender, RoutedEventArgs e)
+        {
+            NotifyIcon.IsBlink = false;
+            EditView editView = new EditView();
+            editView.Show();
+            _eventAggregator.GetEvent<EditViewTransmit>().Publish(Thing);
+            Thing = null;
+        }
+
+        #region 属性定义
+
+        public Thing Thing { get; set; }
+        private IEventAggregator _eventAggregator;
+
+        #endregion 属性定义
+
+        #region 方法
+
+        private void Notify(Thing thing)
+        {
+            try
+            {
+                NotifyIcon.IsBlink = true;
+                Thing = thing;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        #endregion 方法
+
+        private void NotifyIcon_Click(object sender, RoutedEventArgs e)
+        {
+            this.Activate();
+        }
     }
 }

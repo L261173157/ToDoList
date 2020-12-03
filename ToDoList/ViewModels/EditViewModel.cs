@@ -14,7 +14,7 @@ namespace ToDoList.ViewModels
         public EditViewModel(IEventAggregator ea)
         {
             _eventAggregator = ea;
-            ea.GetEvent<EditViewTransmit>().Subscribe(Transmit);
+            ea.GetEvent<EditViewTransmit>().Subscribe(Transmit, ThreadOption.UIThread);
         }
 
         #region 属性定义

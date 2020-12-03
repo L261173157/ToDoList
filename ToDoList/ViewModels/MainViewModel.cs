@@ -48,17 +48,12 @@ namespace ToDoList.ViewModels
         /// 主界面数据列表
         /// </summary>
         public ObservableCollection<Thing> Things { get; set; }
+        
+        #region MainView窗体相关属性
 
-        private Visibility mainViewVisiblity = Visibility.Visible;
+      
+        #endregion
 
-        /// <summary>
-        /// 主界面隐藏属性
-        /// </summary>
-        public Visibility MainViewVisiblity
-        {
-            get { return mainViewVisiblity; }
-            set { SetProperty(ref mainViewVisiblity, value); }
-        }
 
         #endregion 属性定义
 
@@ -88,27 +83,9 @@ namespace ToDoList.ViewModels
         public DelegateCommand RefreshCmd =>
             _RefreshCmd ?? (_RefreshCmd = new DelegateCommand(Refresh));
 
-        private DelegateCommand _MainViewShow;
+       
 
-        //主窗体是否通过托盘图标显示
-        public DelegateCommand MainViewShow =>
-            _MainViewShow ?? (_MainViewShow = new DelegateCommand(ExecuteMainViewShow));
-
-        //主窗体是否显示
-        private void ExecuteMainViewShow()
-        {
-            _eventAggregator.GetEvent<MainViewShow>().Publish();
-            if (MainViewVisiblity == Visibility.Visible)
-            {
-                MainViewVisiblity = Visibility.Hidden;
-                return;
-            }
-            else
-            {
-                MainViewVisiblity = Visibility.Visible;
-                return;
-            }
-        }
+       
 
         #endregion 命令方法
 
@@ -116,12 +93,8 @@ namespace ToDoList.ViewModels
 
         private void Test()
         {
-            Timer timer = new Timer(5000);
-            timer.Elapsed += (sender, e) => Timer_Elapsed(new Thing());
-            timer.AutoReset = false;
-            timer.Enabled = true;
-
-            //Timer_Elapsed( new Thing());
+            Timer_Elapsed_Notify(new Thing() { Content = "test" });
+           
         }
 
         private void Refresh()
@@ -154,7 +127,7 @@ namespace ToDoList.ViewModels
                     timeSpan = thing.RemindTime - nowTime;
 
                     Timer timer = new Timer(timeSpan.TotalSeconds * 1000);
-                    timer.Elapsed += (sender, e) => Timer_Elapsed(thing);
+                    timer.Elapsed += (sender, e) => Timer_Elapsed_Notify(thing);
                     timer.AutoReset = false;
                     timer.Enabled = true;
                     Timers.Add(timer);
@@ -165,7 +138,10 @@ namespace ToDoList.ViewModels
                 throw;
             }
         }
-
+        /// <summary>
+        /// 时间触发后方法(去掉)
+        /// </summary>
+        /// <param name="thing"></param>
         private void Timer_Elapsed(Thing thing)
         {
             try
@@ -184,6 +160,12 @@ namespace ToDoList.ViewModels
                 throw;
             }
             
+        }
+
+        private void Timer_Elapsed_Notify(Thing thing)
+        {
+           //发给mainview通知
+            _eventAggregator.GetEvent<MainViewNotify>().Publish(thing);
         }
 
         #endregion 时间触发
