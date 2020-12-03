@@ -9,12 +9,12 @@ using ToDoList.Services.EventType;
 
 namespace ToDoList.ViewModels
 {
-    public class RemindViewModel : BindableBase
+    public class EditViewModel : BindableBase
     {
-        public RemindViewModel(IEventAggregator ea)
+        public EditViewModel(IEventAggregator ea)
         {
             _eventAggregator = ea;
-            ea.GetEvent<RemindViewTransmit>().Subscribe(Transmit);
+            ea.GetEvent<EditViewTransmit>().Subscribe(Transmit);
         }
 
         #region 属性定义
@@ -110,11 +110,21 @@ namespace ToDoList.ViewModels
         {
             using (var db = new ThingsContext())
             {
-                var thingNeedChang = db.Things.Single(b => b.ThingId == this.ThingId);
-                thingNeedChang.Remind = this.Remind;
-                thingNeedChang.RemindTime = this.RemindTime;
+                if (ThingId == 0)
+                {
+                    db.Things.Add(new Models.Thing { Content = this.Content, CreatTime = DateTime.Now, Remind = this.Remind, RemindTime = this.RemindTime });
+                }
+                else
+                {
+                    var thingNeedChang = db.Things.Single(b => b.ThingId == this.ThingId);
+                    thingNeedChang.Content = this.Content;
+                    thingNeedChang.Done = this.Done;
+                    thingNeedChang.Remind = this.Remind;
+                    thingNeedChang.RemindTime = this.RemindTime;
+                }
                 db.SaveChanges();
             }
+            _eventAggregator.GetEvent<MainViewRefresh>().Publish();
         }
 
         #endregion 命令
@@ -123,10 +133,18 @@ namespace ToDoList.ViewModels
 
         public void Transmit(Thing thing)
         {
-            ThingId = thing.ThingId;
-            Content = thing.Content;
-            Remind = thing.Remind;
-            RemindTime = thing.RemindTime;
+            if (thing != null)
+            {
+                ThingId = thing.ThingId;
+                Content = thing.Content;
+                Remind = false;
+                RemindTime = thing.RemindTime;
+            }
+            else
+            {
+                ThingId = 0;
+                RemindTime = DateTime.Now;
+            }
         }
 
         #endregion 内部方法

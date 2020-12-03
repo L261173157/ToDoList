@@ -27,4 +27,8 @@
     <Resource Include="Resources\Journal.ico" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\ClassType\" />
+  </ItemGroup>
+
 </Project>

@@ -2,6 +2,7 @@
 using Prism.Events;
 using Prism.Mvvm;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Timers;
@@ -23,20 +24,36 @@ namespace ToDoList.ViewModels
             Things = new ObservableCollection<Thing>();
             _eventAggregator = ea;
             Refresh();
-            SetTimer();
+            // SetTimer();
         }
 
         #region 属性定义
 
-        private static Timer timer;
+        /// <summary>
+        /// 提醒功能时间间隔组
+        /// </summary>
+        private List<Timer> Timers = new List<Timer>();
 
+        /// <summary>
+        /// 事件聚合器
+        /// </summary>
         private IEventAggregator _eventAggregator;
 
+        /// <summary>
+        /// 数据库
+        /// </summary>
         private readonly ThingsContext db = new ThingsContext();
+
+        /// <summary>
+        /// 主界面数据列表
+        /// </summary>
         public ObservableCollection<Thing> Things { get; set; }
 
         private Visibility mainViewVisiblity = Visibility.Visible;
 
+        /// <summary>
+        /// 主界面隐藏属性
+        /// </summary>
         public Visibility MainViewVisiblity
         {
             get { return mainViewVisiblity; }
@@ -55,8 +72,10 @@ namespace ToDoList.ViewModels
 
         private void ExecuteNewThingViewCmd()
         {
-            NewThingView newThingView = new NewThingView();
-            newThingView.Show();
+            EditView editView = new EditView();
+            editView.Show();
+
+            _eventAggregator.GetEvent<EditViewTransmit>().Publish(null);
         }
 
         private DelegateCommand _testCmd;
@@ -97,9 +116,12 @@ namespace ToDoList.ViewModels
 
         private void Test()
         {
-            RemindView remindView = new RemindView();
-            remindView.Show();
-            _eventAggregator.GetEvent<RemindViewTransmit>().Publish(new Thing() { Content = "11", ThingId = 21 });
+            Timer timer = new Timer(5000);
+            timer.Elapsed += (sender, e) => Timer_Elapsed(new Thing());
+            timer.AutoReset = false;
+            timer.Enabled = true;
+
+            //Timer_Elapsed( new Thing());
         }
 
         private void Refresh()
@@ -112,33 +134,59 @@ namespace ToDoList.ViewModels
             {
                 Things.Add(item);
             }
-        }
-        //设置时间间隔
-        private void SetTimer()
-        {
-            timer = new Timer(1000);
-            timer.Elapsed += Timer_Elapsed;
-            timer.AutoReset = true;
-            timer.Start();
+            Remind();
         }
 
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        #region 时间触发
+
+        private void Remind()
         {
-            TimeSpan timeSpanMax = new TimeSpan(0, 0, 2);
-            TimeSpan timeSpanMin = new TimeSpan(0, 0, 0);
-            DateTime nowTime = DateTime.Now;
-            var ThingsLst = from Thing in db.Things where (Thing.Done == false && Thing.Remind == true&&Thing.RemindTime> nowTime) select Thing;
-            foreach (var thing in ThingsLst)
+            try
             {
-                TimeSpan timeSpan = thing.RemindTime - nowTime;
-                if (timeSpanMin < timeSpan && timeSpan < timeSpanMax)
+                TimeSpan timeSpan;
+               
+                DateTime nowTime = DateTime.Now;
+                Timers.Clear();
+                var ThingsIQueryable = from Thing in db.Things where (Thing.Done == false && Thing.Remind == true && Thing.RemindTime > nowTime) select Thing;
+
+                foreach (var thing in ThingsIQueryable)
                 {
-                    RemindView remindView = new RemindView();
-                    remindView.Show();
-                    _eventAggregator.GetEvent<RemindViewTransmit>().Publish(thing);
+                    timeSpan = thing.RemindTime - nowTime;
+
+                    Timer timer = new Timer(timeSpan.TotalSeconds * 1000);
+                    timer.Elapsed += (sender, e) => Timer_Elapsed(thing);
+                    timer.AutoReset = false;
+                    timer.Enabled = true;
+                    Timers.Add(timer);
                 }
             }
+            catch (Exception)
+            {
+                throw;
+            }
         }
+
+        private void Timer_Elapsed(Thing thing)
+        {
+            try
+            {
+                //由于Timer另外开启线程，使用下列代码
+                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (Action)(() =>
+                {
+                    EditView editView = new EditView();
+                    editView.Show();
+                    _eventAggregator.GetEvent<EditViewTransmit>().Publish(thing);
+                }
+                  ));
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
+        }
+
+        #endregion 时间触发
 
         #endregion 内部方法
     }

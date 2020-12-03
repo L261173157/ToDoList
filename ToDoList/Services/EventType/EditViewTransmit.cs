@@ -5,7 +5,7 @@ using Prism.Events;
 using ToDoList.Models;
 namespace ToDoList.Services.EventType
 {
-    class RemindViewTransmit: PubSubEvent<Thing>
+    class EditViewTransmit: PubSubEvent<Thing>
     {
     }
 }
