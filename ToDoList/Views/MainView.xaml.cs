@@ -64,6 +64,7 @@ namespace ToDoList.Views
             {
                 NotifyIcon.IsBlink = true;
                 Thing = thing;
+                NotifyMedia.Play();
             }
             catch (Exception e)
             {
@@ -76,6 +77,20 @@ namespace ToDoList.Views
         private void NotifyIcon_Click(object sender, RoutedEventArgs e)
         {
             this.Activate();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                NotifyMedia.Play();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
     }
 }

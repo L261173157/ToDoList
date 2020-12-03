@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="Resources\Journal.ico" />
+    <None Remove="Resources\notify.wav" />
     <None Remove="Views\S+图标.png" />
   </ItemGroup>
 
@@ -24,6 +25,9 @@
 
   <ItemGroup>
     <Resource Include="Resources\Journal.ico" />
+    <Content Include="Resources\notify.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
