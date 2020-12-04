@@ -9,7 +9,7 @@
          xmlns:hc="https://handyorg.github.io/handycontrol"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        Title="ToDoList" Height="750" Width="430" WindowStyle="SingleBorderWindow" ShowInTaskbar="False" Visibility="{Binding MainViewVisiblity, Mode=TwoWay, UpdateSourceTrigger=Default}" ResizeMode="NoResize">
+        Title="ToDoList" Height="750" Width="430" WindowStyle="SingleBorderWindow" ShowInTaskbar="False" ResizeMode="NoResize">
     
     <Grid>
        

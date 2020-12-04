@@ -66,7 +66,7 @@ namespace ToDoList.Views
                 Thing = thing;
                 NotifyMedia.Play();
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 throw;
             }
