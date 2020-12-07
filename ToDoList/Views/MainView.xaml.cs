@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using ToDoList.Models;
 using ToDoList.Services.EventType;
+using System.Collections.Generic;
 
 namespace ToDoList.Views
 {
@@ -24,14 +25,15 @@ namespace ToDoList.Views
         public MainView(IEventAggregator ea)
         {
             InitializeComponent();
-
+            Things = new List<Thing>();
+            //初始化显示位置
             var desktopWorkingArea = SystemParameters.WorkArea;
             this.Left = desktopWorkingArea.Right - this.Width;
             this.Top = 0;
             //接受提醒通知
             _eventAggregator = ea;
             ea.GetEvent<MainViewNotify>().Subscribe(Notify, ThreadOption.UIThread);
-
+            //.net5 自动生成
             IntPtr pWnd = FindWindow("Progman", null);
             pWnd = FindWindowEx(pWnd, IntPtr.Zero, "SHELLDLL_DefVIew", null);
             pWnd = FindWindowEx(pWnd, IntPtr.Zero, "SysListView32", null);
@@ -42,16 +44,31 @@ namespace ToDoList.Views
 
         private void NotifyIcon_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
-            NotifyIcon.IsBlink = false;
-            EditView editView = new EditView();
-            editView.Show();
-            _eventAggregator.GetEvent<EditViewTransmit>().Publish(Thing);
-            Thing = null;
+            NotifyMedia.Stop();
+            if (Things.Count!=0)
+            {
+                Thing thing = Things[0]; 
+                EditView editView = new EditView();
+                editView.Show();
+                _eventAggregator.GetEvent<EditViewTransmit>().Publish(thing);
+                Things.RemoveAt(0);
+            }
+            else
+            {
+                EditView editView = new EditView();
+                editView.Show();
+                _eventAggregator.GetEvent<EditViewTransmit>().Publish(null);
+            }
+            if (Things.Count==0)
+            {
+                NotifyIcon.IsBlink = false;
+            }
+            
         }
 
         #region 属性定义
 
-        public Thing Thing { get; set; }
+        public List<Thing> Things { get; set; }
         private IEventAggregator _eventAggregator;
 
         #endregion 属性定义
@@ -63,7 +80,8 @@ namespace ToDoList.Views
             try
             {
                 NotifyIcon.IsBlink = true;
-                Thing = thing;
+                Things.Add(thing);
+                
                 NotifyMedia.Play();
             }
             catch (Exception )

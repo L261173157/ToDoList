@@ -120,17 +120,28 @@ namespace ToDoList.ViewModels
                
                 DateTime nowTime = DateTime.Now;
                 Timers.Clear();
-                var ThingsIQueryable = from Thing in db.Things where (Thing.Done == false && Thing.Remind == true && Thing.RemindTime > nowTime) select Thing;
+                var ThingsIQueryable = from Thing in db.Things where (Thing.Done == false && Thing.Remind == true ) select Thing;
 
                 foreach (var thing in ThingsIQueryable)
                 {
                     timeSpan = thing.RemindTime - nowTime;
-
-                    Timer timer = new Timer(timeSpan.TotalSeconds * 1000);
-                    timer.Elapsed += (sender, e) => Timer_Elapsed_Notify(thing);
-                    timer.AutoReset = false;
-                    timer.Enabled = true;
-                    Timers.Add(timer);
+                    if (timeSpan >=TimeSpan.Zero)
+                    {
+                        Timer timer = new Timer(timeSpan.TotalSeconds * 1000);
+                        timer.Elapsed += (sender, e) => Timer_Elapsed_Notify(thing);
+                        timer.AutoReset = false;
+                        timer.Enabled = true;
+                        Timers.Add(timer);
+                    }
+                    else
+                    {
+                        Timer timer = new Timer(2000);
+                        timer.Elapsed += (sender, e) => Timer_Elapsed_Notify(thing);
+                        timer.AutoReset = false;
+                        timer.Enabled = true;
+                        Timers.Add(timer);
+                    }
+                   
                 }
             }
             catch (Exception)
@@ -138,30 +149,6 @@ namespace ToDoList.ViewModels
                 throw;
             }
         }
-        /// <summary>
-        /// 时间触发后方法(去掉)
-        /// </summary>
-        /// <param name="thing"></param>
-        private void Timer_Elapsed(Thing thing)
-        {
-            try
-            {
-                //由于Timer另外开启线程，使用下列代码
-                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (Action)(() =>
-                {
-                    EditView editView = new EditView();
-                    editView.Show();
-                    _eventAggregator.GetEvent<EditViewTransmit>().Publish(thing);
-                }
-                  ));
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            
-        }
-
         private void Timer_Elapsed_Notify(Thing thing)
         {
            //发给mainview通知
