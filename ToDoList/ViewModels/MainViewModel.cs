@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Timers;
-using System.Windows;
 using ToDoList.Db;
 using ToDoList.Models;
 using ToDoList.Services.EventType;
@@ -24,6 +23,7 @@ namespace ToDoList.ViewModels
             Things = new ObservableCollection<Thing>();
             _eventAggregator = ea;
             Refresh();
+            RemindPast();
             // SetTimer();
         }
 
@@ -48,12 +48,6 @@ namespace ToDoList.ViewModels
         /// 主界面数据列表
         /// </summary>
         public ObservableCollection<Thing> Things { get; set; }
-        
-        #region MainView窗体相关属性
-
-      
-        #endregion
-
 
         #endregion 属性定义
 
@@ -83,10 +77,6 @@ namespace ToDoList.ViewModels
         public DelegateCommand RefreshCmd =>
             _RefreshCmd ?? (_RefreshCmd = new DelegateCommand(Refresh));
 
-       
-
-       
-
         #endregion 命令方法
 
         #region 内部方法
@@ -94,7 +84,6 @@ namespace ToDoList.ViewModels
         private void Test()
         {
             Timer_Elapsed_Notify(new Thing() { Content = "test" });
-           
         }
 
         private void Refresh()
@@ -107,25 +96,25 @@ namespace ToDoList.ViewModels
             {
                 Things.Add(item);
             }
-            Remind();
+            RemindFuture();
         }
 
         #region 时间触发
 
-        private void Remind()
+        private void RemindFuture()
         {
             try
             {
                 TimeSpan timeSpan;
-               
+
                 DateTime nowTime = DateTime.Now;
                 Timers.Clear();
-                var ThingsIQueryable = from Thing in db.Things where (Thing.Done == false && Thing.Remind == true ) select Thing;
+                var ThingsIQueryable = from Thing in db.Things where (Thing.Done == false && Thing.Remind == true) select Thing;
 
                 foreach (var thing in ThingsIQueryable)
                 {
                     timeSpan = thing.RemindTime - nowTime;
-                    if (timeSpan >=TimeSpan.Zero)
+                    if (timeSpan >= TimeSpan.Zero)
                     {
                         Timer timer = new Timer(timeSpan.TotalSeconds * 1000);
                         timer.Elapsed += (sender, e) => Timer_Elapsed_Notify(thing);
@@ -133,15 +122,6 @@ namespace ToDoList.ViewModels
                         timer.Enabled = true;
                         Timers.Add(timer);
                     }
-                    else
-                    {
-                        Timer timer = new Timer(2000);
-                        timer.Elapsed += (sender, e) => Timer_Elapsed_Notify(thing);
-                        timer.AutoReset = false;
-                        timer.Enabled = true;
-                        Timers.Add(timer);
-                    }
-                   
                 }
             }
             catch (Exception)
@@ -149,9 +129,39 @@ namespace ToDoList.ViewModels
                 throw;
             }
         }
+        //仅在启动时调用
+        private void RemindPast()
+        {
+            try
+            {
+                TimeSpan timeSpan;
+
+                DateTime nowTime = DateTime.Now;
+                Timers.Clear();
+                var ThingsIQueryable = from Thing in db.Things where (Thing.Done == false && Thing.Remind == true) select Thing;
+
+                foreach (var thing in ThingsIQueryable)
+                {
+                    timeSpan = thing.RemindTime - nowTime;
+                    if (timeSpan < TimeSpan.Zero)
+                    {
+                        Timer timer = new Timer(2000);
+                        timer.Elapsed += (sender, e) => Timer_Elapsed_Notify(thing);
+                        timer.AutoReset = false;
+                        timer.Enabled = true;
+                        Timers.Add(timer);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         private void Timer_Elapsed_Notify(Thing thing)
         {
-           //发给mainview通知
+            //发给mainview通知
             _eventAggregator.GetEvent<MainViewNotify>().Publish(thing);
         }
 
