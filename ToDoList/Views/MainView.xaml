@@ -15,9 +15,9 @@
        
         <hc:NotifyIcon x:Name="NotifyIcon" Text="ToDoList" Icon="/Resources/Journal.ico" MouseDoubleClick="NotifyIcon_MouseDoubleClick" Click="NotifyIcon_Click"/>
         <StackPanel Margin="0,0,85,0">
-            <DataGrid x:Name="ExaDataGrid" Height="735" ItemsSource="{Binding Things}" AutoGenerateColumns="False" Width="320" HorizontalAlignment="Left" GridLinesVisibility="Vertical" MaxColumnWidth="261">
+            <DataGrid x:Name="ExaDataGrid" Height="735" ItemsSource="{Binding Things}" AutoGenerateColumns="False" Width="320" HorizontalAlignment="Left" GridLinesVisibility="Vertical" MaxColumnWidth="261" SelectionMode="Single" >
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Content}" Header="内容" MinWidth="260" CanUserReorder="False" FontSize="20"/>
+                    <DataGridTextColumn Binding="{Binding Content}" Header="内容" MinWidth="260" CanUserReorder="False" FontSize="14" CanUserResize="False"/>
                     <DataGridCheckBoxColumn Binding="{Binding Done}" Header="完成"/>
                 </DataGrid.Columns>
             </DataGrid>
