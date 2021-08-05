@@ -44,7 +44,7 @@ namespace ToDoList.Views
 
         private void NotifyIcon_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
-            NotifyMedia.Stop();
+           // NotifyMedia.Stop();
             if (Things.Count!=0)
             {
                 Thing thing = Things[0]; 
@@ -82,7 +82,7 @@ namespace ToDoList.Views
                 NotifyIcon.IsBlink = true;
                 Things.Add(thing);
                 
-                NotifyMedia.Play();
+               // NotifyMedia.Play();
             }
             catch (Exception )
             {
@@ -101,7 +101,7 @@ namespace ToDoList.Views
         {
             try
             {
-                NotifyMedia.Play();
+               // NotifyMedia.Play();
             }
             catch (Exception)
             {

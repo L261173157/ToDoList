@@ -9,6 +9,6 @@ namespace ToDoList.Db
         public DbSet<Thing> Things { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
-            optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["ToDoListDb"].ConnectionString);
+            optionsBuilder.UseSqlite("Data Source=todolist.db");
     }
 }

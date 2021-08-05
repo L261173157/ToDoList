@@ -11,11 +11,14 @@ namespace ToDoList.Migrations
                 name: "Things",
                 columns: table => new
                 {
-                    ThingId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Content = table.Column<string>(nullable: false),
-                    DateTime = table.Column<DateTime>(nullable: false),
-                    Done = table.Column<bool>(nullable: false)
+                    ThingId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Content = table.Column<string>(type: "TEXT", nullable: true),
+                    Done = table.Column<bool>(type: "INTEGER", nullable: false),
+                    CreatTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    FinishedTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Remind = table.Column<bool>(type: "INTEGER", nullable: false),
+                    RemindTime = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

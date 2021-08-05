@@ -10,6 +10,8 @@ using ToDoList.Db;
 using ToDoList.Models;
 using ToDoList.Services.EventType;
 using ToDoList.Views;
+using ToDoList.Services;
+using System.Threading.Tasks;
 
 namespace ToDoList.ViewModels
 {
@@ -24,10 +26,27 @@ namespace ToDoList.ViewModels
             _eventAggregator = ea;
             Refresh();
             RemindPast();
+            WeatherQuery();
             // SetTimer();
         }
 
         #region 属性定义
+
+        private string translate;
+
+        public string Translate
+        {
+            get { return translate; }
+            set { SetProperty(ref translate, value); }
+        }
+
+        private string weather;
+
+        public string Weather
+        {
+            get { return weather; }
+            set { SetProperty(ref weather, value); }
+        }
 
         /// <summary>
         /// 提醒功能时间间隔组
@@ -81,13 +100,29 @@ namespace ToDoList.ViewModels
 
         #region 内部方法
 
-        private void Test()
+       
+        private async void Test()
         {
-            Timer_Elapsed_Notify(new Thing() { Content = "test" });
+            // Timer_Elapsed_Notify(new Thing() { Content = "test" });
+            WeatherQuery();
+            TranslateQuery();
+        }
+        private async void TranslateQuery()
+        {
+            var translateresult =await WebApi.Translate(Translate);
+            Translate +=":"+ translateresult;
+        }
+        /// <summary>
+        /// 天气查询
+        /// </summary>
+        private async void WeatherQuery()
+        {
+            Weather = await WebApi.LocalWeather();
         }
 
         private void Refresh()
         {
+
             db.SaveChanges();
             var ThingsLst = from Thing in db.Things where (Thing.Done == false) select Thing;
 
@@ -129,6 +164,7 @@ namespace ToDoList.ViewModels
                 throw;
             }
         }
+
         //仅在启动时调用
         private void RemindPast()
         {

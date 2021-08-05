@@ -4,34 +4,32 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToDoList"
-       
+
         xmlns:prism="http://prismlibrary.com/"
          xmlns:hc="https://handyorg.github.io/handycontrol"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
         Title="ToDoList" Height="750" Width="430" WindowStyle="SingleBorderWindow" ShowInTaskbar="False" ResizeMode="NoResize">
-    
+
     <Grid>
-       
-        <hc:NotifyIcon x:Name="NotifyIcon" Text="ToDoList" Icon="/Resources/Journal.ico" MouseDoubleClick="NotifyIcon_MouseDoubleClick" Click="NotifyIcon_Click"/>
-        <StackPanel Margin="0,0,85,0">
-            <DataGrid x:Name="ExaDataGrid" Height="735" ItemsSource="{Binding Things}" AutoGenerateColumns="False" Width="320" HorizontalAlignment="Left" GridLinesVisibility="Vertical" MaxColumnWidth="261" SelectionMode="Single" >
+
+        <hc:NotifyIcon x:Name="NotifyIcon" Text="ToDoList" Icon="/Resources/Journal.ico" MouseDoubleClick="NotifyIcon_MouseDoubleClick" Click="NotifyIcon_Click" />
+        <StackPanel Margin="0,35,85,0">
+            <DataGrid x:Name="ExaDataGrid" Height="684" ItemsSource="{Binding Things}" AutoGenerateColumns="False" Width="320" HorizontalAlignment="Left" GridLinesVisibility="Vertical" MaxColumnWidth="261" SelectionMode="Single">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Content}" Header="内容" MinWidth="260" CanUserReorder="False" FontSize="14" CanUserResize="False"/>
-                    <DataGridCheckBoxColumn Binding="{Binding Done}" Header="完成"/>
+                    <DataGridTextColumn Binding="{Binding Content}" Header="内容" MinWidth="260" CanUserReorder="False" FontSize="14" CanUserResize="False" />
+                    <DataGridCheckBoxColumn Binding="{Binding Done}" Header="完成" />
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
-        <StackPanel Margin="350,0,0,0">
-            <Button Content="新建" Command="{Binding NewThingViewCmd}" Height="40"/>
-            <!--<Button Content="test" Command="{Binding TestCmd}"/>-->
-            <Button Content="保存" Command="{Binding RefreshCmd}" Height="40"/>
-            <MediaElement x:Name="NotifyMedia" Height="41" Width="47" Source="Resources\notify.wav" Volume="1"  LoadedBehavior="Manual" UnloadedBehavior="Stop"/>
-            <!--<Button Content="Button" Click="Button_Click"/>-->
+        <StackPanel Margin="350,35
+,0,0">
+            <Button Content="新建" Command="{Binding NewThingViewCmd}" Height="40" />
+            <Button Content="保存" Command="{Binding RefreshCmd}" Height="40" />
+            <Button Content="test" Command="{Binding TestCmd}" />
+            <TextBox TextWrapping="Wrap" Text="{Binding Weather}" Width="77" Height="107" />
+            <TextBox TextWrapping="Wrap" Text="{Binding Translate}" Width="77" Height="107" />
+            <!--<Button Content="Button" Click="Button_Click" />-->
         </StackPanel>
-
     </Grid>
-
-    
-
 </Window>
