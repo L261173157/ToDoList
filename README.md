@@ -4,5 +4,5 @@
 用了Prism，wpf的mvvm框架
 view层用了一些HandyControl里面的控件
 Db连接数据库用的EF
-
+感谢JetBrains提供的开源许可证 https://jb.gg/OpenSource
 
