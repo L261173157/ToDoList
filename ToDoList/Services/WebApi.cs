@@ -63,7 +63,7 @@ namespace ToDoList.Services
                 Weather weather = JsonConvert.DeserializeObject<Weather>(responseBody);
                 if (weather.error_code == 0)
                 {
-                    return weather.result.city + ":" + weather.result.realtime.temperature + "°C," + weather.result.realtime.info;
+                    return weather.result.city + ":" + "\n" + weather.result.realtime.temperature + "°C," + "\n" + weather.result.realtime.info + "\n" + weather.result.future[1].date + ":" + "\n" + weather.result.future[1].temperature + "\n" + weather.result.future[1].weather;
                 }
                 else
                 {
@@ -72,7 +72,7 @@ namespace ToDoList.Services
             }
             catch (Exception)
             {
-                throw;
+                return "查询失败";
             }
         }
 
@@ -152,7 +152,7 @@ namespace ToDoList.Services
                     q = query;
                 }
                 // 原文
-                
+
                 // 源语言
                 string from = "auto";
                 // 目标语言

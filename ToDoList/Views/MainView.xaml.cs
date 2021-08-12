@@ -44,10 +44,10 @@ namespace ToDoList.Views
 
         private void NotifyIcon_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
-           // NotifyMedia.Stop();
-            if (Things.Count!=0)
+            // NotifyMedia.Stop();
+            if (Things.Count != 0)
             {
-                Thing thing = Things[0]; 
+                Thing thing = Things[0];
                 EditView editView = new EditView();
                 editView.Show();
                 _eventAggregator.GetEvent<EditViewTransmit>().Publish(thing);
@@ -59,11 +59,10 @@ namespace ToDoList.Views
                 editView.Show();
                 _eventAggregator.GetEvent<EditViewTransmit>().Publish(null);
             }
-            if (Things.Count==0)
+            if (Things.Count == 0)
             {
                 NotifyIcon.IsBlink = false;
             }
-            
         }
 
         #region 属性定义
@@ -81,10 +80,10 @@ namespace ToDoList.Views
             {
                 NotifyIcon.IsBlink = true;
                 Things.Add(thing);
-                
-               // NotifyMedia.Play();
+
+                // NotifyMedia.Play();
             }
-            catch (Exception )
+            catch (Exception)
             {
                 throw;
             }
@@ -95,20 +94,6 @@ namespace ToDoList.Views
         private void NotifyIcon_Click(object sender, RoutedEventArgs e)
         {
             this.Activate();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-               // NotifyMedia.Play();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            
         }
 
         private void tbTranslate_GotFocus(object sender, RoutedEventArgs e)
