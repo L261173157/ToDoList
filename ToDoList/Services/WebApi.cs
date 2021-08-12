@@ -7,9 +7,16 @@ using System.Net.Http;
 using ToDoList.Services.ClassType;
 using Newtonsoft.Json;
 using System.Web;
+using Serilog;
 
 namespace ToDoList.Services
 {
+    public enum TranslateTarget
+    {
+        zh,
+        en
+    }
+
     public static class WebApi
     {
         private static readonly HttpClient client = new();
@@ -126,16 +133,45 @@ namespace ToDoList.Services
             }
         }
 
-        public static async Task<string> Translate(string query)
+        /// <summary>
+        /// 翻译
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        public static async Task<string> Translate(string query, TranslateTarget target)
         {
+            string to;
             try
             {
+                string q;
+                if (string.IsNullOrEmpty(query))
+                {
+                    return "请输入内容";
+                }
+                else
+                {
+                    q = query;
+                }
                 // 原文
-                string q = query;
+                
                 // 源语言
                 string from = "auto";
                 // 目标语言
-                string to = "zh";
+
+                switch (target)
+                {
+                    case TranslateTarget.zh:
+                        to = "zh";
+                        break;
+
+                    case TranslateTarget.en:
+                        to = "en";
+                        break;
+
+                    default:
+                        to = "zh";
+                        break;
+                }
                 // 改成您的APP ID
                 string appId = "20210730000901668";
                 Random rd = new Random();

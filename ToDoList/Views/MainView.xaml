@@ -14,8 +14,8 @@
     <Grid>
 
         <hc:NotifyIcon x:Name="NotifyIcon" Text="ToDoList" Icon="/Resources/Journal.ico" MouseDoubleClick="NotifyIcon_MouseDoubleClick" Click="NotifyIcon_Click" />
-        <StackPanel Margin="0,35,85,0">
-            <DataGrid x:Name="ExaDataGrid" Height="684" ItemsSource="{Binding Things}" AutoGenerateColumns="False" Width="320" HorizontalAlignment="Left" GridLinesVisibility="Vertical" MaxColumnWidth="261" SelectionMode="Single">
+        <StackPanel Margin="0,35,85,80">
+            <DataGrid x:Name="ExaDataGrid" Height="640" ItemsSource="{Binding Things}" AutoGenerateColumns="False" Width="320" HorizontalAlignment="Left" GridLinesVisibility="Vertical" MaxColumnWidth="261" SelectionMode="Single">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Content}" Header="内容" MinWidth="260" CanUserReorder="False" FontSize="14" CanUserResize="False" />
                     <DataGridCheckBoxColumn Binding="{Binding Done}" Header="完成" />
@@ -28,8 +28,12 @@
             <Button Content="保存" Command="{Binding RefreshCmd}" Height="40" />
             <Button Content="test" Command="{Binding TestCmd}" />
             <TextBox TextWrapping="Wrap" Text="{Binding Weather}" Width="77" Height="107" />
-            <TextBox TextWrapping="Wrap" Text="{Binding Translate}" Width="77" Height="107" />
             <!--<Button Content="Button" Click="Button_Click" />-->
         </StackPanel>
+        <hc:SimplePanel Margin="0,675,0,0">
+            <TextBox x:Name="tbTranslate" TextWrapping="Wrap" Text="{Binding Translate}" Margin="10,0,205,0" GotFocus="tbTranslate_GotFocus" />
+            <Button Content="翻译" Command="{Binding TranslateCmd}" HorizontalAlignment="Left" Margin="341,0,0,0" Height="55" Width="89" />
+            <hc:ComboBox x:Name="comTranslateTarget" HorizontalAlignment="Left" Height="55" VerticalAlignment="Center" Width="106" Margin="230,0,0,0" ItemsSource="{Binding TargetItemsSource}" SelectedItem="{Binding Target}" IsReadOnly="True" SelectedIndex="0"/>
+        </hc:SimplePanel>
     </Grid>
 </Window>

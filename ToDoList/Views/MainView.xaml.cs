@@ -110,5 +110,10 @@ namespace ToDoList.Views
             }
             
         }
+
+        private void tbTranslate_GotFocus(object sender, RoutedEventArgs e)
+        {
+            tbTranslate.Text = "";
+        }
     }
 }

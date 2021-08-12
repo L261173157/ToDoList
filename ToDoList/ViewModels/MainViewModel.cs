@@ -12,6 +12,8 @@ using ToDoList.Services.EventType;
 using ToDoList.Views;
 using ToDoList.Services;
 using System.Threading.Tasks;
+using System.Windows;
+using Serilog;
 
 namespace ToDoList.ViewModels
 {
@@ -27,21 +29,59 @@ namespace ToDoList.ViewModels
             Refresh();
             RemindPast();
             WeatherQuery();
+            TargetItemsSource = new ObservableCollection<string>(Enum.GetNames(typeof(TranslateTarget)));
             // SetTimer();
         }
 
         #region 属性定义
 
+        private bool _isEnabled;
+
+        /// <summary>
+        /// 测试
+        /// </summary>
+        public bool IsEnabled
+        {
+            get { return _isEnabled; }
+            set
+            {
+                SetProperty(ref _isEnabled, value);
+                TranslateCmd.RaiseCanExecuteChanged();
+            }
+        }
+
         private string translate;
 
+        /// <summary>
+        /// 翻译文本框
+        /// </summary>
         public string Translate
         {
             get { return translate; }
             set { SetProperty(ref translate, value); }
         }
 
+        /// <summary>
+        /// 目标语言列表
+        /// </summary>
+        public ObservableCollection<string> TargetItemsSource { get; set; }
+
+        private string target;
+
+        /// <summary>
+        /// 目标语言
+        /// </summary>
+        public string Target
+        {
+            get { return target; }
+            set { SetProperty(ref target, value); }
+        }
+
         private string weather;
 
+        /// <summary>
+        /// 天气文本框
+        /// </summary>
         public string Weather
         {
             get { return weather; }
@@ -70,13 +110,13 @@ namespace ToDoList.ViewModels
 
         #endregion 属性定义
 
-        #region 命令方法
+        #region 命令
 
         private DelegateCommand _newThingCmd;
 
         //弹出新建事务窗体
         public DelegateCommand NewThingViewCmd =>
-            _newThingCmd ?? (_newThingCmd = new DelegateCommand(ExecuteNewThingViewCmd));
+            _newThingCmd ??= new DelegateCommand(ExecuteNewThingViewCmd);
 
         private void ExecuteNewThingViewCmd()
         {
@@ -93,25 +133,56 @@ namespace ToDoList.ViewModels
 
         private DelegateCommand _RefreshCmd;
 
+        //保存命令
         public DelegateCommand RefreshCmd =>
             _RefreshCmd ?? (_RefreshCmd = new DelegateCommand(Refresh));
 
-        #endregion 命令方法
+        private DelegateCommand _translateCmd;
+
+        //翻译命令
+        public DelegateCommand TranslateCmd =>
+            _translateCmd ??= new DelegateCommand(TranslateQuery, CanTranslateQuery);
+
+        #endregion 命令
 
         #region 内部方法
 
-       
         private async void Test()
         {
             // Timer_Elapsed_Notify(new Thing() { Content = "test" });
             WeatherQuery();
             TranslateQuery();
         }
+
+        //检查是否能够执行翻译
+        private bool CanTranslateQuery()
+        {
+            return true;
+           // return !string.IsNullOrEmpty(Translate);
+        }
+
         private async void TranslateQuery()
         {
-            var translateresult =await WebApi.Translate(Translate);
-            Translate +=":"+ translateresult;
+            TranslateTarget target;
+            switch (Target)
+            {
+                case "zh":
+                    target = TranslateTarget.zh;
+                    break;
+
+                case "en":
+                    target = TranslateTarget.en;
+                    break;
+
+                default:
+                    target = TranslateTarget.zh;
+                    break;
+            }
+
+            Translate = await WebApi.Translate(Translate, target);
+            //把文字翻译为目标语言
         }
+
         /// <summary>
         /// 天气查询
         /// </summary>
@@ -122,7 +193,6 @@ namespace ToDoList.ViewModels
 
         private void Refresh()
         {
-
             db.SaveChanges();
             var ThingsLst = from Thing in db.Things where (Thing.Done == false) select Thing;
 
