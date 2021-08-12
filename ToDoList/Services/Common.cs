@@ -10,7 +10,6 @@ namespace ToDoList.Services
 {
     public static class Common
     {
-        
         //MD5转换
         public static string EncryptString(string str)
         {
@@ -29,15 +28,14 @@ namespace ToDoList.Services
             // 返回加密的字符串
             return sb.ToString();
         }
+
         //时间间隔
-        public static void setTimer(int time,ElapsedEventHandler eventHandler)
+        public static void SetTimer(int time, ElapsedEventHandler eventHandler)
         {
-            Timer timer;
-            timer = new Timer(time);
+            var timer = new Timer(time);
             timer.Elapsed += eventHandler;
             timer.AutoReset = true;
             timer.Enabled = true;
-
         }
     }
 }

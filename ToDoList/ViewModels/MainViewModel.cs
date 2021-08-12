@@ -29,7 +29,7 @@ namespace ToDoList.ViewModels
             RemindPast();
             WeatherQuery();
             TargetItemsSource = new ObservableCollection<string>(Enum.GetNames(typeof(TranslateTarget)));
-            Common.setTimer(1800000, ((sender, args) =>WeatherQuery() ));
+            Common.SetTimer(1800000, ((sender, args) =>WeatherQuery() ));
         }
 
         #region 属性定义

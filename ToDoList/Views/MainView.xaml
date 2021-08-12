@@ -22,7 +22,7 @@
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
-        <StackPanel Margin="350,35,0,380">
+        <StackPanel Margin="350,35,0,435">
             <Button Content="新建" Command="{Binding NewThingViewCmd}" Height="40" Width="80" Background="#FFE0E0E0" />
             <Button Content="保存" Command="{Binding RefreshCmd}" Height="40" Width="80" Background="#FFE0E0E0" />
             <Button Content="test" Command="{Binding TestCmd}" Visibility="Hidden" />
