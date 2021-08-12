@@ -63,7 +63,9 @@ namespace ToDoList.Services
                 Weather weather = JsonConvert.DeserializeObject<Weather>(responseBody);
                 if (weather.error_code == 0)
                 {
-                    return weather.result.city + ":" + "\n" + weather.result.realtime.temperature + "°C," + "\n" + weather.result.realtime.info + "\n" + weather.result.future[1].date + ":" + "\n" + weather.result.future[1].temperature + "\n" + weather.result.future[1].weather;
+                    return weather.result.city + ":" + "\n" + weather.result.realtime.temperature + "°C," + "\n" +
+                           weather.result.realtime.info + "\n" + weather.result.future[1].date + ":" + "\n" +
+                           weather.result.future[1].temperature + "\n" + weather.result.future[1].weather;
                 }
                 else
                 {
@@ -171,6 +173,7 @@ namespace ToDoList.Services
                         to = "zh";
                         break;
                 }
+
                 // 改成您的APP ID
                 string appId = "20210730000901668";
                 Random rd = new Random();

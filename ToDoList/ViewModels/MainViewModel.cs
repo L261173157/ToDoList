@@ -29,7 +29,7 @@ namespace ToDoList.ViewModels
             RemindPast();
             WeatherQuery();
             TargetItemsSource = new ObservableCollection<string>(Enum.GetNames(typeof(TranslateTarget)));
-            Common.SetTimer(1800000, ((sender, args) =>WeatherQuery() ));
+            Common.SetTimer(1800000, ((sender, args) => WeatherQuery()));
         }
 
         #region 属性定义
@@ -185,6 +185,7 @@ namespace ToDoList.ViewModels
             {
                 Things.Add(item);
             }
+
             RemindFuture();
         }
 
@@ -198,7 +199,9 @@ namespace ToDoList.ViewModels
 
                 DateTime nowTime = DateTime.Now;
                 Timers.Clear();
-                var ThingsIQueryable = from Thing in db.Things where (Thing.Done == false && Thing.Remind == true) select Thing;
+                var ThingsIQueryable = from Thing in db.Things
+                    where (Thing.Done == false && Thing.Remind == true)
+                    select Thing;
 
                 foreach (var thing in ThingsIQueryable)
                 {
@@ -228,7 +231,9 @@ namespace ToDoList.ViewModels
 
                 DateTime nowTime = DateTime.Now;
                 Timers.Clear();
-                var ThingsIQueryable = from Thing in db.Things where (Thing.Done == false && Thing.Remind == true) select Thing;
+                var ThingsIQueryable = from Thing in db.Things
+                    where (Thing.Done == false && Thing.Remind == true)
+                    select Thing;
 
                 foreach (var thing in ThingsIQueryable)
                 {
