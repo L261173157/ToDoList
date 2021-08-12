@@ -9,7 +9,7 @@
          xmlns:hc="https://handyorg.github.io/handycontrol"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        Title="ToDoList" Height="750" Width="430" WindowStyle="SingleBorderWindow" ShowInTaskbar="False" ResizeMode="NoResize">
+        Title="ToDoList" Height="800" Width="450" WindowStyle="SingleBorderWindow" ShowInTaskbar="False" ResizeMode="NoResize">
 
     <Grid>
 
@@ -23,20 +23,20 @@
             </DataGrid>
         </StackPanel>
         <StackPanel Margin="350,35,0,380">
-            <Button Content="新建" Command="{Binding NewThingViewCmd}" Height="40" Width="80" />
-            <Button Content="保存" Command="{Binding RefreshCmd}" Height="40" Width="80" />
+            <Button Content="新建" Command="{Binding NewThingViewCmd}" Height="40" Width="80" Background="#FFE0E0E0" />
+            <Button Content="保存" Command="{Binding RefreshCmd}" Height="40" Width="80" Background="#FFE0E0E0" />
             <Button Content="test" Command="{Binding TestCmd}" Visibility="Hidden" />
             <!--<Button Content="Button" Click="Button_Click" />-->
         </StackPanel>
         <hc:SimplePanel Margin="0,670,0,0">
-            <TextBox x:Name="tbTranslate" TextWrapping="Wrap" Text="{Binding Translate}" Margin="10,10,205,10" GotFocus="tbTranslate_GotFocus" />
-            <Button Content="翻译" Command="{Binding TranslateCmd}" HorizontalAlignment="Left" Margin="341,0,0,0" Height="45" Width="89" />
-            <hc:ComboBox x:Name="comTranslateTarget" HorizontalAlignment="Left" Height="45" VerticalAlignment="Center" Width="106" Margin="230,0,0,0" ItemsSource="{Binding TargetItemsSource}" SelectedItem="{Binding Target}" IsReadOnly="True" SelectedIndex="0"/>
+            <TextBox x:Name="tbTranslate" TextWrapping="Wrap" Text="{Binding Translate}" Margin="15,0,200,58" GotFocus="tbTranslate_GotFocus" />
+            <Button Content="翻译" Command="{Binding TranslateCmd}" HorizontalAlignment="Left" Margin="361,0,0,0" Height="45" Width="79" VerticalAlignment="Top" Background="#FFE0E0E0" />
+            <hc:ComboBox x:Name="comTranslateTarget" HorizontalAlignment="Left" Height="57" VerticalAlignment="Top" Width="106" Margin="250,0,0,0" ItemsSource="{Binding TargetItemsSource}" SelectedItem="{Binding Target}" IsReadOnly="True" SelectedIndex="0"/>
         </hc:SimplePanel>
         <hc:SimpleText HorizontalAlignment="Left" Height="100" Margin="500,440,0,0" VerticalAlignment="Top" Width="100"/>
-        <hc:SimplePanel Margin="350,355,0,70">
+        <hc:SimplePanel Margin="350,355,0,120">
             <Label Content="当地天气" Height="50" Width="80" VerticalAlignment="Top"/>
-            <TextBlock HorizontalAlignment="Center" Height="140" Text="{Binding Weather}" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" Margin="0,50,0,0"/>
+            <TextBlock HorizontalAlignment="Center" Height="140" Text="{Binding Weather}" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" Margin="0,50,0,0"/>
         </hc:SimplePanel>
     </Grid>
 </Window>
