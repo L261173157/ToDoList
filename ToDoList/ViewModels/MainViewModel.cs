@@ -13,7 +13,6 @@ using ToDoList.Views;
 using ToDoList.Services;
 using System.Threading.Tasks;
 using System.Windows;
-using Serilog;
 
 namespace ToDoList.ViewModels
 {
@@ -34,21 +33,6 @@ namespace ToDoList.ViewModels
         }
 
         #region 属性定义
-
-        private bool _isEnabled;
-
-        /// <summary>
-        /// 测试
-        /// </summary>
-        public bool IsEnabled
-        {
-            get { return _isEnabled; }
-            set
-            {
-                SetProperty(ref _isEnabled, value);
-                TranslateCmd.RaiseCanExecuteChanged();
-            }
-        }
 
         private string translate;
 
@@ -158,7 +142,7 @@ namespace ToDoList.ViewModels
         private bool CanTranslateQuery()
         {
             return true;
-           // return !string.IsNullOrEmpty(Translate);
+            // return !string.IsNullOrEmpty(Translate);
         }
 
         private async void TranslateQuery()
