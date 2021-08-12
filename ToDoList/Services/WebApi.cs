@@ -7,7 +7,6 @@ using System.Net.Http;
 using ToDoList.Services.ClassType;
 using Newtonsoft.Json;
 using System.Web;
-using Serilog;
 
 namespace ToDoList.Services
 {

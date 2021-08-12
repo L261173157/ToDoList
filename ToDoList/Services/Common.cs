@@ -8,6 +8,7 @@ namespace ToDoList.Services
 {
    public static class Common
     {
+        //MD5转换
         public static string EncryptString(string str)
         {
             MD5 md5 = MD5.Create();
