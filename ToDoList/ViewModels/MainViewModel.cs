@@ -227,20 +227,18 @@ namespace ToDoList.ViewModels
         {
             try
             {
-                TimeSpan timeSpan;
-
                 DateTime nowTime = DateTime.Now;
                 Timers.Clear();
-                var ThingsIQueryable = from Thing in db.Things
+                var thingsIQueryable = from Thing in db.Things
                     where (Thing.Done == false && Thing.Remind == true)
                     select Thing;
 
-                foreach (var thing in ThingsIQueryable)
+                foreach (var thing in thingsIQueryable)
                 {
-                    timeSpan = thing.RemindTime - nowTime;
+                    var timeSpan = thing.RemindTime - nowTime;
                     if (timeSpan < TimeSpan.Zero)
                     {
-                        Timer timer = new Timer(2000);
+                        var timer = new Timer(2000);
                         timer.Elapsed += (sender, e) => Timer_Elapsed_Notify(thing);
                         timer.AutoReset = false;
                         timer.Enabled = true;
