@@ -34,6 +34,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Component\Component.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="todolist.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

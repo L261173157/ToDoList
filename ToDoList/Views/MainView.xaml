@@ -9,12 +9,12 @@
          xmlns:hc="https://handyorg.github.io/handycontrol"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        Title="ToDoList" Height="800" Width="450" WindowStyle="SingleBorderWindow" ShowInTaskbar="False" ResizeMode="NoResize">
+        Title="ToDoList" Height="800" Width="450" WindowStyle="SingleBorderWindow" ShowInTaskbar="False" ResizeMode="NoResize" Loaded="Window_Loaded">
 
     <Grid>
 
         <hc:NotifyIcon x:Name="NotifyIcon" Text="ToDoList" Icon="/Resources/Journal.ico" MouseDoubleClick="NotifyIcon_MouseDoubleClick" Click="NotifyIcon_Click" />
-        <StackPanel Margin="0,35,85,80">
+        <StackPanel Margin="0,0,85,225">
             <DataGrid x:Name="ExaDataGrid" Height="615" ItemsSource="{Binding Things}" AutoGenerateColumns="False" Width="320" HorizontalAlignment="Left" GridLinesVisibility="Vertical" MaxColumnWidth="261" SelectionMode="Single">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Content}" Header="内容" MinWidth="260" CanUserReorder="False" FontSize="14" CanUserResize="False" />
@@ -28,15 +28,13 @@
             <Button Content="test" Command="{Binding TestCmd}" Visibility="Hidden" />
             <!--<Button Content="Button" Click="Button_Click" />-->
         </StackPanel>
-        <hc:SimplePanel Margin="0,670,0,0">
-            <TextBox x:Name="tbTranslate" TextWrapping="Wrap" Text="{Binding Translate}" Margin="15,0,200,58" GotFocus="tbTranslate_GotFocus" />
-            <Button Content="翻译" Command="{Binding TranslateCmd}" HorizontalAlignment="Left" Margin="361,0,0,0" Height="45" Width="79" VerticalAlignment="Top" Background="#FFE0E0E0" />
-            <hc:ComboBox x:Name="comTranslateTarget" HorizontalAlignment="Left" Height="57" VerticalAlignment="Top" Width="106" Margin="250,0,0,0" ItemsSource="{Binding TargetItemsSource}" SelectedItem="{Binding Target}" IsReadOnly="True" SelectedIndex="0"/>
+        <hc:SimplePanel Margin="350,355,0,224">
+            <Label Content="当地天气" Height="50" Width="80" VerticalAlignment="Top" />
+            <TextBlock HorizontalAlignment="Center" Height="140" Text="{Binding Weather}" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" Margin="0,50,0,0" />
         </hc:SimplePanel>
-        <hc:SimpleText HorizontalAlignment="Left" Height="100" Margin="500,440,0,0" VerticalAlignment="Top" Width="100"/>
-        <hc:SimplePanel Margin="350,355,0,120">
-            <Label Content="当地天气" Height="50" Width="80" VerticalAlignment="Top"/>
-            <TextBlock HorizontalAlignment="Center" Height="140" Text="{Binding Weather}" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" Margin="0,50,0,0"/>
-        </hc:SimplePanel>
+
+        <Grid Margin="0,600,0,0">
+            <ContentControl prism:RegionManager.RegionName="ComponentRegion" />
+        </Grid>
     </Grid>
 </Window>

@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using Prism.DryIoc;
 using Prism.Ioc;
-
+using Prism.Modularity;
 using ToDoList;
 using Prism.Regions;
 using ToDoList.Views;
 using ToDoList.Services;
+using Component;
 
 namespace ToDoList
 {
@@ -31,6 +32,13 @@ namespace ToDoList
         {
           //  containerRegistry.Register<IEventAggregator,EventAggregator>();
         }
+
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        {
+            base.ConfigureModuleCatalog(moduleCatalog);
+            moduleCatalog.AddModule<ComponentModule>();
+        }
+
         #endregion
 
     }

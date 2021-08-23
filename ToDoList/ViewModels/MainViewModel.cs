@@ -28,38 +28,11 @@ namespace ToDoList.ViewModels
             Refresh();
             RemindPast();
             WeatherQuery();
-            TargetItemsSource = new ObservableCollection<string>(Enum.GetNames(typeof(TranslateTarget)));
+
             Common.SetTimer(1800000, ((sender, args) => WeatherQuery()));
         }
 
         #region 属性定义
-
-        private string translate;
-
-        /// <summary>
-        /// 翻译文本框
-        /// </summary>
-        public string Translate
-        {
-            get { return translate; }
-            set { SetProperty(ref translate, value); }
-        }
-
-        /// <summary>
-        /// 目标语言列表
-        /// </summary>
-        public ObservableCollection<string> TargetItemsSource { get; set; }
-
-        private string target;
-
-        /// <summary>
-        /// 目标语言
-        /// </summary>
-        public string Target
-        {
-            get { return target; }
-            set { SetProperty(ref target, value); }
-        }
 
         private string weather;
 
@@ -121,12 +94,6 @@ namespace ToDoList.ViewModels
         public DelegateCommand RefreshCmd =>
             _RefreshCmd ?? (_RefreshCmd = new DelegateCommand(Refresh));
 
-        private DelegateCommand _translateCmd;
-
-        //翻译命令
-        public DelegateCommand TranslateCmd =>
-            _translateCmd ??= new DelegateCommand(TranslateQuery, CanTranslateQuery);
-
         #endregion 命令
 
         #region 内部方法
@@ -135,37 +102,9 @@ namespace ToDoList.ViewModels
         {
             // Timer_Elapsed_Notify(new Thing() { Content = "test" });
             WeatherQuery();
-            TranslateQuery();
         }
 
         //检查是否能够执行翻译
-        private bool CanTranslateQuery()
-        {
-            return true;
-            // return !string.IsNullOrEmpty(Translate);
-        }
-
-        private async void TranslateQuery()
-        {
-            TranslateTarget target;
-            switch (Target)
-            {
-                case "zh":
-                    target = TranslateTarget.zh;
-                    break;
-
-                case "en":
-                    target = TranslateTarget.en;
-                    break;
-
-                default:
-                    target = TranslateTarget.zh;
-                    break;
-            }
-
-            Translate = await WebApi.Translate(Translate, target);
-            //把文字翻译为目标语言
-        }
 
         /// <summary>
         /// 天气查询

@@ -5,6 +5,8 @@ using System.Windows;
 using ToDoList.Models;
 using ToDoList.Services.EventType;
 using System.Collections.Generic;
+using Prism.Ioc;
+using Prism.Regions;
 
 namespace ToDoList.Views
 {
@@ -21,10 +23,13 @@ namespace ToDoList.Views
 
         [DllImport("user32.dll")]
         public static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
-
-        public MainView(IEventAggregator ea)
+        private IRegionManager regionManager;
+        private IContainerExtension container;
+        public MainView(IEventAggregator ea, IRegionManager regionManager, IContainerExtension container)
         {
             InitializeComponent();
+            this.regionManager = regionManager;
+            this.container = container;
             Things = new List<Thing>();
             //初始化显示位置
             var desktopWorkingArea = SystemParameters.WorkArea;
@@ -96,9 +101,11 @@ namespace ToDoList.Views
             this.Activate();
         }
 
-        private void tbTranslate_GotFocus(object sender, RoutedEventArgs e)
+       
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            tbTranslate.Text = "";
+            regionManager.RequestNavigate("ComponentRegion", "TranslateView");
         }
     }
 }

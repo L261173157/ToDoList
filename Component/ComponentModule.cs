@@ -6,16 +6,15 @@ using Prism.Regions;
 
 namespace Component
 {
-    public class ModuleName : IModule
+    public class ComponentModule : IModule
     {
         public void OnInitialized(IContainerProvider containerProvider)
         {
-
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            containerRegistry.RegisterForNavigation(typeof(TranslateView), "TranslateView");
         }
     }
 }
