@@ -15,6 +15,7 @@ namespace Component
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation(typeof(TranslateView), "TranslateView");
+            containerRegistry.RegisterForNavigation(typeof(WeatherView), "WeatherView");
         }
     }
 }

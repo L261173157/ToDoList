@@ -27,24 +27,10 @@ namespace ToDoList.ViewModels
             _eventAggregator = ea;
             Refresh();
             RemindPast();
-            WeatherQuery();
-
-            Common.SetTimer(1800000, ((sender, args) => WeatherQuery()));
         }
 
         #region 属性定义
-
-        private string weather;
-
-        /// <summary>
-        /// 天气文本框
-        /// </summary>
-        public string Weather
-        {
-            get { return weather; }
-            set { SetProperty(ref weather, value); }
-        }
-
+        
         /// <summary>
         /// 提醒功能时间间隔组
         /// </summary>
@@ -101,18 +87,8 @@ namespace ToDoList.ViewModels
         private async void Test()
         {
             // Timer_Elapsed_Notify(new Thing() { Content = "test" });
-            WeatherQuery();
         }
 
-        //检查是否能够执行翻译
-
-        /// <summary>
-        /// 天气查询
-        /// </summary>
-        private async void WeatherQuery()
-        {
-            Weather = await WebApi.LocalWeather();
-        }
 
         private void Refresh()
         {

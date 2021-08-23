@@ -1,0 +1,9 @@
+﻿<UserControl x:Class="Component.Views.WeatherView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True" Width="450" Height="112">
+    <Grid>
+        <TextBlock Text="{Binding Weather}"></TextBlock>
+    </Grid>
+</UserControl>

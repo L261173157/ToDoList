@@ -107,5 +107,15 @@ namespace ToDoList.Views
         {
             regionManager.RequestNavigate("ComponentRegion", "TranslateView");
         }
+
+        private void BtnTranslate_Click(object sender, RoutedEventArgs e)
+        {
+            regionManager.RequestNavigate("ComponentRegion", "TranslateView");
+        }
+
+        private void BtnWeather_Click(object sender, RoutedEventArgs e)
+        {
+            regionManager.RequestNavigate("ComponentRegion", "WeatherView");
+        }
     }
 }
