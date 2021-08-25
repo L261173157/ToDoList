@@ -35,6 +35,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Component\Component.csproj" />
+    <ProjectReference Include="..\DoList\DoList.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,7 +45,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Db\" />
+    <Folder Include="Migrations\" />
+    <Folder Include="Models\" />
     <Folder Include="Services\ClassType\" />
+    <Folder Include="Services\EventType\" />
   </ItemGroup>
 
 </Project>

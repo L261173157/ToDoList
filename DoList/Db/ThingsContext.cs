@@ -1,8 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Configuration;
-using ToDoList.Models;
+﻿using DoList.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace ToDoList.Db
+namespace DoList.Db
 {
     public class ThingsContext : DbContext
     {

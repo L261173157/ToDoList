@@ -1,7 +1,7 @@
-﻿using Prism.Mvvm;
-using System;
+﻿using System;
+using Prism.Mvvm;
 
-namespace ToDoList.Models
+namespace DoList.Models
 {
     public class Thing : BindableBase
     {

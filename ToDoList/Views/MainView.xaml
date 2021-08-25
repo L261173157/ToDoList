@@ -13,26 +13,12 @@
 
     <Grid>
 
-        <hc:NotifyIcon x:Name="NotifyIcon" Text="ToDoList" Icon="/Resources/Journal.ico" MouseDoubleClick="NotifyIcon_MouseDoubleClick" Click="NotifyIcon_Click" />
-        <StackPanel Margin="0,0,85,225">
-            <DataGrid x:Name="ExaDataGrid" Height="615" ItemsSource="{Binding Things}" AutoGenerateColumns="False" Width="320" HorizontalAlignment="Left" GridLinesVisibility="Vertical" MaxColumnWidth="261" SelectionMode="Single">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Content}" Header="内容" MinWidth="260" CanUserReorder="False" FontSize="14" CanUserResize="False" />
-                    <DataGridCheckBoxColumn Binding="{Binding Done}" Header="完成" />
-                </DataGrid.Columns>
-            </DataGrid>
-        </StackPanel>
-        <StackPanel Margin="350,35,0,435">
-            <Button Content="新建" Command="{Binding NewThingViewCmd}" Height="40" Width="80" Background="#FFE0E0E0" />
-            <Button Content="保存" Command="{Binding RefreshCmd}" Height="40" Width="80" Background="#FFE0E0E0" />
-            <Button Content="test" Command="{Binding TestCmd}" Visibility="Hidden" />
-            <!--<Button Content="Button" Click="Button_Click" />-->
-        </StackPanel>
-        
+        <!--<hc:NotifyIcon x:Name="NotifyIcon" Text="ToDoList" Icon="/Resources/Journal.ico"  Click="NotifyIcon_Click" />-->
+        <ContentControl prism:RegionManager.RegionName="ToDoListRegion"></ContentControl>
 
         <Grid Margin="0,600,0,0">
             <ContentControl prism:RegionManager.RegionName="ComponentRegion" Margin="0,40,0,0" />
-            <Button x:Name="BtnTranslate" Content="翻译" HorizontalAlignment="Left" VerticalAlignment="Top" Click="BtnTranslate_Click"/>
+            <Button x:Name="BtnTranslate" Content="翻译" HorizontalAlignment="Left" VerticalAlignment="Top" Click="BtnTranslate_Click" />
             <Button x:Name="BtnWeather" Content="天气" HorizontalAlignment="Left" VerticalAlignment="Top" Click="BtnWeather_Click" Margin="50,0,0,0" />
         </Grid>
     </Grid>

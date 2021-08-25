@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace ToDoList.Views
+namespace DoList.Views
 {
     /// <summary>
     /// Interaction logic for PrismWindow1.xaml

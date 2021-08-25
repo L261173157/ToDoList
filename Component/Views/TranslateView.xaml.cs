@@ -24,5 +24,10 @@ namespace Component.Views
         {
             InitializeComponent();
         }
+
+        private void TbTranslate_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TbTranslate.Text = string.Empty;
+        }
     }
 }

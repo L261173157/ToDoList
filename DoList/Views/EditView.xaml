@@ -1,4 +1,4 @@
-﻿<Window x:Class="ToDoList.Views.EditView"
+﻿<Window x:Class="DoList.Views.EditView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"

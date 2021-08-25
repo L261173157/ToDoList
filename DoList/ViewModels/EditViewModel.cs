@@ -1,13 +1,13 @@
-﻿using Prism.Commands;
+﻿using System;
+using System.Linq;
+using DoList.Db;
+using DoList.Models;
+using DoList.Services.EventType;
+using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
-using System;
-using System.Linq;
-using ToDoList.Db;
-using ToDoList.Models;
-using ToDoList.Services.EventType;
 
-namespace ToDoList.ViewModels
+namespace DoList.ViewModels
 {
     public class EditViewModel : BindableBase
     {
@@ -112,7 +112,11 @@ namespace ToDoList.ViewModels
             {
                 if (ThingId == 0)
                 {
-                    db.Things.Add(new Models.Thing { Content = this.Content, CreatTime = DateTime.Now, Remind = this.Remind, RemindTime = this.RemindTime });
+                    db.Things.Add(new Thing
+                    {
+                        Content = this.Content, CreatTime = DateTime.Now, Remind = this.Remind,
+                        RemindTime = this.RemindTime
+                    });
                 }
                 else
                 {
@@ -122,8 +126,10 @@ namespace ToDoList.ViewModels
                     thingNeedChang.Remind = this.Remind;
                     thingNeedChang.RemindTime = this.RemindTime;
                 }
+
                 db.SaveChanges();
             }
+
             _eventAggregator.GetEvent<MainViewRefresh>().Publish();
         }
 

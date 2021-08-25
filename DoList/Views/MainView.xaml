@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="DoList.Views.MainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:DoList.Views"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="450"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             prism:ViewModelLocator.AutoWireViewModel="True" Width="450" Height="600" >
+    <Grid Width="450" Height="600">
+        <hc:NotifyIcon x:Name="NotifyIcon" Text="ToDoList"  MouseDoubleClick="NotifyIcon_MouseDoubleClick" />
+        <StackPanel Margin="0,0,0,225" Height="600">
+            <DataGrid x:Name="ExaDataGrid" ItemsSource="{Binding Things}" AutoGenerateColumns="False" Width="350" HorizontalAlignment="Left" GridLinesVisibility="Vertical" MaxColumnWidth="261" SelectionMode="Single">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Content}" Header="内容" MinWidth="260" CanUserReorder="False" FontSize="14" CanUserResize="False" />
+                    <DataGridCheckBoxColumn Binding="{Binding Done}" Header="完成" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+
+        <Button Content="新建" Command="{Binding NewThingViewCmd}" Height="40" Width="80" Background="#FFE0E0E0" Margin="350,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" />
+        <Button Content="保存" Command="{Binding RefreshCmd}" Height="40" Width="80" Background="#FFE0E0E0" HorizontalAlignment="Right" Margin="0,45,0,0" VerticalAlignment="Top" />
+        <Button Content="test" Command="{Binding TestCmd}" Visibility="Hidden" />
+
+    </Grid>
+</UserControl>

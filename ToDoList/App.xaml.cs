@@ -10,9 +10,10 @@ using Prism.Ioc;
 using Prism.Modularity;
 using ToDoList;
 using Prism.Regions;
-using ToDoList.Views;
-using ToDoList.Services;
+
 using Component;
+using DoList;
+using ToDoList.Views;
 
 namespace ToDoList
 {
@@ -37,6 +38,7 @@ namespace ToDoList
         {
             base.ConfigureModuleCatalog(moduleCatalog);
             moduleCatalog.AddModule<ComponentModule>();
+            moduleCatalog.AddModule<DoListModule>();
         }
 
         #endregion
