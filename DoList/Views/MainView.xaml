@@ -8,11 +8,11 @@
              d:DesignHeight="600" d:DesignWidth="450"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:hc="https://handyorg.github.io/handycontrol"
-             prism:ViewModelLocator.AutoWireViewModel="True" Width="450" Height="600" >
+             prism:ViewModelLocator.AutoWireViewModel="True" Width="450" Height="600" Loaded="UserControl_Loaded" >
     <Grid Width="450" Height="600">
         <hc:NotifyIcon x:Name="NotifyIcon" Text="ToDoList"  MouseDoubleClick="NotifyIcon_MouseDoubleClick" />
-        <StackPanel Margin="0,0,0,225" Height="600">
-            <DataGrid x:Name="ExaDataGrid" ItemsSource="{Binding Things}" AutoGenerateColumns="False" Width="350" HorizontalAlignment="Left" GridLinesVisibility="Vertical" MaxColumnWidth="261" SelectionMode="Single">
+        <StackPanel Margin="0,0,0,225" Height="600" Width="350" HorizontalAlignment="Left">
+            <DataGrid x:Name="ExaDataGrid" ItemsSource="{Binding Things}" AutoGenerateColumns="False" HorizontalAlignment="Left" GridLinesVisibility="Vertical" MaxColumnWidth="261" SelectionMode="Single" HeadersVisibility="None" Width="350">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Content}" Header="内容" MinWidth="260" CanUserReorder="False" FontSize="14" CanUserResize="False" />
                     <DataGridCheckBoxColumn Binding="{Binding Done}" Header="完成" />
@@ -21,8 +21,10 @@
         </StackPanel>
 
         <Button Content="新建" Command="{Binding NewThingViewCmd}" Height="40" Width="80" Background="#FFE0E0E0" Margin="350,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" />
-        <Button Content="保存" Command="{Binding RefreshCmd}" Height="40" Width="80" Background="#FFE0E0E0" HorizontalAlignment="Right" Margin="0,45,0,0" VerticalAlignment="Top" />
-        <Button Content="test" Command="{Binding TestCmd}" Visibility="Hidden" />
+        <Button Content="保存" Command="{Binding SaveCmd}" Height="40" Width="80" Background="#FFE0E0E0" HorizontalAlignment="Right" Margin="0,45,0,0" VerticalAlignment="Top" />
+       
+        <!--<Button Content="test" Command="{Binding TestCmd}" Visibility="Hidden" />-->
+        <Button x:Name="btnShowDone" Content="已完成" Command="{Binding ShowDoneCmd}" Height="40" Width="80" Background="#FFE0E0E0" HorizontalAlignment="Right" Margin="0,90,0,0" VerticalAlignment="Top" Click="btnShowDone_Click" CommandParameter="{Binding Content, ElementName=btnShowDone}" />
 
     </Grid>
 </UserControl>

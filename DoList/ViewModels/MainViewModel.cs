@@ -13,7 +13,6 @@ using DoList.Services.EventType;
 using DoList.Views;
 using Prism.Events;
 
-
 namespace DoList.ViewModels
 {
     public class MainViewModel : BindableBase
@@ -44,14 +43,14 @@ namespace DoList.ViewModels
         /// <summary>
         /// 数据库
         /// </summary>
-        private readonly ThingsContext db = new ThingsContext();
+        private readonly ThingsContext db = new();
 
         /// <summary>
         /// 主界面数据列表
         /// </summary>
         public ObservableCollection<Thing> Things { get; set; }
 
-        #endregion
+        #endregion 属性定义
 
         #region 命令
 
@@ -69,34 +68,70 @@ namespace DoList.ViewModels
             _eventAggregator.GetEvent<EditViewTransmit>().Publish(null);
         }
 
-        private DelegateCommand _testCmd;
-
-        public DelegateCommand TestCmd =>
-            _testCmd ?? (_testCmd = new DelegateCommand(Test));
-
-        private DelegateCommand _RefreshCmd;
+        private DelegateCommand _SaveCmd;
 
         //保存命令
-        public DelegateCommand RefreshCmd =>
-            _RefreshCmd ?? (_RefreshCmd = new DelegateCommand(Refresh));
+        public DelegateCommand SaveCmd =>
+            _SaveCmd ?? (_SaveCmd = new DelegateCommand(ExecuteSaveCmd));
+
+        private void ExecuteSaveCmd()
+        {
+            db.SaveChanges();
+        }
+
+        private DelegateCommand<string> _ShowDoneCmd;
+
+        public DelegateCommand<string> ShowDoneCmd =>
+            _ShowDoneCmd ?? (_ShowDoneCmd = new DelegateCommand<string>(ExecuteShowDoneCmd));
+
+        void ExecuteShowDoneCmd(string nowStatus)
+        {
+            db.SaveChanges();
+            switch (nowStatus)
+            {
+                case "全部":
+                    var thingsLst = from thing in db.Things orderby (thing.Done) select thing;
+                    Things.Clear();
+                    foreach (var item in thingsLst)
+                    {
+                        Things.Add(item);
+                    }
+                    break;
+                case "已完成":
+                    var lst = from thing in db.Things where (thing.Done == false) select thing;
+
+                    Things.Clear();
+                    foreach (var item in lst)
+                    {
+                        Things.Add(item);
+                    }
+                    break;
+                
+            }
+        }
+
+        void ExecuteShowDoneCmd()
+        {
+            db.SaveChanges();
+            var thingsLst = from thing in db.Things orderby (thing.Done) select thing;
+            Things.Clear();
+            foreach (var item in thingsLst)
+            {
+                Things.Add(item);
+            }
+        }
 
         #endregion 命令
 
         #region 内部方法
 
-        private async void Test()
-        {
-            // Timer_Elapsed_Notify(new Thing() { Content = "test" });
-        }
-
-
         private void Refresh()
         {
             db.SaveChanges();
-            var ThingsLst = from Thing in db.Things where (Thing.Done == false) select Thing;
+            var thingsLst = from thing in db.Things where (thing.Done == false) select thing;
 
             Things.Clear();
-            foreach (var item in ThingsLst)
+            foreach (var item in thingsLst)
             {
                 Things.Add(item);
             }
