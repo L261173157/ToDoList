@@ -110,17 +110,6 @@ namespace DoList.ViewModels
             }
         }
 
-        void ExecuteShowDoneCmd()
-        {
-            db.SaveChanges();
-            var thingsLst = from thing in db.Things orderby (thing.Done) select thing;
-            Things.Clear();
-            foreach (var item in thingsLst)
-            {
-                Things.Add(item);
-            }
-        }
-
         #endregion 命令
 
         #region 内部方法

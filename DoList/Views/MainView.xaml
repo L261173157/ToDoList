@@ -22,9 +22,7 @@
 
         <Button Content="新建" Command="{Binding NewThingViewCmd}" Height="40" Width="80" Background="#FFE0E0E0" Margin="350,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" />
         <Button Content="保存" Command="{Binding SaveCmd}" Height="40" Width="80" Background="#FFE0E0E0" HorizontalAlignment="Right" Margin="0,45,0,0" VerticalAlignment="Top" />
-       
-        <!--<Button Content="test" Command="{Binding TestCmd}" Visibility="Hidden" />-->
-        <Button x:Name="btnShowDone" Content="已完成" Command="{Binding ShowDoneCmd}" Height="40" Width="80" Background="#FFE0E0E0" HorizontalAlignment="Right" Margin="0,90,0,0" VerticalAlignment="Top" Click="btnShowDone_Click" CommandParameter="{Binding Content, ElementName=btnShowDone}" />
+        <Button x:Name="BtnShowDone" Content="已完成" Command="{Binding ShowDoneCmd}" Height="40" Width="80" Background="#FFE0E0E0" HorizontalAlignment="Right" Margin="0,90,0,0" VerticalAlignment="Top" Click="btnShowDone_Click" CommandParameter="{Binding Content, ElementName=BtnShowDone}" />
 
     </Grid>
 </UserControl>
