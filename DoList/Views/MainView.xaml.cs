@@ -91,25 +91,11 @@ namespace DoList.Views
 
         #endregion 方法
 
-        private void btnShowDone_Click(object sender, RoutedEventArgs e)
-        {
-            switch (BtnShowDone.Content)
-            {
-                case "已完成":
-                    BtnShowDone.Content = "全部";
-                    break;
-                case "全部":
-                    BtnShowDone.Content = "已完成";
-                    break;
-                default:
-                    BtnShowDone.Content = "已完成";
-                    break;
-            }
-        }
+        
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            BtnShowDone.Content = "已完成";
+            
         }
     }
 }

@@ -26,6 +26,8 @@ namespace DoList.ViewModels
             _eventAggregator = ea;
             Refresh();
             RemindPast();
+
+            NowStatus = "未完成";
         }
 
         #region 属性定义
@@ -49,6 +51,14 @@ namespace DoList.ViewModels
         /// 主界面数据列表
         /// </summary>
         public ObservableCollection<Thing> Things { get; set; }
+
+        private string _nowStatus;
+
+        public string NowStatus
+        {
+            get { return _nowStatus; }
+            set { SetProperty(ref _nowStatus, value); }
+        }
 
         #endregion 属性定义
 
@@ -76,18 +86,42 @@ namespace DoList.ViewModels
 
         private void ExecuteSaveCmd()
         {
-            db.SaveChanges();
+            Refresh();
         }
 
-        private DelegateCommand<string> _ShowDoneCmd;
+        private DelegateCommand _ShowNowStatusCmd;
 
-        public DelegateCommand<string> ShowDoneCmd =>
-            _ShowDoneCmd ?? (_ShowDoneCmd = new DelegateCommand<string>(ExecuteShowDoneCmd));
+        //显示当前状态
+        public DelegateCommand ShowNowStatusCmd =>
+            _ShowNowStatusCmd ?? (_ShowNowStatusCmd = new DelegateCommand(ExecuteShowNowStatusCmd));
 
-        void ExecuteShowDoneCmd(string nowStatus)
+        private void ExecuteShowNowStatusCmd()
+        {
+            
+            switch (NowStatus)
+            {
+                case "全部":
+
+                    NowStatus = "未完成";
+                    break;
+
+                case "未完成":
+
+                    NowStatus = "全部";
+                    break;
+            }
+            Refresh();
+        }
+
+        #endregion 命令
+
+        #region 内部方法
+
+        //刷新
+        private void Refresh()
         {
             db.SaveChanges();
-            switch (nowStatus)
+            switch (NowStatus)
             {
                 case "全部":
                     var thingsLst = from thing in db.Things orderby (thing.Done) select thing;
@@ -96,8 +130,10 @@ namespace DoList.ViewModels
                     {
                         Things.Add(item);
                     }
+
                     break;
-                case "已完成":
+
+                case "未完成":
                     var lst = from thing in db.Things where (thing.Done == false) select thing;
 
                     Things.Clear();
@@ -105,24 +141,8 @@ namespace DoList.ViewModels
                     {
                         Things.Add(item);
                     }
+
                     break;
-                
-            }
-        }
-
-        #endregion 命令
-
-        #region 内部方法
-
-        private void Refresh()
-        {
-            db.SaveChanges();
-            var thingsLst = from thing in db.Things where (thing.Done == false) select thing;
-
-            Things.Clear();
-            foreach (var item in thingsLst)
-            {
-                Things.Add(item);
             }
 
             RemindFuture();
@@ -139,8 +159,8 @@ namespace DoList.ViewModels
                 DateTime nowTime = DateTime.Now;
                 Timers.Clear();
                 var ThingsIQueryable = from Thing in db.Things
-                    where (Thing.Done == false && Thing.Remind == true)
-                    select Thing;
+                                       where (Thing.Done == false && Thing.Remind == true)
+                                       select Thing;
 
                 foreach (var thing in ThingsIQueryable)
                 {
@@ -169,8 +189,8 @@ namespace DoList.ViewModels
                 DateTime nowTime = DateTime.Now;
                 Timers.Clear();
                 var thingsIQueryable = from Thing in db.Things
-                    where (Thing.Done == false && Thing.Remind == true)
-                    select Thing;
+                                       where (Thing.Done == false && Thing.Remind == true)
+                                       select Thing;
 
                 foreach (var thing in thingsIQueryable)
                 {
