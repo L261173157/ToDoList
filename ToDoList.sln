@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Component", "Component\Comp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{00CB88A2-A5FC-4882-A509-5BC70435BD38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoList", "DoList\DoList.csproj", "{689FBA46-DD70-4080-A24F-7C8FF3420037}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoList", "DoList\DoList.csproj", "{689FBA46-DD70-4080-A24F-7C8FF3420037}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{E8B6E6F8-515B-48CD-BE61-8A95136DCC0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{689FBA46-DD70-4080-A24F-7C8FF3420037}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{689FBA46-DD70-4080-A24F-7C8FF3420037}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{689FBA46-DD70-4080-A24F-7C8FF3420037}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8B6E6F8-515B-48CD-BE61-8A95136DCC0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8B6E6F8-515B-48CD-BE61-8A95136DCC0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8B6E6F8-515B-48CD-BE61-8A95136DCC0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8B6E6F8-515B-48CD-BE61-8A95136DCC0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

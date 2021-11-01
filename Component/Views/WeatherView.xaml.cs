@@ -11,5 +11,10 @@ namespace Component.Views
         {
             InitializeComponent();
         }
+
+        private void tbCity_GotFocus(object sender, System.Windows.RoutedEventArgs e)
+        {
+            tbCity.Text = "";
+        }
     }
 }

@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using DoList.Models;
+using Database.Models.DoList;
 using DoList.Services.EventType;
 using Prism.Events;
 using Prism.Ioc;

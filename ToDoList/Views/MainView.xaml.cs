@@ -3,7 +3,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Collections.Generic;
-using DoList.Models;
+
 using DoList.Services.EventType;
 using DoList.Views;
 using Prism.Ioc;

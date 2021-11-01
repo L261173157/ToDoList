@@ -29,7 +29,37 @@ namespace Component.ViewModels
             set { SetProperty(ref weather, value); }
         }
 
-        #endregion
+        private string city;
+
+        //查询城市
+        public string City
+        {
+            get { return city; }
+            set { SetProperty(ref city, value); }
+        }
+
+        #endregion 属性定义
+
+        #region 命令
+
+        private DelegateCommand _queryCmd;
+
+        public DelegateCommand QueryCmd =>
+            _queryCmd ??= new DelegateCommand(ExecuteQuery);
+
+        private async void ExecuteQuery()
+        {
+            if (string.IsNullOrEmpty(City))
+            {
+                Weather = await WebApi.LocalWeather();
+            }
+            else
+            {
+                Weather = await WebApi.Weather(City);
+            }
+        }
+
+        #endregion 命令
 
         #region 内部方法
 
@@ -38,6 +68,6 @@ namespace Component.ViewModels
             Weather = await WebApi.LocalWeather();
         }
 
-        #endregion
+        #endregion 内部方法
     }
 }

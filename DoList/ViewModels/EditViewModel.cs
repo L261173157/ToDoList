@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using DoList.Db;
-using DoList.Models;
+using Database.Db;
+using Database.Models.DoList;
 using DoList.Services.EventType;
 using Prism.Commands;
 using Prism.Events;
@@ -108,7 +108,7 @@ namespace DoList.ViewModels
 
         private void ExecuteSaveCmd()
         {
-            using (var db = new ThingsContext())
+            using (var db = new Context())
             {
                 if (ThingId == 0)
                 {

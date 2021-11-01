@@ -7,8 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
-using DoList.Db;
-using DoList.Models;
+using Database.Models.DoList;
+using Database.Db;
+
 using DoList.Services.EventType;
 using DoList.Views;
 using Prism.Events;
@@ -35,7 +36,7 @@ namespace DoList.ViewModels
         /// <summary>
         /// 提醒功能时间间隔组
         /// </summary>
-        private List<Timer> Timers = new List<Timer>();
+        private List<Timer> _timers = new List<Timer>();
 
         /// <summary>
         /// 事件聚合器
@@ -45,7 +46,7 @@ namespace DoList.ViewModels
         /// <summary>
         /// 数据库
         /// </summary>
-        private readonly ThingsContext db = new();
+        private readonly Context _db = new();
 
         /// <summary>
         /// 主界面数据列表
@@ -78,22 +79,23 @@ namespace DoList.ViewModels
             _eventAggregator.GetEvent<EditViewTransmit>().Publish(null);
         }
 
-        private DelegateCommand _SaveCmd;
+        private DelegateCommand _saveCmd;
 
         //保存命令
         public DelegateCommand SaveCmd =>
-            _SaveCmd ?? (_SaveCmd = new DelegateCommand(ExecuteSaveCmd));
+            _saveCmd ??= new DelegateCommand(ExecuteSaveCmd);
 
+        
         private void ExecuteSaveCmd()
         {
             Refresh();
         }
 
-        private DelegateCommand _ShowNowStatusCmd;
+        private DelegateCommand _showNowStatusCmd;
 
         //显示当前状态
         public DelegateCommand ShowNowStatusCmd =>
-            _ShowNowStatusCmd ?? (_ShowNowStatusCmd = new DelegateCommand(ExecuteShowNowStatusCmd));
+            _showNowStatusCmd ??= new DelegateCommand(ExecuteShowNowStatusCmd);
 
         private void ExecuteShowNowStatusCmd()
         {
@@ -120,11 +122,11 @@ namespace DoList.ViewModels
         //刷新
         private void Refresh()
         {
-            db.SaveChanges();
+            _db.SaveChanges();
             switch (NowStatus)
             {
                 case "全部":
-                    var thingsLst = from thing in db.Things orderby (thing.Done) select thing;
+                    var thingsLst = from thing in _db.Things orderby (thing.Done) select thing;
                     Things.Clear();
                     foreach (var item in thingsLst)
                     {
@@ -134,7 +136,7 @@ namespace DoList.ViewModels
                     break;
 
                 case "未完成":
-                    var lst = from thing in db.Things where (thing.Done == false) select thing;
+                    var lst = from thing in _db.Things where (thing.Done == false) select thing;
 
                     Things.Clear();
                     foreach (var item in lst)
@@ -157,12 +159,12 @@ namespace DoList.ViewModels
                 TimeSpan timeSpan;
 
                 DateTime nowTime = DateTime.Now;
-                Timers.Clear();
-                var ThingsIQueryable = from Thing in db.Things
-                                       where (Thing.Done == false && Thing.Remind == true)
-                                       select Thing;
+                _timers.Clear();
+                var thingsIQueryable = from thing in _db.Things
+                                       where (thing.Done == false && thing.Remind == true)
+                                       select thing;
 
-                foreach (var thing in ThingsIQueryable)
+                foreach (var thing in thingsIQueryable)
                 {
                     timeSpan = thing.RemindTime - nowTime;
                     if (timeSpan >= TimeSpan.Zero)
@@ -171,7 +173,7 @@ namespace DoList.ViewModels
                         timer.Elapsed += (sender, e) => Timer_Elapsed_Notify(thing);
                         timer.AutoReset = false;
                         timer.Enabled = true;
-                        Timers.Add(timer);
+                        _timers.Add(timer);
                     }
                 }
             }
@@ -187,10 +189,10 @@ namespace DoList.ViewModels
             try
             {
                 DateTime nowTime = DateTime.Now;
-                Timers.Clear();
-                var thingsIQueryable = from Thing in db.Things
-                                       where (Thing.Done == false && Thing.Remind == true)
-                                       select Thing;
+                _timers.Clear();
+                var thingsIQueryable = from thing in _db.Things
+                                       where (thing.Done == false && thing.Remind == true)
+                                       select thing;
 
                 foreach (var thing in thingsIQueryable)
                 {
@@ -201,7 +203,7 @@ namespace DoList.ViewModels
                         timer.Elapsed += (sender, e) => Timer_Elapsed_Notify(thing);
                         timer.AutoReset = false;
                         timer.Enabled = true;
-                        Timers.Add(timer);
+                        _timers.Add(timer);
                     }
                 }
             }

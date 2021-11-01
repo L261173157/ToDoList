@@ -15,8 +15,8 @@
 
   <ItemGroup>
     <PackageReference Include="HandyControl" Version="3.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.9">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.11">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -42,14 +42,6 @@
     <None Update="todolist.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Db\" />
-    <Folder Include="Migrations\" />
-    <Folder Include="Models\" />
-    <Folder Include="Services\ClassType\" />
-    <Folder Include="Services\EventType\" />
   </ItemGroup>
 
 </Project>
