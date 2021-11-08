@@ -12,14 +12,6 @@ namespace Database.Models.Component
         {
         }
 
-        private int id;
-
-        public int Id
-        {
-            get { return id; }
-            set { SetProperty(ref id, value); }
-        }
-
         private string word;
 
         public string Word

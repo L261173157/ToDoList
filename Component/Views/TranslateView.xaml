@@ -12,6 +12,7 @@
         <ComboBox HorizontalAlignment="Left" Margin="260,0,0,0" VerticalAlignment="Top" Width="80" ItemsSource="{Binding TargetItemsSource}" SelectedItem="{Binding TranslateTarget}" SelectedIndex="0"/>
         <Button Content="翻译" HorizontalAlignment="Left" Margin="345,0,0,0" VerticalAlignment="Top" Width="100" Height="50" Command="{Binding TranslateCmd}"/>
         <TextBox x:Name="TbTranslate" HorizontalAlignment="Left" Text="{Binding TranslateResult}" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Height="100" FontSize="24" GotFocus="TbTranslate_GotFocus"/>
+        <Button Content="字典操作" HorizontalAlignment="Left" Margin="345,50,0,0" VerticalAlignment="Top" Width="100" Height="50" Command="{Binding DictOperateCmd}"/>
 
     </Grid>
 </UserControl>

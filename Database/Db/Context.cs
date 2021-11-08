@@ -9,7 +9,7 @@ namespace Database.Db
     {
         public DbSet<Thing> Things { get; set; }
 
-        public DbSet<Dict> Dicts { get; set; }
+        public DbSet<DictDb> DictDbs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
             optionsBuilder.UseSqlite("Data Source=todolist.db");

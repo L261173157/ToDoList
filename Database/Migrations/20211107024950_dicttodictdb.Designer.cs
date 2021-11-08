@@ -3,14 +3,16 @@ using System;
 using Database.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Database.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20211107024950_dicttodictdb")]
+    partial class dicttodictdb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,7 +65,7 @@ namespace Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DictDbs");
+                    b.ToTable("Dicts");
                 });
 
             modelBuilder.Entity("Database.Models.DoList.Thing", b =>

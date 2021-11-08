@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Prism.Regions;
 using Services.Services;
 using Services.Services.ClassType;
+using Component.Views;
+using Database.Db;
 
 namespace Component.ViewModels
 {
@@ -20,6 +22,7 @@ namespace Component.ViewModels
         }
 
         #region 属性定义
+
         private string _translateResult;
 
         /// <summary>
@@ -47,8 +50,7 @@ namespace Component.ViewModels
             set { SetProperty(ref _translateTarget, value); }
         }
 
-
-        #endregion
+        #endregion 属性定义
 
         #region 命令
 
@@ -58,14 +60,25 @@ namespace Component.ViewModels
         public DelegateCommand TranslateCmd =>
             _translateCmd ??= new DelegateCommand(TranslateQuery, CanTranslateQuery);
 
-        #endregion
+        private DelegateCommand _dictOperateCmd;
+
+        public DelegateCommand DictOperateCmd =>
+            _dictOperateCmd ?? (_dictOperateCmd = new DelegateCommand(ExecuteDictOperateCmd));
+
+        private void ExecuteDictOperateCmd()
+        {
+            DictOperate dictOperate = new DictOperate();
+            dictOperate.Show();
+        }
+
+        #endregion 命令
 
         #region 内部方法
 
         private bool CanTranslateQuery()
         {
             return true;
-          //  return !string.IsNullOrEmpty(TranslateResult);
+            //  return !string.IsNullOrEmpty(TranslateResult);
         }
 
         private async void TranslateQuery()
@@ -86,11 +99,20 @@ namespace Component.ViewModels
                     break;
             }
 
-            TranslateResult = await WebApi.Translate(TranslateResult, target);
-            //把文字翻译为目标语言
+            await using (var context = new Context())
+            {
+                var result = (from dict in context.DictDbs where dict.Word == TranslateResult select dict.Translation).FirstOrDefault();
+                if (!string.IsNullOrEmpty(result))
+                {
+                    TranslateResult = result;
+                }
+                else
+                {
+                    TranslateResult = await WebApi.Translate(TranslateResult, target);
+                }
+            }
         }
 
-        #endregion
-
+        #endregion 内部方法
     }
 }
