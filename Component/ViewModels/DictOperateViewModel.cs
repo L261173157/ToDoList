@@ -10,6 +10,8 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using Database.Models.Component;
 using Database.Db;
+using System.Threading;
+using System.Windows;
 
 namespace Component.ViewModels
 {
@@ -29,12 +31,12 @@ namespace Component.ViewModels
             set { SetProperty(ref csvFileName, value); }
         }
 
-        private string test;
+        private string rate;
 
-        public string Test
+        public string Rate
         {
-            get { return test; }
-            set { SetProperty(ref test, value); }
+            get { return rate; }
+            set { SetProperty(ref rate, value); }
         }
 
         #endregion 属性
@@ -50,7 +52,7 @@ namespace Component.ViewModels
 
         #region 内部方法
 
-        private async void ExecuteNewDictCmd()
+        private void ExecuteNewDictCmd()
         {
             //打开csv文件
             Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
@@ -64,7 +66,13 @@ namespace Component.ViewModels
             {
                 CsvFileName = openFileDialog.FileName;
             }
-            
+            Thread thread = new Thread(CsvToDb);
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private async void CsvToDb()
+        {
             //读取csv文件,缺少异步方法，目前发现会阻塞
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
@@ -76,31 +84,57 @@ namespace Component.ViewModels
             //写入数据库
             await using (var context = new Context())
             {
+                long rateTotal = 0;
+                long rateNew = 0;
+                long rateUpdate = 0;
                 foreach (var dict in records)
                 {
-                    var dictDb = new DictDb
+                    rateTotal++;
+                    var oldDictDb = (from d in context.DictDbs where d.Word == dict.Word select d).FirstOrDefault();
+                    if (oldDictDb is null)
                     {
-                        Word = dict.Word,
-                        Audio = dict.Audio,
-                        Bnc = dict.Bnc,
-                        Collins = dict.Collins,
-                        Definition = dict.Definition,
-                        Translation = dict.Translation,
-                        Pos = dict.Pos,
-                        Detail = dict.Detail,
-                        Exchange = dict.Exchange,
-                        Frq = dict.Frq,
-                        Oxford = dict.Oxford,
-                        Tag = dict.Tag,
-                        Phonetic = dict.Phonetic,
-                    };
-                    context.DictDbs.Add(dictDb);
+                        var dictDb = new DictDb
+                        {
+                            Word = dict.Word,
+                            Audio = dict.Audio,
+                            Bnc = dict.Bnc,
+                            Collins = dict.Collins,
+                            Definition = dict.Definition,
+                            Translation = dict.Translation,
+                            Pos = dict.Pos,
+                            Detail = dict.Detail,
+                            Exchange = dict.Exchange,
+                            Frq = dict.Frq,
+                            Oxford = dict.Oxford,
+                            Tag = dict.Tag,
+                            Phonetic = dict.Phonetic,
+                        };
+                        context.DictDbs.Add(dictDb);
+                        rateNew++;
+                    }
+                    else
+                    {
+                        oldDictDb.Word = dict.Word;
+                        oldDictDb.Audio = dict.Audio;
+                        oldDictDb.Bnc = dict.Bnc;
+                        oldDictDb.Collins = dict.Collins;
+                        oldDictDb.Definition = dict.Definition;
+                        oldDictDb.Translation = dict.Translation;
+                        oldDictDb.Pos = dict.Pos;
+                        oldDictDb.Detail = dict.Detail;
+                        oldDictDb.Exchange = dict.Exchange;
+                        oldDictDb.Frq = dict.Frq;
+                        oldDictDb.Oxford = dict.Oxford;
+                        oldDictDb.Tag = dict.Tag;
+                        oldDictDb.Phonetic = dict.Phonetic;
+                        rateUpdate++;
+                    }
+                    Rate = "新增:" + rateNew.ToString() + "更新:" + rateUpdate.ToString() + "总数:" + rateTotal.ToString();
                 }
 
                 await context.SaveChangesAsync();
             }
-
-            Test = "ok";
+            MessageBox.Show("读取成功");
         }
 
         #endregion 内部方法

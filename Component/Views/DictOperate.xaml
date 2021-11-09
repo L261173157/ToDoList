@@ -6,8 +6,8 @@
     <Grid>
         <Button Content="导入文件" HorizontalAlignment="Left" Margin="310,55,0,0" VerticalAlignment="Top" Command="{Binding NewDictCmd}"/>
         <TextBox HorizontalAlignment="Left" Margin="80,55,0,0" Text="{Binding CsvFileName}" TextWrapping="Wrap" VerticalAlignment="Top" Width="195"/>
-        <TextBox HorizontalAlignment="Left" Margin="80,125,0,0" Text="{Binding Test}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="文件路径" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Height="30"/>
-        <Label Content="导入结果" HorizontalAlignment="Left" Margin="10,125,0,0" VerticalAlignment="Top" Height="30"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,105,0,0" Text="{Binding Rate}" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
+        <Label Content="当前进度" HorizontalAlignment="Left" Margin="10,105,0,0" VerticalAlignment="Top" Height="30"/>
     </Grid>
 </Window>
