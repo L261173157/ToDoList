@@ -28,7 +28,7 @@ namespace Component.ViewModels
             get { return csvFileName; }
             set { SetProperty(ref csvFileName, value); }
         }
-        
+
         private string test;
 
         public string Test
@@ -64,6 +64,7 @@ namespace Component.ViewModels
             {
                 CsvFileName = openFileDialog.FileName;
             }
+            
             //读取csv文件,缺少异步方法，目前发现会阻塞
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
@@ -73,7 +74,7 @@ namespace Component.ViewModels
             using var csv = new CsvReader(reader, config);
             var records = csv.GetRecords<Dict>();
             //写入数据库
-            await using (var context=new Context())
+            await using (var context = new Context())
             {
                 foreach (var dict in records)
                 {
