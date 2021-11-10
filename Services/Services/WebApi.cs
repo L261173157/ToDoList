@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Newtonsoft.Json;
 using Services.Services.ClassType;
+using System.Configuration;
 
 namespace Services.Services
 {
@@ -29,7 +30,7 @@ namespace Services.Services
             try
             {
                 localIP = await LocationIP();
-                localCity = await Adress(localIP);
+                localCity = await Address(localIP);
                 localCity = localCity.Substring(0, localCity.Length - 1);
                 localWeather = await Weather(localCity);
             }
@@ -51,12 +52,12 @@ namespace Services.Services
             try
             {
                 string url = "http://apis.juhe.cn/simpleWeather/query";
-                string key = "abe434a6bb7e95827219b4ad24407816";
+                string key = ConfigurationManager.AppSettings["weatherKey"];
                 string par = url + "?city=" + city + "&key=" + key;
                 var response = await client.GetAsync(par);
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();
-
+                //通过jsonconvert接收api信息，转化为weather
                 Weather weather = JsonConvert.DeserializeObject<Weather>(responseBody);
                 if (weather.error_code == 0)
                 {
@@ -104,12 +105,12 @@ namespace Services.Services
         /// </summary>
         /// <param name="ip">IP</param>
         /// <returns></returns>
-        public static async Task<string> Adress(string ip)
+        public static async Task<string> Address(string ip)
         {
             try
             {
                 string url = "http://apis.juhe.cn/ip/ipNew";
-                string key = "ddd8a4dc286bdc58a75fd47fda75ff0c";
+                string key = ConfigurationManager.AppSettings["addressKey"];
                 string par = url + "?ip=" + ip + "&key=" + key;
                 var response = await client.GetAsync(par);
                 response.EnsureSuccessStatusCode();
@@ -171,12 +172,12 @@ namespace Services.Services
                         break;
                 }
 
-                // 改成您的APP ID
-                string appId = "20210730000901668";
+                // 改成自己的APP ID
+                string appId = ConfigurationManager.AppSettings["translateAppId"];
                 Random rd = new Random();
                 string salt = rd.Next(100000).ToString();
                 // 改成您的密钥
-                string secretKey = "gOLq8gchFBxy0JA_pBCu";
+                string secretKey = ConfigurationManager.AppSettings["translateSecretKey"];
                 string sign = Common.EncryptString(appId + q + salt + secretKey);
                 string url = "http://api.fanyi.baidu.com/api/trans/vip/translate?";
                 url += "q=" + HttpUtility.UrlEncode(q);

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Database.Models.DoList;
 using Database.Models.Component;
-
+using System.Configuration;
 
 namespace Database.Db
 {
@@ -12,7 +12,6 @@ namespace Database.Db
         public DbSet<DictDb> DictDbs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
-            optionsBuilder.UseSqlite("Data Source=todolist.db");
-
+            optionsBuilder.UseSqlite(ConfigurationManager.ConnectionStrings["DbSqlite"].ConnectionString);
     }
 }

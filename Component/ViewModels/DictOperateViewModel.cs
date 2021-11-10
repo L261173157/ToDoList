@@ -10,8 +10,8 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using Database.Models.Component;
 using Database.Db;
-using System.Threading;
 using System.Windows;
+using System.Configuration;
 
 namespace Component.ViewModels
 {
@@ -39,6 +39,14 @@ namespace Component.ViewModels
             set { SetProperty(ref rate, value); }
         }
 
+        private string dbCount;
+
+        public string DbCount
+        {
+            get { return dbCount; }
+            set { SetProperty(ref dbCount, value); }
+        }
+
         #endregion 属性
 
         #region 命令
@@ -47,6 +55,11 @@ namespace Component.ViewModels
 
         public DelegateCommand NewDictCmd =>
             _newDictCmd ?? (_newDictCmd = new DelegateCommand(ExecuteNewDictCmd));
+
+        private DelegateCommand _dbCountCmd;
+
+        public DelegateCommand DbCountCmd =>
+            _dbCountCmd ?? (_dbCountCmd = new DelegateCommand(ExecuteDbCountCmd));
 
         #endregion 命令
 
@@ -59,21 +72,18 @@ namespace Component.ViewModels
             openFileDialog.FileName = "选取CSV文件";
             openFileDialog.DefaultExt = ".csv";
             openFileDialog.Filter = "Csv documents (.csv)|*.csv";
-
             Nullable<bool> result = openFileDialog.ShowDialog();
 
             if (result == true)
             {
                 CsvFileName = openFileDialog.FileName;
             }
-            Thread thread = new Thread(CsvToDb);
-            thread.IsBackground = true;
-            thread.Start();
+            Task task = Task.Run(CsvToDb);
         }
 
         private async void CsvToDb()
         {
-            //读取csv文件,缺少异步方法，目前发现会阻塞
+            //读取csv文件,缺少异步方法，目前发现会阻塞,用Task避免
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
                 PrepareHeaderForMatch = args => args.Header.ToLower(),
@@ -135,6 +145,14 @@ namespace Component.ViewModels
                 await context.SaveChangesAsync();
             }
             MessageBox.Show("读取成功");
+        }
+
+        private async void ExecuteDbCountCmd()
+        {
+            await using (var context = new Context())
+            {
+                DbCount = (from dict in context.DictDbs select dict).Count().ToString();
+            }
         }
 
         #endregion 内部方法
