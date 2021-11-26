@@ -14,7 +14,7 @@
     <Grid>
 
         <!--<hc:NotifyIcon x:Name="NotifyIcon" Text="ToDoList" Icon="/Resources/Journal.ico"  Click="NotifyIcon_Click" />-->
-        <ContentControl prism:RegionManager.RegionName="ToDoListRegion"></ContentControl>
+        <ContentControl prism:RegionManager.RegionName="ToDoListRegion" Height="600" VerticalAlignment="Top"></ContentControl>
 
         <Grid Margin="0,600,0,0">
             <ContentControl prism:RegionManager.RegionName="ComponentRegion" Margin="0,40,0,0" />

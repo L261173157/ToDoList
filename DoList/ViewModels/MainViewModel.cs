@@ -25,10 +25,9 @@ namespace DoList.ViewModels
 
             Things = new ObservableCollection<Thing>();
             _eventAggregator = ea;
+            NowStatus = "未完成";
             Refresh();
             RemindPast();
-
-            NowStatus = "未完成";
         }
 
         #region 属性定义
@@ -85,7 +84,6 @@ namespace DoList.ViewModels
         public DelegateCommand SaveCmd =>
             _saveCmd ??= new DelegateCommand(ExecuteSaveCmd);
 
-        
         private void ExecuteSaveCmd()
         {
             Refresh();
@@ -99,7 +97,6 @@ namespace DoList.ViewModels
 
         private void ExecuteShowNowStatusCmd()
         {
-            
             switch (NowStatus)
             {
                 case "全部":

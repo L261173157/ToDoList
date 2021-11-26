@@ -1,16 +1,12 @@
-﻿using Prism.Commands;
+﻿using Component.Views;
+using Database.Db;
+using Prism.Commands;
 using Prism.Mvvm;
+using Services.Services;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Prism.Regions;
-using Services.Services;
-using Services.Services.ClassType;
-using Component.Views;
-using Database.Db;
+using System.Windows.Input;
 
 namespace Component.ViewModels
 {
@@ -19,6 +15,9 @@ namespace Component.ViewModels
         public TranslateViewModel()
         {
             TargetItemsSource = new ObservableCollection<string>(Enum.GetNames(typeof(TranslateTarget)));
+            TbKeyUpEventCmd = new DelegateCommand<KeyEventArgs>(TbKeyUpEvent);
+            TranslateCmd = new DelegateCommand(TranslateQuery);
+            DictOperateCmd = new DelegateCommand(ExecuteDictOperateCmd);
         }
 
         #region 属性定义
@@ -54,32 +53,18 @@ namespace Component.ViewModels
 
         #region 命令
 
-        private DelegateCommand _translateCmd;
+        //翻译命令
+        public DelegateCommand TranslateCmd { get; private set; }
+
+        //字典操作命令
+        public DelegateCommand DictOperateCmd { get; private set; }
 
         //翻译命令
-        public DelegateCommand TranslateCmd =>
-            _translateCmd ??= new DelegateCommand(TranslateQuery, CanTranslateQuery);
-
-        private DelegateCommand _dictOperateCmd;
-
-        public DelegateCommand DictOperateCmd =>
-            _dictOperateCmd ?? (_dictOperateCmd = new DelegateCommand(ExecuteDictOperateCmd));
-
-        private void ExecuteDictOperateCmd()
-        {
-            DictOperate dictOperate = new DictOperate();
-            dictOperate.Show();
-        }
+        public DelegateCommand<KeyEventArgs> TbKeyUpEventCmd { get; private set; }
 
         #endregion 命令
 
         #region 内部方法
-
-        private bool CanTranslateQuery()
-        {
-            return true;
-            //  return !string.IsNullOrEmpty(TranslateResult);
-        }
 
         private async void TranslateQuery()
         {
@@ -110,6 +95,21 @@ namespace Component.ViewModels
                 {
                     TranslateResult = await WebApi.Translate(TranslateResult, target);
                 }
+            }
+        }
+
+        //显示字典操作页面
+        private void ExecuteDictOperateCmd()
+        {
+            DictOperate dictOperate = new DictOperate();
+            dictOperate.Show();
+        }
+
+        private void TbKeyUpEvent(KeyEventArgs eventArgs)
+        {
+            if (eventArgs.Key == Key.Enter)
+            {
+                TranslateQuery();
             }
         }
 
