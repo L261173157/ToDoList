@@ -3,23 +3,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ToDoList"
 
         xmlns:prism="http://prismlibrary.com/"
-         xmlns:hc="https://handyorg.github.io/handycontrol"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        Title="ToDoList" Height="800" Width="500" WindowStyle="SingleBorderWindow" ShowInTaskbar="False" ResizeMode="NoResize" Loaded="Window_Loaded">
+        Title="ToDoList" Height="800" Width="500" WindowStyle="SingleBorderWindow" ShowInTaskbar="False"
+        ResizeMode="NoResize" Loaded="Window_Loaded">
 
     <Grid>
 
         <!--<hc:NotifyIcon x:Name="NotifyIcon" Text="ToDoList" Icon="/Resources/Journal.ico"  Click="NotifyIcon_Click" />-->
-        <ContentControl prism:RegionManager.RegionName="ToDoListRegion" Height="600" VerticalAlignment="Top"></ContentControl>
+        <ContentControl prism:RegionManager.RegionName="ToDoListRegion" Height="600" VerticalAlignment="Top" />
 
         <Grid Margin="0,600,0,0">
             <ContentControl prism:RegionManager.RegionName="ComponentRegion" Margin="0,40,0,0" />
-            <Button x:Name="BtnTranslate" Content="翻译" HorizontalAlignment="Left" VerticalAlignment="Top" Click="BtnTranslate_Click" />
-            <Button x:Name="BtnWeather" Content="天气" HorizontalAlignment="Left" VerticalAlignment="Top" Click="BtnWeather_Click" Margin="50,0,0,0" />
+            <Button x:Name="BtnTranslate" Content="翻译" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    Click="BtnTranslate_Click" />
+            <Button x:Name="BtnWeather" Content="天气" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    Click="BtnWeather_Click" Margin="50,0,0,0" />
         </Grid>
     </Grid>
 </Window>

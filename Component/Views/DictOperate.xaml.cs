@@ -1,15 +1,14 @@
 ﻿using System.Windows;
 
-namespace Component.Views
+namespace Component.Views;
+
+/// <summary>
+///     Interaction logic for DictOperate.xaml
+/// </summary>
+public partial class DictOperate : Window
 {
-    /// <summary>
-    /// Interaction logic for DictOperate.xaml
-    /// </summary>
-    public partial class DictOperate : Window
+    public DictOperate()
     {
-        public DictOperate()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

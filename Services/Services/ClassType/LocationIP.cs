@@ -1,7 +1,6 @@
-﻿namespace Services.Services.ClassType
+﻿namespace Services.Services.ClassType;
+
+public class LocationIP
 {
-   public class LocationIP
-    {
-        public string origin { get; set; }
-    }
+    public string origin { get; set; }
 }

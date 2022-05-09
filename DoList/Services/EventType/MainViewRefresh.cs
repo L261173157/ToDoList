@@ -1,8 +1,7 @@
 ﻿using Prism.Events;
 
-namespace DoList.Services.EventType
+namespace DoList.Services.EventType;
+
+public class MainViewRefresh : PubSubEvent
 {
-   public class MainViewRefresh: PubSubEvent
-    {
-    }
 }

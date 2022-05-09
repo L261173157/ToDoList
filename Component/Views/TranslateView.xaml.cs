@@ -1,24 +1,20 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Component.Views
+namespace Component.Views;
+
+/// <summary>
+///     Interaction logic for TranslateView.xaml
+/// </summary>
+public partial class TranslateView : UserControl
 {
-    /// <summary>
-    /// Interaction logic for TranslateView.xaml
-    /// </summary>
-    public partial class TranslateView : UserControl
+    public TranslateView()
     {
-        public TranslateView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 
-        private void TbTranslate_GotFocus(object sender, RoutedEventArgs e)
-        {
-            TbTranslate.Text = String.Empty;
-        }
-
-
+    private void TbTranslate_GotFocus(object sender, RoutedEventArgs e)
+    {
+        TbTranslate.Text = string.Empty;
     }
 }

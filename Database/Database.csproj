@@ -5,10 +5,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="CsvHelper" Version="27.1.1" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.0" />
-      <PackageReference Include="Prism.Core" Version="8.1.97" />
-      <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
+        <PackageReference Include="CsvHelper" Version="27.1.1"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.0"/>
+        <PackageReference Include="Prism.Core" Version="8.1.97"/>
+        <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0"/>
     </ItemGroup>
 
 </Project>

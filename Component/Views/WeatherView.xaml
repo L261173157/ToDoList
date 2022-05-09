@@ -4,9 +4,11 @@
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True" Width="450" Height="112">
     <Grid>
-        <TextBlock Text="{Binding Weather}" Width="200" HorizontalAlignment="Left"></TextBlock>
-        <Label Content="查询城市" HorizontalAlignment="Left" Margin="205,10,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="tbCity" HorizontalAlignment="Left" Margin="205,44,0,0" Text="{Binding City}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" GotFocus="tbCity_GotFocus"/>
-        <Button Content="查询" HorizontalAlignment="Left" Margin="205,79,0,0" VerticalAlignment="Top" Width="70" Command="{Binding QueryCmd}"/>
+        <TextBlock Text="{Binding Weather}" Width="200" HorizontalAlignment="Left" />
+        <Label Content="查询城市" HorizontalAlignment="Left" Margin="205,10,0,0" VerticalAlignment="Top" />
+        <TextBox x:Name="tbCity" HorizontalAlignment="Left" Margin="205,44,0,0" Text="{Binding City}"
+                 TextWrapping="Wrap" VerticalAlignment="Top" Width="120" GotFocus="tbCity_GotFocus" />
+        <Button Content="查询" HorizontalAlignment="Left" Margin="205,79,0,0" VerticalAlignment="Top" Width="70"
+                Command="{Binding QueryCmd}" />
     </Grid>
 </UserControl>

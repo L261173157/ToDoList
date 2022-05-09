@@ -1,10 +1,8 @@
 ﻿using Database.Models.DoList;
-
 using Prism.Events;
 
-namespace DoList.Services.EventType
+namespace DoList.Services.EventType;
+
+public class MainViewNotify : PubSubEvent<Thing>
 {
-   public class MainViewNotify: PubSubEvent<Thing>
-    {
-    }
 }
