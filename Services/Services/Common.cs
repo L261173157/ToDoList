@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Timers;
 
 namespace Services.Services;
@@ -30,5 +31,16 @@ public static class Common
         timer.Elapsed += eventHandler;
         timer.AutoReset = true;
         timer.Enabled = true;
+    }
+    
+    /// <summary>
+    /// 判断字符串中是否包含中文
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    public static bool ContainChinese(string input)
+    {
+        string pattern = "[\u4e00-\u9fbb]";
+        return Regex.IsMatch(input, pattern);
     }
 }
