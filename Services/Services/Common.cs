@@ -7,7 +7,12 @@ namespace Services.Services;
 
 public static class Common
 {
-    //MD5转换
+    
+    /// <summary>
+    /// MD5转换
+    /// </summary>
+    /// <param name="str">源值</param>
+    /// <returns>目标值</returns>
     public static string EncryptString(string str)
     {
         var md5 = MD5.Create();

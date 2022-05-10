@@ -155,12 +155,18 @@ public static class WebApi
         url += "&appid=" + appId;
         url += "&salt=" + salt;
         url += "&sign=" + sign;
-        var response = await client.GetAsync(url);
-        response.EnsureSuccessStatusCode();
-        var responseBody = await response.Content.ReadAsStringAsync();
 
-        var result = JsonConvert.DeserializeObject<Translate>(responseBody);
-
-        return result.trans_result[0].dst;
+        try
+        {
+            var response = await client.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+            var responseBody = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<Translate>(responseBody);
+            return result.trans_result[0].dst;
+        }
+        catch (Exception e)
+        {
+            return "翻译失败"+Environment.NewLine+e.Message;
+        }
     }
 }
