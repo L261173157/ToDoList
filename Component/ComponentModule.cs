@@ -14,5 +14,6 @@ public class ComponentModule : IModule
     {
         containerRegistry.RegisterForNavigation(typeof(TranslateView), "TranslateView");
         containerRegistry.RegisterForNavigation(typeof(WeatherView), "WeatherView");
+        containerRegistry.RegisterForNavigation(typeof(RemindView), "RemindView");
     }
 }

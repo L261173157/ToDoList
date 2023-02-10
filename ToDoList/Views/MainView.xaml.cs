@@ -80,4 +80,9 @@ public partial class MainView : Window
     #region 方法
 
     #endregion 方法
+
+    private void BtnRemind_Click(object sender, RoutedEventArgs e)
+    {
+        regionManager.RequestNavigate("ComponentRegion", "RemindView");
+    }
 }

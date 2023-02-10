@@ -13,8 +13,8 @@ public partial class TranslateView : UserControl
         InitializeComponent();
     }
 
-    private void TbTranslate_GotFocus(object sender, RoutedEventArgs e)
-    {
-        TbTranslate.Text = string.Empty;
-    }
+    //private void TbTranslate_GotFocus(object sender, RoutedEventArgs e)
+    //{
+    //    TbTranslate.Text = string.Empty;
+    //}
 }
