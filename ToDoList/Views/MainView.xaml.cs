@@ -60,7 +60,6 @@ public partial class MainView : Window
         Activate();
     }
 
-
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         regionManager.RequestNavigate("ComponentRegion", "WeatherView");
@@ -77,14 +76,8 @@ public partial class MainView : Window
         regionManager.RequestNavigate("ComponentRegion", "WeatherView");
     }
 
-
-
-    #region 方法
-
-    #endregion 方法
-
     private void Chat_Click(object sender, RoutedEventArgs e)
     {
-        regionManager.RequestNavigate("ComponentRegion", "WeatherView");
+        //regionManager.RequestNavigate("ComponentRegion", "WeatherView");
     }
 }
