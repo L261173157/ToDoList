@@ -12,17 +12,4 @@
         <ProjectReference Include="..\Database\Database.csproj" />
         <ProjectReference Include="..\Services\Services.csproj" />
     </ItemGroup>
-    <ItemGroup>
-      <Page Update="Views\RemindView.xaml">
-        <Generator>MSBuild:Compile</Generator>
-        <XamlRuntime>Wpf</XamlRuntime>
-        <SubType>Designer</SubType>
-      </Page>
-    </ItemGroup>
-    <ItemGroup>
-      <Compile Update="Views\RemindView.xaml.cs">
-        <SubType>Code</SubType>
-        <DependentUpon>RemindView.xaml</DependentUpon>
-      </Compile>
-    </ItemGroup>
 </Project>

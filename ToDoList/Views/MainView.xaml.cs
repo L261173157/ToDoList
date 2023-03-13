@@ -77,12 +77,14 @@ public partial class MainView : Window
         regionManager.RequestNavigate("ComponentRegion", "WeatherView");
     }
 
+
+
     #region 方法
 
     #endregion 方法
 
-    private void BtnRemind_Click(object sender, RoutedEventArgs e)
+    private void Chat_Click(object sender, RoutedEventArgs e)
     {
-        regionManager.RequestNavigate("ComponentRegion", "RemindView");
+        regionManager.RequestNavigate("ComponentRegion", "WeatherView");
     }
 }
