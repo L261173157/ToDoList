@@ -5,9 +5,9 @@ namespace Component.Views;
 /// <summary>
 ///     Interaction logic for DictOperate.xaml
 /// </summary>
-public partial class DictOperate : Window
+public partial class ParameterView : Window
 {
-    public DictOperate()
+    public ParameterView()
     {
         InitializeComponent();
     }

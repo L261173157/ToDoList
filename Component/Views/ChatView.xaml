@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Component.Views.TranslateView"
+﻿<UserControl x:Class="Component.Views.ChatView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -11,10 +11,10 @@
     <Grid>
         <ComboBox HorizontalAlignment="Left" Margin="260,0,0,0" VerticalAlignment="Top" Width="80"
                   ItemsSource="{Binding TargetItemsSource}" SelectedItem="{Binding TranslateTarget}" SelectedIndex="0" />
-        <Button Content="查询" HorizontalAlignment="Left" Margin="345,0,0,0" VerticalAlignment="Top" Width="100"
-                Height="50" Command="{Binding TranslateCmd}" />
+        <Button Content="问答" HorizontalAlignment="Left" Margin="345,0,0,0" VerticalAlignment="Top" Width="100"
+                Height="50" Command="{Binding ChatCmd}" />
         <TextBox x:Name="TbTranslate" HorizontalAlignment="Left"
-                 Text="{Binding TranslateResult,UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap"
+                 Text="{Binding ChatResult,UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="250" Height="100" FontSize="16">
             <!-- <i:Interaction.Triggers> -->
             <!--     <i:EventTrigger EventName="KeyUp"> -->

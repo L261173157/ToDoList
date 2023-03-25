@@ -78,6 +78,6 @@ public partial class MainView : Window
 
     private void Chat_Click(object sender, RoutedEventArgs e)
     {
-        //regionManager.RequestNavigate("ComponentRegion", "WeatherView");
+        regionManager.RequestNavigate("ComponentRegion", "ChatView");
     }
 }

@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net6.0-windows</TargetFramework>
+        <TargetFramework>net7.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>
         <AssemblyName>Component</AssemblyName>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="CsvHelper" Version="27.1.1" />
+        <PackageReference Include="CsvHelper" Version="30.0.1" />
         <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
     </ItemGroup>
     <ItemGroup>

@@ -112,8 +112,8 @@ public class TranslateViewModel : BindableBase
     //显示字典操作页面
     private void ExecuteDictOperateCmd()
     {
-        var dictOperate = new DictOperate();
-        dictOperate.Show();
+        var Parameter = new ParameterView();
+        Parameter.Show();
     }
 
 //取消的方法，之后再试

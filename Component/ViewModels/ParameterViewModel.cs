@@ -13,7 +13,7 @@ using Prism.Mvvm;
 
 namespace Component.ViewModels;
 
-public class DictOperateViewModel : BindableBase
+public class ParameterViewModel : BindableBase
 {
     #region 属性
 

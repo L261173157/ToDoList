@@ -1,21 +1,21 @@
-﻿<Window x:Class="Component.Views.DictOperate"
+﻿<Window x:Class="Component.Views.ParameterView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:prism="http://prismlibrary.com/"
-        prism:ViewModelLocator.AutoWireViewModel="True" Width="460" Height="200" WindowStartupLocation="CenterScreen">
+        prism:ViewModelLocator.AutoWireViewModel="True" Width="460" Height="400" WindowStartupLocation="CenterScreen">
     <Grid>
         <Button Content="导入文件" HorizontalAlignment="Left" Margin="310,10,0,0" VerticalAlignment="Top"
-                Command="{Binding NewDictCmd}" />
+                Command="{Binding NewDictCmd}" Height="30" Width="70" />
         <TextBox HorizontalAlignment="Left" Margin="80,10,0,0" Text="{Binding CsvFileName}" TextWrapping="Wrap"
-                 VerticalAlignment="Top" Width="195" />
+                 VerticalAlignment="Top" Width="195" Height="30" />
         <Label Content="文件路径" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="30" />
         <TextBox HorizontalAlignment="Center" Margin="0,50,0,0" Text="{Binding Rate}" TextWrapping="Wrap"
-                 VerticalAlignment="Top" Width="300" />
+                 VerticalAlignment="Top" Width="300" Height="30" />
         <Label Content="当前进度" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Height="30" />
         <Label Content="词库数量" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Height="30" />
         <Button Content="查询" HorizontalAlignment="Left" Margin="310,90,0,0" VerticalAlignment="Top"
-                Command="{Binding DbCountCmd}" Width="70" />
+                Command="{Binding DbCountCmd}" Width="70" Height="30" />
         <TextBox HorizontalAlignment="Left" Margin="80,90,0,0" Text="{Binding DbCount}" TextWrapping="Wrap"
-                 VerticalAlignment="Top" Width="195" />
+                 VerticalAlignment="Top" Width="195" Height="30" />
     </Grid>
 </Window>
