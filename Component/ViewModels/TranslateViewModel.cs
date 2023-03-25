@@ -87,13 +87,14 @@ public class TranslateViewModel : BindableBase
 
         await using (var context = new Context())
         {
-            TranslateResult=Regex.Replace(TranslateResult, @"\s+", "").ToLower();
+            TranslateResult = Regex.Replace(TranslateResult, @"\s+", "").ToLower();
             if (Common.ContainChinese(TranslateResult))
             {
                 target = Services.Services.TranslateTarget.en;
                 TranslateResult = await WebApi.Translate(TranslateResult, target);
                 return;
             }
+
             var result = (from dict in context.DictDbs where dict.Word == TranslateResult select dict.Translation)
                 .FirstOrDefault();
 
@@ -102,7 +103,7 @@ public class TranslateViewModel : BindableBase
                 result = result.Replace("\\n", Environment.NewLine);
                 TranslateResult = result;
             }
-                
+
             else
                 TranslateResult = await WebApi.Translate(TranslateResult, target);
         }
@@ -114,13 +115,12 @@ public class TranslateViewModel : BindableBase
         var dictOperate = new DictOperate();
         dictOperate.Show();
     }
+
 //取消的方法，之后再试
     private void TbKeyUpEvent(KeyEventArgs eventArgs)
     {
         if (eventArgs.Key == Key.Enter) TranslateQuery();
     }
-    
-    
 
     #endregion 内部方法
 }
