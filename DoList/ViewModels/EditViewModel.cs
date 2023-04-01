@@ -128,11 +128,11 @@ public class EditViewModel : BindableBase
 
     private void ExecuteSaveCmd()
     {
-        using (var db = new Context())
+        using (var context = new Context())
         {
             if (ThingId == 0)
             {
-                db.Things.Add(new Thing
+                context.Things.Add(new Thing
                 {
                     Content = Content, CreatTime = DateTime.Now, Remind = Remind,
                     RemindTime = RemindTime
@@ -140,14 +140,14 @@ public class EditViewModel : BindableBase
             }
             else
             {
-                var thingNeedChang = db.Things.Single(b => b.ThingId == ThingId);
+                var thingNeedChang = context.Things.Single(b => b.ThingId == ThingId);
                 thingNeedChang.Content = Content;
                 thingNeedChang.Done = Done;
                 thingNeedChang.Remind = Remind;
                 thingNeedChang.RemindTime = RemindTime;
             }
 
-            db.SaveChanges();
+            context.SaveChanges();
         }
 
         _eventAggregator.GetEvent<MainViewRefresh>().Publish();

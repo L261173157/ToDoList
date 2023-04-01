@@ -3,13 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="450"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:hc="https://handyorg.github.io/handycontrol"
              prism:ViewModelLocator.AutoWireViewModel="True" Width="450" Height="600" Loaded="UserControl_Loaded">
     <Grid Width="450" Height="600">
-        <hc:NotifyIcon x:Name="NotifyIcon" Text="ToDoList" MouseDoubleClick="NotifyIcon_MouseDoubleClick" />
+        <hc:NotifyIcon x:Name="NotifyIcon" Text="ToDoList" />
 
         <DataGrid x:Name="ExaDataGrid" ItemsSource="{Binding Things}" AutoGenerateColumns="False"
                   HorizontalAlignment="Left" GridLinesVisibility="Vertical" MaxColumnWidth="261" SelectionMode="Single"
@@ -20,8 +21,6 @@
                 <DataGridCheckBoxColumn Binding="{Binding Done}" Header="完成" />
             </DataGrid.Columns>
         </DataGrid>
-
-
         <Button Content="新建" Command="{Binding NewThingViewCmd}" Height="40" Width="80" Background="#FFE0E0E0"
                 VerticalAlignment="Top" HorizontalAlignment="Right" />
         <Button Content="保存" Command="{Binding SaveCmd}" Height="40" Width="80" Background="#FFE0E0E0"

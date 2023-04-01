@@ -29,10 +29,14 @@ public static class Common
         return sb.ToString();
     }
 
-    //时间间隔
+    /// <summary>
+    /// 延时调用方法
+    /// </summary>
+    /// <param name="time">延时时间S</param>
+    /// <param name="eventHandler">被调用方法</param>
     public static void SetTimer(int time, ElapsedEventHandler eventHandler)
     {
-        var timer = new Timer(time);
+        var timer = new Timer(time*1000);
         timer.Elapsed += eventHandler;
         timer.AutoReset = true;
         timer.Enabled = true;
@@ -48,4 +52,6 @@ public static class Common
         string pattern = "[\u4e00-\u9fbb]";
         return Regex.IsMatch(input, pattern);
     }
+
+
 }

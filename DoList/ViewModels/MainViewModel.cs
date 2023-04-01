@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Timers;
 using Database.Db;
 using Database.Models.DoList;
 using DoList.Services.EventType;
 using DoList.Views;
+using Microsoft.EntityFrameworkCore;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -19,35 +21,43 @@ public class MainViewModel : BindableBase
 
     {
         ea.GetEvent<MainViewRefresh>().Subscribe(Refresh);
-
-        Things = new ObservableCollection<Thing>();
         _eventAggregator = ea;
+        _context.Database.EnsureCreated();
+        // Things = _context.Things.Local.ToObservableCollection();
+        Things = new ObservableCollection<Thing>();
         NowStatus = "未完成";
         Refresh();
         RemindPast();
+    }
+    //通过析构函数释放资源
+    ~MainViewModel()
+    {
+        foreach (var timer in _timers)
+        {
+            timer.Stop();
+            timer.Dispose();
+        }
+        _context.Dispose();
     }
 
     #region 属性定义
 
     /// <summary>
-    ///     提醒功能时间间隔组
+    /// 提醒功能时间间隔组
     /// </summary>
     private readonly List<Timer> _timers = new();
 
     /// <summary>
-    ///     事件聚合器
+    /// 事件聚合器
     /// </summary>
     private readonly IEventAggregator _eventAggregator;
 
     /// <summary>
-    ///     数据库
-    /// </summary>
-    private readonly Context _db = new();
-
-    /// <summary>
-    ///     主界面数据列表
+    /// 主界面数据列表
     /// </summary>
     public ObservableCollection<Thing> Things { get; set; }
+
+    private readonly Context _context = new Context();
 
     private string _nowStatus;
 
@@ -109,6 +119,7 @@ public class MainViewModel : BindableBase
 
         Refresh();
     }
+    
 
     #endregion 命令
 
@@ -117,21 +128,25 @@ public class MainViewModel : BindableBase
     //刷新
     private void Refresh()
     {
-        _db.SaveChanges();
+        _context.SaveChanges();
+        _context.Things.Load();
+        Things.Clear();
         switch (NowStatus)
         {
             case "全部":
-                var thingsLst = from thing in _db.Things orderby thing.Done select thing;
-                Things.Clear();
-                foreach (var item in thingsLst) Things.Add(item);
+                var resultAll = _context.Things.OrderBy(thing => thing.Done);
+                foreach (var item in resultAll)
+                {
+                    Things.Add(item);
+                }
 
                 break;
-
             case "未完成":
-                var lst = from thing in _db.Things where thing.Done == false select thing;
-
-                Things.Clear();
-                foreach (var item in lst) Things.Add(item);
+                var resultNodone = _context.Things.Where(thing => thing.Done == false);
+                foreach (var item in resultNodone)
+                {
+                    Things.Add(item);
+                }
 
                 break;
         }
@@ -143,24 +158,27 @@ public class MainViewModel : BindableBase
 
     private void RemindFuture()
     {
-        TimeSpan timeSpan;
-
-        var nowTime = DateTime.Now;
-        _timers.Clear();
-        var thingsIQueryable = from thing in _db.Things
-            where thing.Done == false && thing.Remind == true
-            select thing;
-
-        foreach (var thing in thingsIQueryable)
+        using (var context = new Context())
         {
-            timeSpan = thing.RemindTime - nowTime;
-            if (timeSpan >= TimeSpan.Zero)
+            TimeSpan timeSpan;
+
+            var nowTime = DateTime.Now;
+            _timers.Clear();
+            var thingsIQueryable = from thing in context.Things
+                where thing.Done == false && thing.Remind == true
+                select thing;
+
+            foreach (var thing in thingsIQueryable)
             {
-                var timer = new Timer(timeSpan.TotalSeconds * 1000);
-                timer.Elapsed += (sender, e) => Timer_Elapsed_Notify(thing);
-                timer.AutoReset = false;
-                timer.Enabled = true;
-                _timers.Add(timer);
+                timeSpan = thing.RemindTime - nowTime;
+                if (timeSpan >= TimeSpan.Zero)
+                {
+                    var timer = new Timer(timeSpan.TotalSeconds * 1000);
+                    timer.Elapsed += (sender, e) => Timer_Elapsed_Notify(thing);
+                    timer.AutoReset = false;
+                    timer.Enabled = true;
+                    _timers.Add(timer);
+                }
             }
         }
     }
@@ -168,22 +186,25 @@ public class MainViewModel : BindableBase
     //仅在启动时调用
     private void RemindPast()
     {
-        var nowTime = DateTime.Now;
-        _timers.Clear();
-        var thingsIQueryable = from thing in _db.Things
-            where thing.Done == false && thing.Remind == true
-            select thing;
-
-        foreach (var thing in thingsIQueryable)
+        using (var context = new Context())
         {
-            var timeSpan = thing.RemindTime - nowTime;
-            if (timeSpan < TimeSpan.Zero)
+            var nowTime = DateTime.Now;
+            _timers.Clear();
+            var thingsIQueryable = from thing in context.Things
+                where thing.Done == false && thing.Remind == true
+                select thing;
+
+            foreach (var thing in thingsIQueryable)
             {
-                var timer = new Timer(2000);
-                timer.Elapsed += (sender, e) => Timer_Elapsed_Notify(thing);
-                timer.AutoReset = false;
-                timer.Enabled = true;
-                _timers.Add(timer);
+                var timeSpan = thing.RemindTime - nowTime;
+                if (timeSpan < TimeSpan.Zero)
+                {
+                    var timer = new Timer(2000);
+                    timer.Elapsed += (sender, e) => Timer_Elapsed_Notify(thing);
+                    timer.AutoReset = false;
+                    timer.Enabled = true;
+                    _timers.Add(timer);
+                }
             }
         }
     }
@@ -195,6 +216,7 @@ public class MainViewModel : BindableBase
     }
 
     #endregion 时间触发
-
+    
+   
     #endregion 内部方法
 }

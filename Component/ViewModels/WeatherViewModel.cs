@@ -10,7 +10,7 @@ public class WeatherViewModel : BindableBase
     {
         WeatherQuery();
 
-        Common.SetTimer(1800000, (sender, args) => WeatherQuery());
+        Common.SetTimer(1800, (sender, args) => WeatherQuery());
     }
 
     #region 内部方法

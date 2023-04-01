@@ -43,6 +43,5 @@ public static class OpenAiApi
             return completionResult.Error.Code.ToString();
         }
     }
-    
-    
 }
+

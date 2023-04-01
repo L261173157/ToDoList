@@ -166,7 +166,9 @@ public static class WebApi
         }
         catch (Exception e)
         {
-            return "翻译失败"+Environment.NewLine+e.Message;
+            return "翻译失败" + Environment.NewLine + e.Message;
         }
     }
+
+
 }
