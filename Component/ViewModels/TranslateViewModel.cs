@@ -87,7 +87,16 @@ public class TranslateViewModel : BindableBase
 
         await using (var context = new Context())
         {
-            TranslateResult = Regex.Replace(TranslateResult, @"\s+", "").ToLower();
+            try
+            {
+                TranslateResult = Regex.Replace(TranslateResult, @"\s+", "").ToLower();
+            }
+            catch (ArgumentNullException e)
+            {
+                Console.WriteLine(e);
+                return;
+            }
+            
             if (Common.ContainChinese(TranslateResult))
             {
                 target = Services.Services.TranslateTarget.en;

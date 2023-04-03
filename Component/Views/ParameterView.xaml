@@ -4,18 +4,22 @@
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True" Width="460" Height="400" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Button Content="导入文件" HorizontalAlignment="Left" Margin="310,10,0,0" VerticalAlignment="Top"
+        <Button Content="选择文件" HorizontalAlignment="Left" Margin="300,10,0,0" VerticalAlignment="Top"
                 Command="{Binding NewDictCmd}" Height="30" Width="70" />
         <TextBox HorizontalAlignment="Left" Margin="80,10,0,0" Text="{Binding CsvFileName}" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="195" Height="30" />
         <Label Content="文件路径" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="30" />
-        <TextBox HorizontalAlignment="Center" Margin="0,50,0,0" Text="{Binding Rate}" TextWrapping="Wrap"
-                 VerticalAlignment="Top" Width="300" Height="30" />
+        <Button Content="确定导入" HorizontalAlignment="Left" Margin="300,50,0,0" VerticalAlignment="Top"
+                Command="{Binding ImportNewDictCmd}" Height="30" Width="70" />
+        <Button Content="初始化" HorizontalAlignment="Left" Margin="375,50,0,0" VerticalAlignment="Top"
+                Command="{Binding InitializeDictCmd}" Height="30" Width="70" />
+        <TextBox HorizontalAlignment="Left" Margin="80,50,0,0" Text="{Binding Rate}" TextWrapping="Wrap"
+                 VerticalAlignment="Top" Width="195" Height="30" />
         <Label Content="当前进度" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Height="30" />
-        <Label Content="词库数量" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Height="30" />
-        <Button Content="查询" HorizontalAlignment="Left" Margin="310,90,0,0" VerticalAlignment="Top"
-                Command="{Binding DbCountCmd}" Width="70" Height="30" />
-        <TextBox HorizontalAlignment="Left" Margin="80,90,0,0" Text="{Binding DbCount}" TextWrapping="Wrap"
+        <Label Content="词库状态" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Height="30" />
+        <Button Content="查询" HorizontalAlignment="Left" Margin="300,90,0,0" VerticalAlignment="Top"
+                Command="{Binding DbQueryCmd}" Width="70" Height="30" />
+        <TextBox HorizontalAlignment="Left" Margin="80,90,0,0" Text="{Binding DictState}" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="195" Height="30" />
     </Grid>
 </Window>
