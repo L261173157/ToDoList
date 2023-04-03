@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using Database.Models.DoList;
-using DoList.Services.EventType;
 using Prism.Events;
 using Prism.Ioc;
 using Prism.Regions;
@@ -14,6 +11,12 @@ namespace DoList.Views;
 /// </summary>
 public partial class MainView : UserControl
 {
+    #region 属性定义
+
+    private readonly IEventAggregator _eventAggregator;
+
+    #endregion 属性定义
+
     private IContainerExtension container;
     private IRegionManager regionManager;
 
@@ -28,10 +31,4 @@ public partial class MainView : UserControl
     private void UserControl_Loaded(object sender, RoutedEventArgs e)
     {
     }
-
-    #region 属性定义
-
-    private readonly IEventAggregator _eventAggregator;
-
-    #endregion 属性定义
 }

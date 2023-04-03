@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using OpenAI.GPT3;
 using OpenAI.GPT3.Managers;
@@ -15,7 +13,7 @@ public static class OpenAiApi
 {
     public static async Task<string> Chat(string input)
     {
-        var openAiService = new OpenAIService(new OpenAiOptions()
+        var openAiService = new OpenAIService(new OpenAiOptions
         {
             ApiKey = ConfigurationManager.AppSettings["openAiKey"]
         });
@@ -30,18 +28,12 @@ public static class OpenAiApi
                 ChatMessage.FromUser(input)
             },
             Model = Models.ChatGpt3_5Turbo,
-            MaxTokens = 500//optional
+            MaxTokens = 500 //optional
         });
         if (completionResult.Successful)
-        {
             //Console.WriteLine(completionResult.Choices.First().Message.Content);
             return completionResult.Choices.First().Message.Content;
-        }
-        else
-        {
-            //Console.WriteLine(completionResult.Error);
-            return completionResult.Error.Code.ToString();
-        }
+        //Console.WriteLine(completionResult.Error);
+        return completionResult.Error.Code;
     }
 }
-

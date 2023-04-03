@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,7 +29,7 @@ public class ParameterViewModel : BindableBase
     private string _rate;
 
     /// <summary>
-    /// 当前进度，绑定界面进度条
+    ///     当前进度，绑定界面进度条
     /// </summary>
     public string Rate
     {
@@ -41,7 +40,7 @@ public class ParameterViewModel : BindableBase
     private string _dictState;
 
     /// <summary>
-    /// 当前词库状态，绑定界面词库状态
+    ///     当前词库状态，绑定界面词库状态
     /// </summary>
     public string DictState
     {
@@ -56,7 +55,7 @@ public class ParameterViewModel : BindableBase
     private DelegateCommand _newDictCmd;
 
     /// <summary>
-    /// 读取csv文件，绑定界面选择文件按钮
+    ///     读取csv文件，绑定界面选择文件按钮
     /// </summary>
     public DelegateCommand NewDictCmd =>
         _newDictCmd ?? (_newDictCmd = new DelegateCommand(ExecuteNewDictCmd));
@@ -64,7 +63,7 @@ public class ParameterViewModel : BindableBase
     private DelegateCommand _importNewDictCmd;
 
     /// <summary>
-    /// 读取csv文件，绑定界面确定导入按钮
+    ///     读取csv文件，绑定界面确定导入按钮
     /// </summary>
     public DelegateCommand ImportNewDictCmd =>
         _importNewDictCmd ?? (_importNewDictCmd = new DelegateCommand(ExecuteImportNewDictCmd));
@@ -72,7 +71,7 @@ public class ParameterViewModel : BindableBase
     private DelegateCommand _initializeDictCmd;
 
     /// <summary>
-    /// 初始化数据库，绑定界面初始化按钮
+    ///     初始化数据库，绑定界面初始化按钮
     /// </summary>
     public DelegateCommand InitializeDictCmd =>
         _initializeDictCmd ?? (_initializeDictCmd = new DelegateCommand(ExecuteInitializeDictCmd));
@@ -80,7 +79,7 @@ public class ParameterViewModel : BindableBase
     private DelegateCommand _dbQueryCmd;
 
     /// <summary>
-    /// 查询数据库总数，绑定界面查询按钮
+    ///     查询数据库总数，绑定界面查询按钮
     /// </summary>
     public DelegateCommand DbQueryCmd =>
         _dbQueryCmd ?? (_dbQueryCmd = new DelegateCommand(ExecuteDbQueryCmd));
@@ -90,7 +89,7 @@ public class ParameterViewModel : BindableBase
     #region 内部方法
 
     /// <summary>
-    /// 选取新CSV文件
+    ///     选取新CSV文件
     /// </summary>
     private void ExecuteNewDictCmd()
     {
@@ -112,16 +111,16 @@ public class ParameterViewModel : BindableBase
     }
 
     /// <summary>
-    /// 导入CSV文件到数据库
+    ///     导入CSV文件到数据库
     /// </summary>
     private void ExecuteImportNewDictCmd()
     {
-        Task.Run(CsvToDb).ContinueWith((t) => MessageBox.Show("导入成功"));
-        DictState = "任务状态:"+"正在导入";
+        Task.Run(CsvToDb).ContinueWith(t => MessageBox.Show("导入成功"));
+        DictState = "任务状态:" + "正在导入";
     }
 
     /// <summary>
-    /// CSV文件到数据库
+    ///     CSV文件到数据库
     /// </summary>
     private async void CsvToDb()
     {
@@ -188,9 +187,9 @@ public class ParameterViewModel : BindableBase
 
     private void ExecuteInitializeDictCmd()
     {
-        Task.Run((InitializeDictDb))
-            .ContinueWith((t) => MessageBox.Show("初始化成功"));
-        DictState = "任务状态:"+"正在导入";
+        Task.Run(InitializeDictDb)
+            .ContinueWith(t => MessageBox.Show("初始化成功"));
+        DictState = "任务状态:" + "正在导入";
     }
 
     private async void InitializeDictDb()
@@ -239,7 +238,7 @@ public class ParameterViewModel : BindableBase
     {
         await using (var context = new Context())
         {
-            DictState = "词库数量:" + (from dict in context.DictDbs select dict).Count().ToString();
+            DictState = "词库数量:" + (from dict in context.DictDbs select dict).Count();
         }
     }
 

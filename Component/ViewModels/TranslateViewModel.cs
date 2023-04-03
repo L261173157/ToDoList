@@ -96,7 +96,7 @@ public class TranslateViewModel : BindableBase
                 Console.WriteLine(e);
                 return;
             }
-            
+
             if (Common.ContainChinese(TranslateResult))
             {
                 target = Services.Services.TranslateTarget.en;
@@ -114,7 +114,9 @@ public class TranslateViewModel : BindableBase
             }
 
             else
+            {
                 TranslateResult = await WebApi.Translate(TranslateResult, target);
+            }
         }
     }
 

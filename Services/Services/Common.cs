@@ -7,9 +7,8 @@ namespace Services.Services;
 
 public static class Common
 {
-    
     /// <summary>
-    /// MD5转换
+    ///     MD5转换
     /// </summary>
     /// <param name="str">源值</param>
     /// <returns>目标值</returns>
@@ -30,28 +29,26 @@ public static class Common
     }
 
     /// <summary>
-    /// 延时调用方法
+    ///     延时调用方法
     /// </summary>
     /// <param name="time">延时时间S</param>
     /// <param name="eventHandler">被调用方法</param>
     public static void SetTimer(int time, ElapsedEventHandler eventHandler)
     {
-        var timer = new Timer(time*1000);
+        var timer = new Timer(time * 1000);
         timer.Elapsed += eventHandler;
         timer.AutoReset = true;
         timer.Enabled = true;
     }
-    
+
     /// <summary>
-    /// 判断字符串中是否包含中文
+    ///     判断字符串中是否包含中文
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
     public static bool ContainChinese(string input)
     {
-        string pattern = "[\u4e00-\u9fbb]";
+        var pattern = "[\u4e00-\u9fbb]";
         return Regex.IsMatch(input, pattern);
     }
-
-
 }

@@ -22,7 +22,7 @@
             <Button x:Name="BtnWeather" Content="天气" HorizontalAlignment="Left" VerticalAlignment="Top"
                     Click="BtnWeather_Click" Margin="50,0,0,0" />
             <Button x:Name="Chat" Content="问答" HorizontalAlignment="Left" VerticalAlignment="Top"
-                 Margin="100,0,0,0" Click="Chat_Click" />
+                    Margin="100,0,0,0" Click="Chat_Click" />
         </Grid>
     </Grid>
 </Window>

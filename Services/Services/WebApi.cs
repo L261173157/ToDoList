@@ -169,6 +169,4 @@ public static class WebApi
             return "翻译失败" + Environment.NewLine + e.Message;
         }
     }
-
-
 }

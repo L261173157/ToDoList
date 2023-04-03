@@ -1,9 +1,7 @@
 ﻿using System.Configuration;
-using System.Security.Policy;
 using Database.Models.Component;
 using Database.Models.DoList;
 using Microsoft.EntityFrameworkCore;
-using MySql.EntityFrameworkCore.Extensions;
 
 namespace Database.Db;
 
@@ -33,9 +31,6 @@ public class Context : DbContext
             entity.Property(e => e.Content).IsRequired();
         });
 
-        modelBuilder.Entity<DictDb>(entity =>
-        {
-            entity.HasKey(e => e.Id);
-        });
+        modelBuilder.Entity<DictDb>(entity => { entity.HasKey(e => e.Id); });
     }
 }

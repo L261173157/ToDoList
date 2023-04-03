@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text.RegularExpressions;
 using System.Windows.Input;
 using Component.Views;
-using Database.Db;
 using Prism.Commands;
 using Prism.Mvvm;
 using Services.Services;
@@ -69,7 +66,7 @@ public class ChatViewModel : BindableBase
 
     private async void Chat()
     {
-       ChatResult=await OpenAiApi.Chat(ChatResult);
+        ChatResult = await OpenAiApi.Chat(ChatResult);
     }
 
     //显示字典操作页面

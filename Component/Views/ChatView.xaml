@@ -6,7 +6,6 @@
              mc:Ignorable="d"
              d:DesignHeight="115" d:DesignWidth="450"
              xmlns:prism="http://prismlibrary.com/"
-             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <Grid>
         <ComboBox HorizontalAlignment="Left" Margin="260,0,0,0" VerticalAlignment="Top" Width="80"

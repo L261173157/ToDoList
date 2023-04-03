@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Timers;
 using Database.Db;
 using Database.Models.DoList;
@@ -29,6 +28,7 @@ public class MainViewModel : BindableBase
         Refresh();
         RemindPast();
     }
+
     //通过析构函数释放资源
     ~MainViewModel()
     {
@@ -37,27 +37,28 @@ public class MainViewModel : BindableBase
             timer.Stop();
             timer.Dispose();
         }
+
         _context.Dispose();
     }
 
     #region 属性定义
 
     /// <summary>
-    /// 提醒功能时间间隔组
+    ///     提醒功能时间间隔组
     /// </summary>
     private readonly List<Timer> _timers = new();
 
     /// <summary>
-    /// 事件聚合器
+    ///     事件聚合器
     /// </summary>
     private readonly IEventAggregator _eventAggregator;
 
     /// <summary>
-    /// 主界面数据列表
+    ///     主界面数据列表
     /// </summary>
     public ObservableCollection<Thing> Things { get; set; }
 
-    private readonly Context _context = new Context();
+    private readonly Context _context = new();
 
     private string _nowStatus;
 
@@ -119,7 +120,6 @@ public class MainViewModel : BindableBase
 
         Refresh();
     }
-    
 
     #endregion 命令
 
@@ -135,18 +135,12 @@ public class MainViewModel : BindableBase
         {
             case "全部":
                 var resultAll = _context.Things.OrderBy(thing => thing.Done);
-                foreach (var item in resultAll)
-                {
-                    Things.Add(item);
-                }
+                foreach (var item in resultAll) Things.Add(item);
 
                 break;
             case "未完成":
                 var resultNodone = _context.Things.Where(thing => thing.Done == false);
-                foreach (var item in resultNodone)
-                {
-                    Things.Add(item);
-                }
+                foreach (var item in resultNodone) Things.Add(item);
 
                 break;
         }
@@ -216,7 +210,6 @@ public class MainViewModel : BindableBase
     }
 
     #endregion 时间触发
-    
-   
+
     #endregion 内部方法
 }
