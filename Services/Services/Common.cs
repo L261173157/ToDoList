@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Timers;
@@ -50,5 +51,12 @@ public static class Common
     {
         var pattern = "[\u4e00-\u9fbb]";
         return Regex.IsMatch(input, pattern);
+    }
+    
+    //时间戳函数
+    public static long GetTimeStamp()
+    {
+        var timeSpan = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0));
+        return (long) timeSpan.TotalSeconds;
     }
 }

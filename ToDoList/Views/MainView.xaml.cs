@@ -13,15 +13,14 @@ namespace ToDoList.Views;
 /// </summary>
 public partial class MainView : Window
 {
-    private readonly IRegionManager regionManager;
-
     #region 属性定义
 
+    private readonly IRegionManager regionManager;
     private IEventAggregator _eventAggregator;
+    private IContainerExtension container;
 
     #endregion 属性定义
 
-    private IContainerExtension container;
 
     public MainView(IEventAggregator ea, IRegionManager regionManager, IContainerExtension container)
     {

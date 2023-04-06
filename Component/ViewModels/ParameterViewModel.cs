@@ -115,14 +115,21 @@ public class ParameterViewModel : BindableBase
     /// </summary>
     private void ExecuteImportNewDictCmd()
     {
-        Task.Run(CsvToDb).ContinueWith(t => MessageBox.Show("导入成功"));
-        DictState = "任务状态:" + "正在导入";
+        var task1 = Task.Run(ImportNewDict).ContinueWith(t => MessageBox.Show("导入成功"));
+        Task.Run(() =>
+        {
+            do
+            {
+                DictState = "任务状态:" + task1.Status;
+            } while (task1.Status == TaskStatus.RanToCompletion);
+        });
+        task1.Wait();
     }
 
     /// <summary>
-    ///     CSV文件到数据库
+    /// 导入新词入库
     /// </summary>
-    private async void CsvToDb()
+    private async void ImportNewDict()
     {
         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
@@ -132,7 +139,7 @@ public class ParameterViewModel : BindableBase
         using var csv = new CsvReader(reader, config);
         var records = csv.GetRecords<Dict>();
         //写入数据库
-        await using (var context = new Context())
+        await using (var context = new ContextLocal())
         {
             long rateNew = 0;
             long rateUpdate = 0;
@@ -187,11 +194,21 @@ public class ParameterViewModel : BindableBase
 
     private void ExecuteInitializeDictCmd()
     {
-        Task.Run(InitializeDictDb)
+        var task1 = Task.Run(InitializeDictDb)
             .ContinueWith(t => MessageBox.Show("初始化成功"));
-        DictState = "任务状态:" + "正在导入";
+        Task.Run(() =>
+        {
+            do
+            {
+                DictState = "任务状态:" + task1.Status;
+            } while (task1.Status == TaskStatus.RanToCompletion);
+        });
+        task1.Wait();
     }
 
+    /// <summary>
+    /// 初始化数据库
+    /// </summary>
     private async void InitializeDictDb()
     {
         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
@@ -202,10 +219,10 @@ public class ParameterViewModel : BindableBase
         using var csv = new CsvReader(reader, config);
         var records = csv.GetRecords<Dict>();
         //写入数据库
-        await using (var context = new Context())
+        await using (var context = new ContextLocal())
         {
             //清空词典表
-            await context.Database.ExecuteSqlRawAsync("truncate table dictdbs");
+            await context.Database.ExecuteSqlRawAsync("delete from dictdbs");
             long rateNew = 0;
             foreach (var record in records)
             {
@@ -236,7 +253,7 @@ public class ParameterViewModel : BindableBase
 
     private async void ExecuteDbQueryCmd()
     {
-        await using (var context = new Context())
+        await using (var context = new ContextLocal())
         {
             DictState = "词库数量:" + (from dict in context.DictDbs select dict).Count();
         }

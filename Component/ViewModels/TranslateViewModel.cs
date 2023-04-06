@@ -85,7 +85,7 @@ public class TranslateViewModel : BindableBase
                 break;
         }
 
-        await using (var context = new Context())
+        await using (var context = new ContextLocal())
         {
             try
             {

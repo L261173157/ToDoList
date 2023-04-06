@@ -1,14 +1,18 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
+
 namespace Database.Migrations
 {
-    public partial class addDict : Migration
+    /// <inheritdoc />
+    public partial class addupdatetimestamp : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Dicts",
+                name: "DictDbs",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -29,7 +33,7 @@ namespace Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Dicts", x => x.Id);
+                    table.PrimaryKey("PK_DictDbs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -38,12 +42,14 @@ namespace Database.Migrations
                 {
                     ThingId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Content = table.Column<string>(type: "TEXT", nullable: true),
+                    Content = table.Column<string>(type: "TEXT", nullable: false),
                     Done = table.Column<bool>(type: "INTEGER", nullable: false),
-                    CreatTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    CreateTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     FinishedTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Remind = table.Column<bool>(type: "INTEGER", nullable: false),
-                    RemindTime = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    RemindTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    CreateTimeStamp = table.Column<long>(type: "INTEGER", nullable: false),
+                    UpdateTimeStamp = table.Column<long>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,10 +57,11 @@ namespace Database.Migrations
                 });
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Dicts");
+                name: "DictDbs");
 
             migrationBuilder.DropTable(
                 name: "Things");

@@ -7,7 +7,7 @@ public class Thing : BindableBase
 {
     private string content;
 
-    private DateTime creatTime;
+    private DateTime createTime;
 
     private bool done;
 
@@ -48,10 +48,10 @@ public class Thing : BindableBase
     /// <summary>
     ///     创建时间
     /// </summary>
-    public DateTime CreatTime
+    public DateTime CreateTime
     {
-        get => creatTime;
-        set => SetProperty(ref creatTime, value);
+        get => createTime;
+        set => SetProperty(ref createTime, value);
     }
 
     /// <summary>
@@ -79,5 +79,27 @@ public class Thing : BindableBase
     {
         get => remindTime;
         set => SetProperty(ref remindTime, value);
+    }
+    
+    private Int64 _createTimeStamp;
+
+    /// <summary>
+    ///     创建时间戳
+    /// </summary>
+    public Int64 CreateTimeStamp
+    {
+        get => _createTimeStamp;
+        set => SetProperty(ref _createTimeStamp, value);
+    }
+    
+    private Int64 _updateTimeStamp;
+
+    /// <summary>
+    ///     更新时间戳
+    /// </summary>
+    public Int64 UpdateTimeStamp
+    {
+        get => _updateTimeStamp;
+        set => SetProperty(ref _updateTimeStamp, value);
     }
 }

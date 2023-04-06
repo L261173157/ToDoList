@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Timers;
 using Database.Db;
 using Database.Models.DoList;
@@ -11,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using Services.Services;
 
 namespace DoList.ViewModels;
 
@@ -21,7 +23,7 @@ public class MainViewModel : BindableBase
     {
         ea.GetEvent<MainViewRefresh>().Subscribe(Refresh);
         _eventAggregator = ea;
-        _context.Database.EnsureCreated();
+        _contextLocal.Database.EnsureCreated();
         // Things = _context.Things.Local.ToObservableCollection();
         Things = new ObservableCollection<Thing>();
         NowStatus = "未完成";
@@ -38,7 +40,7 @@ public class MainViewModel : BindableBase
             timer.Dispose();
         }
 
-        _context.Dispose();
+        _contextLocal.Dispose();
     }
 
     #region 属性定义
@@ -58,7 +60,7 @@ public class MainViewModel : BindableBase
     /// </summary>
     public ObservableCollection<Thing> Things { get; set; }
 
-    private readonly Context _context = new();
+    private readonly ContextLocal _contextLocal = new();
 
     private string _nowStatus;
 
@@ -128,19 +130,33 @@ public class MainViewModel : BindableBase
     //刷新
     private void Refresh()
     {
-        _context.SaveChanges();
-        _context.Things.Load();
+        //更新时间戳
+        var result = _contextLocal.Things;
+        foreach (var item in result)
+        {
+            item.UpdateTimeStamp = Common.GetTimeStamp();
+        }
+        _contextLocal.SaveChanges();
+        //同步数据库
+        Task.Run((Database.SyncDb.SyncThings));
+        _contextLocal.Things.Load();
         Things.Clear();
         switch (NowStatus)
         {
             case "全部":
-                var resultAll = _context.Things.OrderBy(thing => thing.Done);
-                foreach (var item in resultAll) Things.Add(item);
+                var resultAll = _contextLocal.Things.OrderBy(thing => thing.Done);
+                foreach (var item in resultAll)
+                {
+                    Things.Add(item);
+                }
 
                 break;
             case "未完成":
-                var resultNodone = _context.Things.Where(thing => thing.Done == false);
-                foreach (var item in resultNodone) Things.Add(item);
+                var resultNotDone = _contextLocal.Things.Where(thing => thing.Done == false);
+                foreach (var item in resultNotDone)
+                {
+                    Things.Add(item);
+                }
 
                 break;
         }
@@ -152,7 +168,7 @@ public class MainViewModel : BindableBase
 
     private void RemindFuture()
     {
-        using (var context = new Context())
+        using (var context = new ContextLocal())
         {
             TimeSpan timeSpan;
 
@@ -180,7 +196,7 @@ public class MainViewModel : BindableBase
     //仅在启动时调用
     private void RemindPast()
     {
-        using (var context = new Context())
+        using (var context = new ContextLocal())
         {
             var nowTime = DateTime.Now;
             _timers.Clear();

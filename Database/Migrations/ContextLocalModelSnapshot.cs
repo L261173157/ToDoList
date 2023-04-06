@@ -3,20 +3,19 @@ using System;
 using Database.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+
+#nullable disable
 
 namespace Database.Migrations
 {
-    [DbContext(typeof(Context))]
-    [Migration("20211107024950_dicttodictdb")]
-    partial class dicttodictdb
+    [DbContext(typeof(ContextLocal))]
+    partial class ContextLocalModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.11");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.4");
 
             modelBuilder.Entity("Database.Models.Component.DictDb", b =>
                 {
@@ -65,7 +64,7 @@ namespace Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Dicts");
+                    b.ToTable("DictDbs");
                 });
 
             modelBuilder.Entity("Database.Models.DoList.Thing", b =>
@@ -75,10 +74,14 @@ namespace Database.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Content")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("CreatTime")
+                    b.Property<DateTime>("CreateTime")
                         .HasColumnType("TEXT");
+
+                    b.Property<long>("CreateTimeStamp")
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("Done")
                         .HasColumnType("INTEGER");
@@ -91,6 +94,9 @@ namespace Database.Migrations
 
                     b.Property<DateTime>("RemindTime")
                         .HasColumnType("TEXT");
+
+                    b.Property<long>("UpdateTimeStamp")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ThingId");
 

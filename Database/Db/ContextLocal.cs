@@ -5,21 +5,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Database.Db;
 
-public class Context : DbContext
+public class ContextLocal : DbContext
 {
     public DbSet<Thing> Things { get; set; }
 
     public DbSet<DictDb> DictDbs { get; set; }
 
     //链接本地sqlite
-    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //{
-    //    optionsBuilder.UseSqlite(ConfigurationManager.ConnectionStrings["DbSqlite"].ConnectionString);
-    //}
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseMySQL(ConfigurationManager.ConnectionStrings["mySql"].ConnectionString);
+        optionsBuilder.UseSqlite(ConfigurationManager.ConnectionStrings["DbSqlite"].ConnectionString);
     }
+   
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

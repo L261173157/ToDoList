@@ -31,7 +31,8 @@ public static class WebApi
         {
             localIP = await LocationIP();
             localCity = await Address(localIP);
-            localCity = localCity.Substring(0, localCity.Length - 1);
+            if (localCity.EndsWith("市"))
+                localCity = localCity.Substring(0, localCity.Length - 1);
             localWeather = await Weather(localCity);
         }
         catch (Exception)
@@ -53,6 +54,8 @@ public static class WebApi
         {
             var url = "http://apis.juhe.cn/simpleWeather/query";
             var key = ConfigurationManager.AppSettings["weatherKey"];
+            if (city.EndsWith("市"))
+                city = city.Substring(0, city.Length - 1);
             var par = url + "?city=" + city + "&key=" + key;
             var response = await client.GetAsync(par);
             response.EnsureSuccessStatusCode();
@@ -104,7 +107,15 @@ public static class WebApi
 
         var adress = JsonConvert.DeserializeObject<Adress>(responseBody);
         if (adress.error_code == 0)
-            return adress.result.City;
+            if (adress.result.City == "")
+            {
+                return adress.result.Province;
+            }
+            else
+            {
+                return adress.result.City;
+            }
+
         return "";
     }
 

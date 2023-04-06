@@ -6,6 +6,7 @@ using DoList.Services.EventType;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using Services.Services;
 
 namespace DoList.ViewModels;
 
@@ -128,14 +129,17 @@ public class EditViewModel : BindableBase
 
     private void ExecuteSaveCmd()
     {
-        using (var context = new Context())
+        using (var context = new ContextLocal())
         {
             if (ThingId == 0)
             {
                 context.Things.Add(new Thing
                 {
-                    Content = Content, CreatTime = DateTime.Now, Remind = Remind,
-                    RemindTime = RemindTime
+                    Content = Content,
+                    CreateTime = DateTime.Now,
+                    Remind = Remind,
+                    RemindTime = RemindTime,
+                    CreateTimeStamp = Common.GetTimeStamp()
                 });
             }
             else
@@ -145,6 +149,7 @@ public class EditViewModel : BindableBase
                 thingNeedChang.Done = Done;
                 thingNeedChang.Remind = Remind;
                 thingNeedChang.RemindTime = RemindTime;
+                thingNeedChang.CreateTimeStamp = Common.GetTimeStamp();
             }
 
             context.SaveChanges();

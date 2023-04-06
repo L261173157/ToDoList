@@ -4,13 +4,16 @@
 
 namespace Database.Migrations
 {
-    public partial class to60 : Migration
+    /// <inheritdoc />
+    public partial class addtimestamp : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
 
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
 
