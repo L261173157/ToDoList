@@ -9,7 +9,7 @@
              prism:ViewModelLocator.AutoWireViewModel="True">
     <Grid>
         <ComboBox HorizontalAlignment="Left" Margin="260,0,0,0" VerticalAlignment="Top" Width="80"
-                  ItemsSource="{Binding TargetItemsSource}" SelectedItem="{Binding TranslateTarget}" SelectedIndex="0" />
+                  ItemsSource="{Binding SystemInputSource}" SelectedItem="{Binding SystemInput}" SelectedIndex="0" />
         <Button Content="问答" HorizontalAlignment="Left" Margin="345,0,0,0" VerticalAlignment="Top" Width="100"
                 Height="50" Command="{Binding ChatCmd}" />
         <TextBox x:Name="TbTranslate" HorizontalAlignment="Left"
@@ -22,6 +22,6 @@
             <!-- </i:Interaction.Triggers> -->
         </TextBox>
         <Button Content="设置" HorizontalAlignment="Left" Margin="345,50,0,0" VerticalAlignment="Top" Width="100"
-                Height="50" Command="{Binding DictOperateCmd}" />
+                Height="50" Command="{Binding ParameterCmd}" />
     </Grid>
 </UserControl>

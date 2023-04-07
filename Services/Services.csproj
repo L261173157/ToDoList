@@ -6,13 +6,28 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Betalgo.OpenAI.GPT3" Version="6.8.1"/>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
-        <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0"/>
+        <PackageReference Include="Betalgo.OpenAI.GPT3" Version="6.8.1" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Services\EventType\"/>
+        <Folder Include="Services\EventType\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="chatRole.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>chatRole.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="chatRole.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>chatRole.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
 
 </Project>

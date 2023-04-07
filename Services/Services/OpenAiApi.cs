@@ -11,29 +11,28 @@ namespace Services.Services;
 
 public static class OpenAiApi
 {
-    public static async Task<string> Chat(string input)
+    public static async Task<string> Chat(string userInput, string systemInput = "", string assistantInput = "",
+        float temperature = 0.5f)
     {
         var openAiService = new OpenAIService(new OpenAiOptions
         {
             ApiKey = ConfigurationManager.AppSettings["openAiKey"]
         });
-        var completionResult = await openAiService.ChatCompletion.CreateCompletion(new ChatCompletionCreateRequest
+
+        var create = new ChatCompletionCreateRequest
         {
             Messages = new List<ChatMessage>
             {
-                //ChatMessage.FromSystem("You are a helpful assistant."),
-                //ChatMessage.FromUser("Who won the world series in 2020?"),
-                //ChatMessage.FromAssistant("The Los Angeles Dodgers won the World Series in 2020."),
-                //ChatMessage.FromUser("Where was it played?")
-                ChatMessage.FromUser(input)
+                ChatMessage.FromSystem(systemInput??"不担任任何角色"), //optional
+                ChatMessage.FromUser(userInput),
             },
             Model = Models.ChatGpt3_5Turbo,
-            MaxTokens = 500 //optional
-        });
+            MaxTokens = 4000, //optional
+            Temperature = temperature, //optional
+        };
+        var completionResult = await openAiService.ChatCompletion.CreateCompletion(create);
         if (completionResult.Successful)
-            //Console.WriteLine(completionResult.Choices.First().Message.Content);
             return completionResult.Choices.First().Message.Content;
-        //Console.WriteLine(completionResult.Error);
         return completionResult.Error.Code;
     }
 }

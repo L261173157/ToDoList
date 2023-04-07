@@ -18,7 +18,7 @@ public class TranslateViewModel : BindableBase
         TargetItemsSource = new ObservableCollection<string>(Enum.GetNames(typeof(TranslateTarget)));
         TbKeyUpEventCmd = new DelegateCommand<KeyEventArgs>(TbKeyUpEvent);
         TranslateCmd = new DelegateCommand(TranslateQuery);
-        DictOperateCmd = new DelegateCommand(ExecuteDictOperateCmd);
+        ParameterCmd = new DelegateCommand(ExecuteParameterCmd);
     }
 
     #region 属性定义
@@ -58,7 +58,7 @@ public class TranslateViewModel : BindableBase
     public DelegateCommand TranslateCmd { get; }
 
     //字典操作命令
-    public DelegateCommand DictOperateCmd { get; }
+    public DelegateCommand ParameterCmd { get; }
 
     //翻译命令
     public DelegateCommand<KeyEventArgs> TbKeyUpEventCmd { get; }
@@ -121,10 +121,10 @@ public class TranslateViewModel : BindableBase
     }
 
     //显示字典操作页面
-    private void ExecuteDictOperateCmd()
+    private void ExecuteParameterCmd()
     {
-        var Parameter = new ParameterView();
-        Parameter.Show();
+        var parameterView = new ParameterView();
+        parameterView.Show();
     }
 
 //取消的方法，之后再试
