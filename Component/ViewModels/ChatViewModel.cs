@@ -14,7 +14,7 @@ public class ChatViewModel : BindableBase
     public ChatViewModel()
     {
         SystemInputSource =
-            new ObservableCollection<string>(new string[] { "通用", "Linux_终端", "英翻中", "英英词典", "英语翻译和改进者" });
+            new ObservableCollection<string>(new string[] { "通用", ".net专家", "英翻中", "中翻英" });
         TbKeyUpEventCmd = new DelegateCommand<KeyEventArgs>(TbKeyUpEvent);
         ChatCmd = new DelegateCommand(Chat);
         ParameterCmd = new DelegateCommand(ExecuteParameterCmd);
@@ -71,27 +71,25 @@ public class ChatViewModel : BindableBase
 
     private async void Chat()
     {
-        string systemInput=chatRole.通用;
+        string systemInput = chatRole.通用;
         switch (SystemInput)
         {
             case "通用":
                 systemInput = chatRole.通用;
                 break;
-            case "Linux 终端":
-                systemInput = chatRole.Linux_终端;
-                break;
+
             case "英翻中":
                 systemInput = chatRole.英翻中;
                 break;
-            case "英英词典":
-                systemInput = chatRole.英英词典;
+            case "中翻英":
+                systemInput = chatRole.中翻英;
                 break;
-            case "英语翻译和改进者":
-                systemInput = chatRole.英语翻译和改进者;
+            case ".net专家":
+                systemInput = chatRole.dotnet专家;
                 break;
         }
 
-        ChatResult = await OpenAiApi.Chat(ChatResult,systemInput);
+        ChatResult = await OpenAiApi.Chat(ChatResult, systemInput);
         //assistantInput = ChatResult;
     }
 

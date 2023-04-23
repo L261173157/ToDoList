@@ -15,7 +15,7 @@
         <Label Width="80" VerticalAlignment="Top" Margin="272,74,0,0" HorizontalAlignment="Left" Content="提醒" />
         <CheckBox x:Name="cbRemind" VerticalAlignment="Top" Margin="366,80,0,0" IsChecked="{Binding Remind}"
                   HorizontalAlignment="Left" Content="" />
-        <hc:DateTimePicker x:Name="dtpRemindTime" Margin="272,104,0,10" SelectedDateTime="{Binding RemindTime}" />
+        <!-- <hc:DateTimePicker x:Name="dtpRemindTime" Margin="272,104,0,10" SelectedDateTime="{Binding RemindTime}" /> -->
         <Label Width="80" VerticalAlignment="Top" Margin="272,43,0,0" HorizontalAlignment="Left" Content="完成" />
         <CheckBox x:Name="cbRemind_Copy" VerticalAlignment="Top" Margin="366,49,0,0" IsChecked="{Binding Done}"
                   HorizontalAlignment="Left" Content="" />

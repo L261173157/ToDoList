@@ -9,7 +9,7 @@
              xmlns:hc="https://handyorg.github.io/handycontrol"
              prism:ViewModelLocator.AutoWireViewModel="True" Width="450" Height="600" Loaded="UserControl_Loaded">
     <Grid Width="450" Height="600">
-        <hc:NotifyIcon x:Name="NotifyIcon" Text="ToDoList" />
+        <!-- <hc:NotifyIcon x:Name="NotifyIcon" Text="ToDoList" /> -->
 
         <DataGrid x:Name="ExaDataGrid" ItemsSource="{Binding Things}" AutoGenerateColumns="False"
                   HorizontalAlignment="Left" GridLinesVisibility="Vertical" MaxColumnWidth="261" SelectionMode="Single"

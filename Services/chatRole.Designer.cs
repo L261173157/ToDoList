@@ -60,11 +60,20 @@ namespace Services {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 我想让你充当 Linux 终端。我将输入命令，您将回复终端应显示的内容。我希望您只在一个唯一的代码块内回复终端输出，而不是其他任何内容。不要写解释。除非我指示您这样做，否则不要键入命令。当我需要用英语告诉你一些事情时，我会把文字放在中括号内[就像这样]。.
+        ///   Looks up a localized string similar to 我想让你充当dotnot方面的代码专家.
         /// </summary>
-        public static string Linux_终端 {
+        public static string dotnet专家 {
             get {
-                return ResourceManager.GetString("Linux 终端", resourceCulture);
+                return ResourceManager.GetString("dotnet专家", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 将中文翻译为英文，要专业请检查所有信息是否准确，并在回答时保持简洁，不需要任何其他反馈。.
+        /// </summary>
+        public static string 中翻英 {
+            get {
+                return ResourceManager.GetString("中翻英", resourceCulture);
             }
         }
         
@@ -74,24 +83,6 @@ namespace Services {
         public static string 英翻中 {
             get {
                 return ResourceManager.GetString("英翻中", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 将英文单词转换为包括中文翻译、英文释义和一个例句的完整解释。请检查所有信息是否准确，并在回答时保持简洁，不需要任何其他反馈。.
-        /// </summary>
-        public static string 英英词典 {
-            get {
-                return ResourceManager.GetString("英英词典", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 我希望你能担任英语翻译、拼写校对和修辞改进的角色。我会用任何语言和你交流，你会识别语言，将其翻译并用更为优美和精炼的英语回答我。请将我简单的词汇和句子替换成更为优美和高雅的表达方式，确保意思不变，但使其更具文学性。请仅回答更正和改进的部分，不要写解释。.
-        /// </summary>
-        public static string 英语翻译和改进者 {
-            get {
-                return ResourceManager.GetString("英语翻译和改进者", resourceCulture);
             }
         }
         
