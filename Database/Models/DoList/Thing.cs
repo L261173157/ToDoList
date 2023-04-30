@@ -80,7 +80,7 @@ public class Thing : BindableBase
         get => remindTime;
         set => SetProperty(ref remindTime, value);
     }
-    
+
     private Int64 _createTimeStamp;
 
     /// <summary>
@@ -91,7 +91,7 @@ public class Thing : BindableBase
         get => _createTimeStamp;
         set => SetProperty(ref _createTimeStamp, value);
     }
-    
+
     private Int64 _updateTimeStamp;
 
     /// <summary>

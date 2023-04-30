@@ -136,6 +136,7 @@ public class MainViewModel : BindableBase
         {
             item.UpdateTimeStamp = Common.GetTimeStamp();
         }
+
         _contextLocal.SaveChanges();
         //同步数据库
         Task.Run((Database.SyncDb.SyncThings));

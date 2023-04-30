@@ -16,7 +16,7 @@ public class ContextLocal : DbContext
     {
         optionsBuilder.UseSqlite(ConfigurationManager.ConnectionStrings["DbSqlite"].ConnectionString);
     }
-   
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

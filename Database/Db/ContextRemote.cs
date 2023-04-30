@@ -10,7 +10,7 @@ public class ContextRemote : DbContext
     public DbSet<Thing> Things { get; set; }
 
     public DbSet<DictDb> DictDbs { get; set; }
-    
+
     //链接华为云mysql
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

@@ -23,7 +23,7 @@ public static class OpenAiApi
         {
             Messages = new List<ChatMessage>
             {
-                ChatMessage.FromSystem(systemInput??"不担任任何角色"), //optional
+                ChatMessage.FromSystem(systemInput ?? "不担任任何角色"), //optional
                 ChatMessage.FromUser(userInput),
             },
             Model = Models.ChatGpt3_5Turbo,
