@@ -15,7 +15,7 @@ public class ChatViewModel : BindableBase
     {
         SystemInputSource =
             new ObservableCollection<string>(new string[] { "通用", ".net专家", "英翻中", "中翻英" });
-        TbKeyUpEventCmd = new DelegateCommand<KeyEventArgs>(TbKeyUpEvent);
+
         ChatCmd = new DelegateCommand(Chat);
         ParameterCmd = new DelegateCommand(ExecuteParameterCmd);
     }
@@ -59,11 +59,8 @@ public class ChatViewModel : BindableBase
     //绑定界面问答命令
     public DelegateCommand ChatCmd { get; }
 
-    //字典操作命令
+    //参数命令
     public DelegateCommand ParameterCmd { get; }
-
-    //翻译命令
-    public DelegateCommand<KeyEventArgs> TbKeyUpEventCmd { get; }
 
     #endregion 命令
 
@@ -89,6 +86,7 @@ public class ChatViewModel : BindableBase
                 break;
         }
 
+//TODO 未来需要修改catch内容
         try
         {
             ChatResult = await OpenAiApi.Chat(ChatResult, systemInput);
@@ -97,21 +95,13 @@ public class ChatViewModel : BindableBase
         {
             ChatResult = e.Message;
         }
-        
-        //assistantInput = ChatResult;
     }
 
-    //显示字典操作页面
+    //显示参数页面
     private void ExecuteParameterCmd()
     {
         var parameterView = new ParameterView();
         parameterView.Show();
-    }
-
-    //取消的方法，之后再试
-    private void TbKeyUpEvent(KeyEventArgs eventArgs)
-    {
-        if (eventArgs.Key == Key.Enter) Chat();
     }
 
     #endregion 内部方法

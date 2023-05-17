@@ -34,13 +34,12 @@ public static class WebApi
             if (localCity.EndsWith("市"))
                 localCity = localCity.Substring(0, localCity.Length - 1);
             localWeather = await Weather(localCity);
+            return localWeather;
         }
         catch (Exception)
         {
             return "网络错误";
         }
-
-        return localWeather;
     }
 
     /// <summary>
