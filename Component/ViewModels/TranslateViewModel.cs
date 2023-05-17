@@ -16,7 +16,6 @@ public class TranslateViewModel : BindableBase
     public TranslateViewModel()
     {
         TargetItemsSource = new ObservableCollection<string>(Enum.GetNames(typeof(TranslateTarget)));
-        TbKeyUpEventCmd = new DelegateCommand<KeyEventArgs>(TbKeyUpEvent);
         TranslateCmd = new DelegateCommand(TranslateQuery);
         ParameterCmd = new DelegateCommand(ExecuteParameterCmd);
     }
@@ -60,9 +59,6 @@ public class TranslateViewModel : BindableBase
     //字典操作命令
     public DelegateCommand ParameterCmd { get; }
 
-    //翻译命令
-    public DelegateCommand<KeyEventArgs> TbKeyUpEventCmd { get; }
-
     #endregion 命令
 
     #region 内部方法
@@ -97,25 +93,32 @@ public class TranslateViewModel : BindableBase
                 return;
             }
 
-            if (Common.ContainChinese(TranslateResult))
+            try
             {
-                target = Services.Services.TranslateTarget.en;
-                TranslateResult = await WebApi.Translate(TranslateResult, target);
-                return;
+                if (Common.ContainChinese(TranslateResult))
+                {
+                    target = Services.Services.TranslateTarget.en;
+                    TranslateResult = await WebApi.Translate(TranslateResult, target);
+                    return;
+                }
+
+                var result = (from dict in context.DictDbs where dict.Word == TranslateResult select dict.Translation)
+                    .FirstOrDefault();
+
+                if (!string.IsNullOrEmpty(result))
+                {
+                    result = result.Replace("\\n", Environment.NewLine);
+                    TranslateResult = result;
+                }
+
+                else
+                {
+                    TranslateResult = await WebApi.Translate(TranslateResult, target);
+                }
             }
-
-            var result = (from dict in context.DictDbs where dict.Word == TranslateResult select dict.Translation)
-                .FirstOrDefault();
-
-            if (!string.IsNullOrEmpty(result))
+            catch (Exception e)
             {
-                result = result.Replace("\\n", Environment.NewLine);
-                TranslateResult = result;
-            }
-
-            else
-            {
-                TranslateResult = await WebApi.Translate(TranslateResult, target);
+                TranslateResult = e.Message;
             }
         }
     }
@@ -125,12 +128,6 @@ public class TranslateViewModel : BindableBase
     {
         var parameterView = new ParameterView();
         parameterView.Show();
-    }
-
-//取消的方法，之后再试
-    private void TbKeyUpEvent(KeyEventArgs eventArgs)
-    {
-        if (eventArgs.Key == Key.Enter) TranslateQuery();
     }
 
     #endregion 内部方法

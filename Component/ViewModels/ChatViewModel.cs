@@ -89,7 +89,15 @@ public class ChatViewModel : BindableBase
                 break;
         }
 
-        ChatResult = await OpenAiApi.Chat(ChatResult, systemInput);
+        try
+        {
+            ChatResult = await OpenAiApi.Chat(ChatResult, systemInput);
+        }
+        catch (Exception e)
+        {
+            ChatResult = e.Message;
+        }
+        
         //assistantInput = ChatResult;
     }
 
