@@ -74,7 +74,6 @@ public class ChatViewModel : BindableBase
             case "通用":
                 systemInput = chatRole.通用;
                 break;
-
             case "英翻中":
                 systemInput = chatRole.英翻中;
                 break;
