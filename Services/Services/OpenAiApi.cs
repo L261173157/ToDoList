@@ -2,10 +2,15 @@
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
-using OpenAI.GPT3;
-using OpenAI.GPT3.Managers;
-using OpenAI.GPT3.ObjectModels;
-using OpenAI.GPT3.ObjectModels.RequestModels;
+using OpenAI;
+using OpenAI.Managers;
+using OpenAI.ObjectModels;
+using OpenAI.ObjectModels.RequestModels;
+
+// using OpenAI.GPT3;
+// using OpenAI.GPT3.Managers;
+// using OpenAI.GPT3.ObjectModels;
+// using OpenAI.GPT3.ObjectModels.RequestModels;
 
 namespace Services.Services;
 
@@ -27,7 +32,7 @@ public static class OpenAiApi
                 ChatMessage.FromUser(userInput),
             },
             Model = Models.ChatGpt3_5Turbo,
-            MaxTokens = 4000, //optional
+            // MaxTokens = 4000, //optional
             Temperature = temperature, //optional
         };
         var completionResult = await openAiService.ChatCompletion.CreateCompletion(create);
