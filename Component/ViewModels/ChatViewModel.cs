@@ -68,7 +68,7 @@ public class ChatViewModel : BindableBase
 
     private async void Chat()
     {
-        string systemInput = chatRole.通用;
+        var systemInput = chatRole.通用;
         switch (SystemInput)
         {
             case "通用":

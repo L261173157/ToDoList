@@ -9,15 +9,15 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.4" />
-        <PackageReference Include="Prism.Wpf" Version="8.1.97" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.4"/>
+        <PackageReference Include="Prism.Wpf" Version="8.1.97"/>
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="Services\ClassType\" />
+        <Folder Include="Services\ClassType\"/>
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Database\Database.csproj" />
-        <ProjectReference Include="..\Services\Services.csproj" />
+        <ProjectReference Include="..\Database\Database.csproj"/>
+        <ProjectReference Include="..\Services\Services.csproj"/>
     </ItemGroup>
     <ItemGroup>
         <Reference Include="HandyControl">

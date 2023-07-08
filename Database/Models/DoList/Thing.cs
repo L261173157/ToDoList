@@ -81,23 +81,23 @@ public class Thing : BindableBase
         set => SetProperty(ref remindTime, value);
     }
 
-    private Int64 _createTimeStamp;
+    private long _createTimeStamp;
 
     /// <summary>
     ///     创建时间戳
     /// </summary>
-    public Int64 CreateTimeStamp
+    public long CreateTimeStamp
     {
         get => _createTimeStamp;
         set => SetProperty(ref _createTimeStamp, value);
     }
 
-    private Int64 _updateTimeStamp;
+    private long _updateTimeStamp;
 
     /// <summary>
     ///     更新时间戳
     /// </summary>
-    public Int64 UpdateTimeStamp
+    public long UpdateTimeStamp
     {
         get => _updateTimeStamp;
         set => SetProperty(ref _updateTimeStamp, value);

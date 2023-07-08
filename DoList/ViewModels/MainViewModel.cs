@@ -132,32 +132,23 @@ public class MainViewModel : BindableBase
     {
         //更新时间戳
         var result = _contextLocal.Things;
-        foreach (var item in result)
-        {
-            item.UpdateTimeStamp = Common.GetTimeStamp();
-        }
+        foreach (var item in result) item.UpdateTimeStamp = Common.GetTimeStamp();
 
         _contextLocal.SaveChanges();
         //同步数据库
-        Task.Run((Database.SyncDb.SyncThings));
+        Task.Run(Database.SyncDb.SyncThings);
         _contextLocal.Things.Load();
         Things.Clear();
         switch (NowStatus)
         {
             case "全部":
                 var resultAll = _contextLocal.Things.OrderBy(thing => thing.Done);
-                foreach (var item in resultAll)
-                {
-                    Things.Add(item);
-                }
+                foreach (var item in resultAll) Things.Add(item);
 
                 break;
             case "未完成":
                 var resultNotDone = _contextLocal.Things.Where(thing => thing.Done == false);
-                foreach (var item in resultNotDone)
-                {
-                    Things.Add(item);
-                }
+                foreach (var item in resultNotDone) Things.Add(item);
 
                 break;
         }

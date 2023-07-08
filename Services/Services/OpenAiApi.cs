@@ -29,11 +29,10 @@ public static class OpenAiApi
             Messages = new List<ChatMessage>
             {
                 ChatMessage.FromSystem(systemInput ?? "不担任任何角色"), //optional
-                ChatMessage.FromUser(userInput),
+                ChatMessage.FromUser(userInput)
             },
             Model = Models.ChatGpt3_5Turbo,
-            // MaxTokens = 4000, //optional
-            Temperature = temperature, //optional
+            Temperature = temperature //optional
         };
         var completionResult = await openAiService.ChatCompletion.CreateCompletion(create);
         if (completionResult.Successful)

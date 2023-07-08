@@ -56,7 +56,7 @@ public static class Common
     //时间戳函数
     public static long GetTimeStamp()
     {
-        var timeSpan = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0));
+        var timeSpan = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
         return (long)timeSpan.TotalSeconds;
     }
 }

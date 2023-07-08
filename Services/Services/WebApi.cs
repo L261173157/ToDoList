@@ -107,13 +107,9 @@ public static class WebApi
         var adress = JsonConvert.DeserializeObject<Adress>(responseBody);
         if (adress.error_code == 0)
             if (adress.result.City == "")
-            {
                 return adress.result.Province;
-            }
             else
-            {
                 return adress.result.City;
-            }
 
         return "";
     }

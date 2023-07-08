@@ -6,7 +6,6 @@
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="450"
              xmlns:prism="http://prismlibrary.com/"
-             xmlns:hc="https://handyorg.github.io/handycontrol"
              prism:ViewModelLocator.AutoWireViewModel="True" Width="450" Height="600" Loaded="UserControl_Loaded">
     <Grid Width="450" Height="600">
         <!-- <hc:NotifyIcon x:Name="NotifyIcon" Text="ToDoList" /> -->
