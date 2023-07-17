@@ -8,14 +8,17 @@
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <Grid>
-        <ComboBox HorizontalAlignment="Left" Margin="260,0,0,0" VerticalAlignment="Top" Width="80"
+        <ComboBox HorizontalAlignment="Left" Margin="260,5,0,0" VerticalAlignment="Top" Width="80"
                   ItemsSource="{Binding TargetItemsSource}" SelectedItem="{Binding TranslateTarget}" SelectedIndex="0" />
-        <Button Content="查询" HorizontalAlignment="Left" Margin="345,0,0,0" VerticalAlignment="Top" Width="100"
+        <Button Content="查询" HorizontalAlignment="Left" Margin="345,5,0,0" VerticalAlignment="Top" Width="100"
                 Height="50" Command="{Binding TranslateCmd}" />
-        <TextBox x:Name="TbTranslate" HorizontalAlignment="Left"
+        <TextBox x:Name="TbTranslateResult" HorizontalAlignment="Left"
                  Text="{Binding TranslateResult,UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap"
-                 VerticalAlignment="Top" Width="250" Height="100" FontSize="16" />
-        <Button Content="设置" HorizontalAlignment="Left" Margin="345,50,0,0" VerticalAlignment="Top" Width="100"
+                 VerticalAlignment="Top" Width="250" Height="70" FontSize="16" Margin="5,40,0,0" />
+        <Button Content="设置" HorizontalAlignment="Left" Margin="345,60,0,0" VerticalAlignment="Top" Width="100"
                 Height="50" Command="{Binding ParameterCmd}" />
+        <TextBox x:Name="TbTranslate" HorizontalAlignment="Left" Margin="5,5,0,0"
+            Text="{Binding Translate, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap"
+            VerticalAlignment="Top" Width="250" Height="30" FontSize="14" GotFocus="TbTranslate_OnGotFocus"/>
     </Grid>
 </UserControl>

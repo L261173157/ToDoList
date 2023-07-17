@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace Component.Views;
 
@@ -12,8 +13,8 @@ public partial class TranslateView : UserControl
         InitializeComponent();
     }
 
-    //private void TbTranslate_GotFocus(object sender, RoutedEventArgs e)
-    //{
-    //    TbTranslate.Text = string.Empty;
-    //}
+    private void TbTranslate_OnGotFocus(object sender, RoutedEventArgs e)
+    {
+        TbTranslate.Text = string.Empty;
+    }
 }

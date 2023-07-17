@@ -22,10 +22,21 @@ public class TranslateViewModel : BindableBase
 
     #region 属性定义
 
+    private string _translate;
+
+    /// <summary>
+    ///     翻译目标文本框
+    /// </summary>
+    public string Translate
+    {
+        get => _translate;
+        set => SetProperty(ref _translate, value);
+    }
+
     private string _translateResult;
 
     /// <summary>
-    ///     翻译文本框
+    ///     翻译结果文本框
     /// </summary>
     public string TranslateResult
     {
@@ -85,7 +96,7 @@ public class TranslateViewModel : BindableBase
         {
             try
             {
-                TranslateResult = Regex.Replace(TranslateResult, @"\s+", "").ToLower();
+                Translate = Regex.Replace(Translate, @"\s+", "").ToLower();
             }
             catch (ArgumentNullException e)
             {
@@ -95,14 +106,14 @@ public class TranslateViewModel : BindableBase
 
             try
             {
-                if (Common.ContainChinese(TranslateResult))
+                if (Common.ContainChinese(Translate))
                 {
                     target = Services.Services.TranslateTarget.en;
-                    TranslateResult = await WebApi.Translate(TranslateResult, target);
+                    TranslateResult = await WebApi.Translate(Translate, target);
                     return;
                 }
 
-                var result = (from dict in context.DictDbs where dict.Word == TranslateResult select dict.Translation)
+                var result = (from dict in context.DictDbs where dict.Word == Translate select dict.Translation)
                     .FirstOrDefault();
 
                 if (!string.IsNullOrEmpty(result))
@@ -110,10 +121,9 @@ public class TranslateViewModel : BindableBase
                     result = result.Replace("\\n", Environment.NewLine);
                     TranslateResult = result;
                 }
-
                 else
                 {
-                    TranslateResult = await WebApi.Translate(TranslateResult, target);
+                    TranslateResult = await WebApi.Translate(Translate, target);
                 }
             }
             catch (Exception e)
