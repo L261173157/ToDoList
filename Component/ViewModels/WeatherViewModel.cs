@@ -27,7 +27,7 @@ public class WeatherViewModel : BindableBase
     private string weather;
 
     /// <summary>
-    ///     天气文本框
+    /// 天气文本框
     /// </summary>
     public string Weather
     {

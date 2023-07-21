@@ -31,15 +31,14 @@ public static class WebApi
         {
             localIP = await LocationIP();
             localCity = await Address(localIP);
-            if (localCity.EndsWith("市"))
-                localCity = localCity.Substring(0, localCity.Length - 1);
-            localWeather = await Weather(localCity);
-            return localWeather;
         }
         catch (Exception)
         {
-            return "网络错误";
+            return "查询城市失败";
         }
+
+        localWeather = await Weather(localCity);
+        return localWeather;
     }
 
     /// <summary>
@@ -69,7 +68,7 @@ public static class WebApi
         }
         catch (Exception)
         {
-            return "查询失败";
+            return "查询天气失败";
         }
     }
 
