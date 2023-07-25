@@ -34,7 +34,7 @@ public static class WebApi
         }
         catch (Exception)
         {
-            return "查询城市失败";
+            localCity= "沈阳";
         }
 
         localWeather = await Weather(localCity);
