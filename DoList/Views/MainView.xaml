@@ -9,21 +9,21 @@
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              prism:ViewModelLocator.AutoWireViewModel="True" Width="450" Height="600" Loaded="UserControl_Loaded">
     <Grid Width="450" Height="600">
-
-        <ui:DataGrid x:Name="ExaDataGrid" ItemsSource="{Binding Things}" AutoGenerateColumns="False"
-                  HorizontalAlignment="Left" GridLinesVisibility="Vertical" MaxColumnWidth="261" SelectionMode="Single"
-                  HeadersVisibility="None" Width="350">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Content}" Header="内容" MinWidth="260" CanUserReorder="False"
-                                    FontSize="14" CanUserResize="False" />
-                <DataGridCheckBoxColumn Binding="{Binding Done}" Header="完成" />
-            </DataGrid.Columns>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <ui:DataGrid Grid.Column="0" ItemsSource="{Binding Things}" Width="350" AutoGenerateColumns="False" SelectionMode="Single">
+            <ui:DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Content,UpdateSourceTrigger=PropertyChanged}" Header="内容" ></DataGridTextColumn>
+                <DataGridCheckBoxColumn Binding="{Binding Done,UpdateSourceTrigger=PropertyChanged}" Header="完成" MinWidth="10" ></DataGridCheckBoxColumn>
+            </ui:DataGrid.Columns>
         </ui:DataGrid>
-        <ui:Button Content="新建" Command="{Binding NewThingViewCmd}" Height="40" Width="80" Background="#FFE0E0E0"
-                VerticalAlignment="Top" HorizontalAlignment="Right"/>
-        <ui:Button Content="保存" Command="{Binding SaveCmd}" Height="40" Width="80" Background="#FFE0E0E0"
+        <ui:Button Grid.Column="1" Content="新建" Command="{Binding NewThingViewCmd}" Height="40" Width="80" Background="#FFE0E0E0"
+                VerticalAlignment="Top" HorizontalAlignment="Right" />
+        <ui:Button Grid.Column="1" Content="保存" Command="{Binding SaveCmd}" Height="40" Width="80" Background="#FFE0E0E0"
                 HorizontalAlignment="Right" Margin="0,45,0,0" VerticalAlignment="Top" />
-        <ui:Button x:Name="BtnShowDone" Content="{Binding NowStatus}" Command="{Binding ShowNowStatusCmd}" Height="40"
+        <ui:Button Grid.Column="1" x:Name="BtnShowDone" Content="{Binding NowStatus}" Command="{Binding ShowNowStatusCmd}" Height="40"
                 Width="80" Background="#FFE0E0E0" HorizontalAlignment="Right" Margin="0,90,0,0" VerticalAlignment="Top" />
     </Grid>
 </UserControl>
