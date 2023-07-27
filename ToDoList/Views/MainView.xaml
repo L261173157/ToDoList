@@ -1,9 +1,9 @@
-﻿<Window x:Class="ToDoList.Views.MainView"
+﻿<ui:UiWindow x:Class="ToDoList.Views.MainView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
@@ -12,17 +12,16 @@
 
     <Grid>
 
-        <!--<hc:NotifyIcon x:Name="NotifyIcon" Text="ToDoList" Icon="/Resources/Journal.ico"  Click="NotifyIcon_Click" />-->
         <ContentControl prism:RegionManager.RegionName="ToDoListRegion" Height="600" VerticalAlignment="Top" />
 
         <Grid Margin="0,600,0,0">
             <ContentControl prism:RegionManager.RegionName="ComponentRegion" Margin="0,40,0,0" />
-            <Button x:Name="BtnTranslate" Content="翻译" HorizontalAlignment="Left" VerticalAlignment="Top"
-                    Click="BtnTranslate_Click" />
-            <Button x:Name="BtnWeather" Content="天气" HorizontalAlignment="Left" VerticalAlignment="Top"
-                    Click="BtnWeather_Click" Margin="50,0,0,0" />
-            <Button x:Name="Chat" Content="问答" HorizontalAlignment="Left" VerticalAlignment="Top"
-                    Margin="100,0,0,0" Click="Chat_Click" />
+            <ui:Button x:Name="BtnTranslate" Content="翻译" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    Click="BtnTranslate_Click"  />
+            <ui:Button x:Name="BtnWeather" Content="天气" VerticalAlignment="Top"
+                    Click="BtnWeather_Click" Margin="60,0,0,0" />
+            <ui:Button x:Name="Chat" Content="问答" VerticalAlignment="Top"
+                    Margin="120,0,0,0" Click="Chat_Click"/>
         </Grid>
     </Grid>
-</Window>
+</ui:UiWindow>

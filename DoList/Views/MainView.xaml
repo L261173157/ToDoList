@@ -6,11 +6,11 @@
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="450"
              xmlns:prism="http://prismlibrary.com/"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              prism:ViewModelLocator.AutoWireViewModel="True" Width="450" Height="600" Loaded="UserControl_Loaded">
     <Grid Width="450" Height="600">
-        <!-- <hc:NotifyIcon x:Name="NotifyIcon" Text="ToDoList" /> -->
 
-        <DataGrid x:Name="ExaDataGrid" ItemsSource="{Binding Things}" AutoGenerateColumns="False"
+        <ui:DataGrid x:Name="ExaDataGrid" ItemsSource="{Binding Things}" AutoGenerateColumns="False"
                   HorizontalAlignment="Left" GridLinesVisibility="Vertical" MaxColumnWidth="261" SelectionMode="Single"
                   HeadersVisibility="None" Width="350">
             <DataGrid.Columns>
@@ -18,12 +18,12 @@
                                     FontSize="14" CanUserResize="False" />
                 <DataGridCheckBoxColumn Binding="{Binding Done}" Header="完成" />
             </DataGrid.Columns>
-        </DataGrid>
-        <Button Content="新建" Command="{Binding NewThingViewCmd}" Height="40" Width="80" Background="#FFE0E0E0"
-                VerticalAlignment="Top" HorizontalAlignment="Right" />
-        <Button Content="保存" Command="{Binding SaveCmd}" Height="40" Width="80" Background="#FFE0E0E0"
+        </ui:DataGrid>
+        <ui:Button Content="新建" Command="{Binding NewThingViewCmd}" Height="40" Width="80" Background="#FFE0E0E0"
+                VerticalAlignment="Top" HorizontalAlignment="Right"/>
+        <ui:Button Content="保存" Command="{Binding SaveCmd}" Height="40" Width="80" Background="#FFE0E0E0"
                 HorizontalAlignment="Right" Margin="0,45,0,0" VerticalAlignment="Top" />
-        <Button x:Name="BtnShowDone" Content="{Binding NowStatus}" Command="{Binding ShowNowStatusCmd}" Height="40"
+        <ui:Button x:Name="BtnShowDone" Content="{Binding NowStatus}" Command="{Binding ShowNowStatusCmd}" Height="40"
                 Width="80" Background="#FFE0E0E0" HorizontalAlignment="Right" Margin="0,90,0,0" VerticalAlignment="Top" />
     </Grid>
 </UserControl>

@@ -8,18 +8,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Remove="Resources\Journal.ico"/>
-        <None Remove="Resources\notify.wav"/>
-        <None Remove="Views\S+图标.png"/>
+        <None Remove="Resources\Journal.ico" />
+        <None Remove="Resources\notify.wav" />
+        <None Remove="Views\S+图标.png" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="HandyControl" Version="3.2.0"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.4">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Prism.DryIoc" Version="8.1.97"/>
+        <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
+        <PackageReference Include="WPF-UI" Version="2.0.3" />
     </ItemGroup>
 
     <ItemGroup>
@@ -32,8 +32,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Component\Component.csproj"/>
-        <ProjectReference Include="..\DoList\DoList.csproj"/>
+        <ProjectReference Include="..\Component\Component.csproj" />
+        <ProjectReference Include="..\DoList\DoList.csproj" />
     </ItemGroup>
 
     <ItemGroup>
