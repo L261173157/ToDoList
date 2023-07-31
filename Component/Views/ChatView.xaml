@@ -8,14 +8,13 @@
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <Grid>
-        <ComboBox HorizontalAlignment="Left" Margin="260,0,0,0" VerticalAlignment="Top" Width="80"
+        <ComboBox HorizontalAlignment="Left" Margin="260,8,0,0" VerticalAlignment="Top" Width="80"
                   ItemsSource="{Binding SystemInputSource}" SelectedItem="{Binding SystemInput}" SelectedIndex="0" />
-        <Button Content="问答" HorizontalAlignment="Left" Margin="345,0,0,0" VerticalAlignment="Top" Width="100"
+        <Button Content="问答" Margin="345,8,0,0" VerticalAlignment="Top" Width="100"
                 Height="50" Command="{Binding ChatCmd}" />
-        <TextBox x:Name="TbTranslate" HorizontalAlignment="Left"
-                 Text="{Binding ChatResult,UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap"
-                 VerticalAlignment="Top" Width="250" Height="100" FontSize="16" />
-        <Button Content="设置" HorizontalAlignment="Left" Margin="345,50,0,0" VerticalAlignment="Top" Width="100"
+        <TextBox x:Name="TbTranslate"
+                 Text="{Binding ChatResult,UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Width="250" Height="100" FontSize="16" Margin="0,0,200,0" VerticalAlignment="Stretch" />
+        <Button Content="设置" Margin="345,58,0,0" VerticalAlignment="Top" Width="100"
                 Height="50" Command="{Binding ParameterCmd}" />
     </Grid>
 </UserControl>
